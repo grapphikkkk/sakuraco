@@ -11,16 +11,48 @@ export function HomeAfterLogin01() {
   const [specialSlots, setSpecialSlots] = useState<SpecialSlotEvent[]>([]);
 
   useEffect(() => {
-    // Check if we should show special slots
-    const showSpecialSlot = localStorage.getItem("sakuraco_show_special_slot");
-    
-    // Load special slots from connections if flag is set or connections exist
-    if (showSpecialSlot === "1" || getConnections().length > 0) {
-      const connections = getConnections();
-      const slots = connections.map(createSpecialSlotEvent);
-      setSpecialSlots(slots);
+  const showSpecialSlot = localStorage.getItem("sakuraco_show_special_slot");
+
+  // ✅ ConnectionResult から渡された“今回の相互マッチ”があればそれを優先
+  const saved = localStorage.getItem("sakuraco_special_slots");
+  let connections: any[] = [];
+
+  if (saved) {
+    try {
+      connections = JSON.parse(saved);
+    } catch {
+      connections = [];
     }
-  }, []);
+  } else if (showSpecialSlot === "1") {
+    // 保険：保存が無いなら mutual のみ
+    connections = getConnections().filter((c) => c.mutualInterest);
+  }
+
+  // ✅ 重複排除（nickname/participantNickname などをキーに）
+  const uniq = Array.from(
+    new Map(
+      connections.map((c) => {
+        const key = c.participantId ?? c.participantNickname ?? c.nickname ?? JSON.stringify(c);
+        return [key, c];
+      })
+    ).values()
+  );
+
+  const slots = uniq.map((c) =>
+    createSpecialSlotEvent({
+      ...c,
+      partnerNickname: c.participantNickname ?? c.nickname,
+      partnerHobby: c.participantHobby ?? c.hobby,
+    } as any)
+  );
+
+  setSpecialSlots(slots);
+
+  // ✅ 1回表示したらフラグ/保存を消して増殖事故を防ぐ（必要なら残してもOK）
+  localStorage.removeItem("sakuraco_show_special_slot");
+  localStorage.removeItem("sakuraco_special_slots");
+}, []);
+
 
   const handleEventClick = (event: Event) => {
     navigate(`/event/${event.id}`);

@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { CreditCard, Lock } from "lucide-react";

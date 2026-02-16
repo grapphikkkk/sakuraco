@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Calendar, Users, MapPin } from "lucide-react";
 import { getEventsByCategory, getEventById, Event } from "../data/events";
+import { getConnections, createSpecialSlotEvent, SpecialSlotEvent } from "../data/participants";
+
 
 interface Booking {
   eventId: string;
@@ -15,6 +17,7 @@ interface Booking {
 export function HomeAfterLogin02() {
   const navigate = useNavigate();
   const [currentBooking, setCurrentBooking] = useState<Booking | null>(null);
+  const [specialSlots, setSpecialSlots] = useState<SpecialSlotEvent[]>([]);
 
   useEffect(() => {
     const savedBooking = localStorage.getItem("sakuraco_current_booking");
@@ -22,6 +25,52 @@ export function HomeAfterLogin02() {
       setCurrentBooking(JSON.parse(savedBooking));
     }
   }, []);
+
+  useEffect(() => {
+  const showSpecialSlot = localStorage.getItem("sakuraco_show_special_slot");
+
+  // ✅ ConnectionResult から渡された“今回の相互マッチ”があればそれを優先
+  const saved = localStorage.getItem("sakuraco_special_slots");
+  let connections: any[] = [];
+
+  if (saved) {
+    try {
+      connections = JSON.parse(saved);
+    } catch {
+      connections = [];
+    }
+  } else if (showSpecialSlot === "1") {
+    // 保険：保存が無いなら mutual のみ
+    connections = getConnections().filter((c) => c.mutualInterest);
+  }
+
+  // ✅ 重複排除（nickname/participantNickname などをキーに）
+  const uniq = Array.from(
+    new Map(
+      connections.map((c) => {
+        const key = c.participantId ?? c.participantNickname ?? c.nickname ?? JSON.stringify(c);
+        return [key, c];
+      })
+    ).values()
+  );
+
+  const slots = uniq.map((c) =>
+    createSpecialSlotEvent({
+      ...c,
+      partnerNickname: c.participantNickname ?? c.nickname,
+      partnerHobby: c.participantHobby ?? c.hobby,
+    } as any)
+  );
+
+  setSpecialSlots(slots);
+
+  // ✅ 1回表示したらフラグ/保存を消して増殖事故を防ぐ（必要なら残してもOK）
+  localStorage.removeItem("sakuraco_show_special_slot");
+  localStorage.removeItem("sakuraco_special_slots");
+}, []);
+
+
+
 
   const { basic, attr, gay } = getEventsByCategory();
   const otherEvents = [...basic, ...attr, ...gay].filter(
@@ -62,6 +111,46 @@ export function HomeAfterLogin02() {
           </p>
         </div>
 
+        {/* Special Slots Section */}
+        {specialSlots.length > 0 && (
+          <div style={{ marginBottom: "var(--spacing-2xl)" }}>
+            {specialSlots.map((slot) => {
+              const expiresDate = new Date(slot.expiresAt);
+              const now = new Date();
+              const daysLeft = Math.ceil(
+                (expiresDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+              );
+
+              return (
+                <div key={slot.id} style={{ marginBottom: "var(--spacing-md)" }}>
+                  <h2>
+                    特別枠（
+                    {expiresDate.toLocaleDateString("ja-JP", {
+                      month: "long",
+                      day: "numeric",
+                    })}
+                    まで参加表明ができます）
+                  </h2>
+
+                  <div
+                    onClick={() => navigate(`/event/${slot.id}`)}
+                    style={{
+                      border: "2px solid var(--green-300)",
+                      borderRadius: "var(--radius-lg)",
+                      padding: "var(--spacing-lg)",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <h3>{slot.partnerNickname}さんとのお食事</h3>
+                    <div>2人</div>
+                    <div>あと{daysLeft}日</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+    
         {/* Current Booking */}
         {currentBooking && bookedEvent && (
           <div style={{ marginBottom: "var(--spacing-2xl)" }}>

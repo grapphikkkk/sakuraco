@@ -88,6 +88,22 @@ export function FeedbackScreen() {
       saveConnections(connections);
     }
 
+    // ✅ 追加：プロトタイプ用（yesを押した相手だけを保存）
+    const yesPeople = participants
+      .filter((p) => participantFeedbacks[p.id] === "yes")
+      .map((p) => ({
+        participantId: p.id,
+        participantNickname: p.nickname,
+        participantHobby: p.hobby,
+        iconColor: ICON_COLORS[p.icon] || ICON_COLORS.green,
+        expiresAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(), // とりあえず3日後
+      }));
+
+    localStorage.setItem(
+      `sakuraco_yes_people_${event.id}`,
+      JSON.stringify(yesPeople)
+    );
+
     // Navigate to result screen
     navigate(`/connection-result/${event.id}`);
   };
