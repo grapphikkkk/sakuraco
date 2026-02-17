@@ -234,7 +234,7 @@ export function HomeAfterLogin02() {
               {/* CTA */}
               <button
                 onClick={() => {
-                  navigate(`/event-day/${currentBooking.eventId}`);
+                  navigate(`/event/${currentBooking.eventId}`);
                 }}
                 style={{
                   width: "100%",

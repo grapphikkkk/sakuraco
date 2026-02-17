@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { Calendar, Users, MapPin, ArrowLeft, Info } from "lucide-react";
+import { Calendar, Users, MapPin, ArrowLeft, Info, MessageCircle } from "lucide-react";
 import { getEventById, AREAS } from "../data/events";
 import { getConnections, createSpecialSlotEvent } from "../data/participants";
 
@@ -55,6 +55,45 @@ export function EventDetail01() {
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
 
+  // Date change modal state
+  const [showDateSelectModal, setShowDateSelectModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectedNewDate, setSelectedNewDate] = useState<string | null>(null);
+
+  // Mock alternative dates with same theme  
+  const alternativeDates = [
+    { fullDateTime: "2月21日（金）20:00", date: "2月21日（金）", time: "20:00" },
+    { fullDateTime: "2月26日（水）19:30", date: "2月26日（水）", time: "19:30" },
+    { fullDateTime: "3月5日（水）19:00", date: "3月5日（水）", time: "19:00" },
+  ];
+
+  // Determine if user has a booking for this event
+  const savedBookingRaw = typeof window !== "undefined" ? localStorage.getItem("sakuraco_current_booking") : null;
+  let savedBooking: any = null;
+  try {
+    if (savedBookingRaw) savedBooking = JSON.parse(savedBookingRaw);
+  } catch {
+    savedBooking = null;
+  }
+
+  const parseEventDate = (ev: any): Date | null => {
+    if (!ev || !ev.date) return null;
+    const m = ev.date.match(/(\d+)月(\d+)日/);
+    if (!m) return null;
+    const month = parseInt(m[1], 10) - 1;
+    const day = parseInt(m[2], 10);
+    const year = new Date().getFullYear();
+    const timeParts = (ev.time || "00:00").split(":");
+    const hour = parseInt(timeParts[0] || "0", 10);
+    const minute = parseInt(timeParts[1] || "0", 10);
+    return new Date(year, month, day, hour, minute);
+  };
+
+  const eventDate = event ? parseEventDate(event) : null;
+  const today = new Date();
+  const isBookedByUser = savedBooking && savedBooking.eventId === event?.id;
+  const isFutureBooking = isBookedByUser && (eventDate ? eventDate > today : true);
+
   if (!event && !specialSlot) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
@@ -103,6 +142,538 @@ export function EventDetail01() {
   const canApply = specialSlot 
     ? selectedDates.length > 0 && selectedAreas.length > 0
     : selectedArea !== null;
+
+  // Booked (before-event) page view: date selection for change
+  if (!specialSlot && event && isFutureBooking && showDateSelectModal) {
+    return (
+      <div className="min-h-screen">
+        {/* Header */}
+        <div
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 10,
+            background: "var(--bg-card)",
+            borderBottom: "1px solid var(--green-100)",
+            padding: "var(--spacing-md) var(--spacing-lg)",
+          }}
+        >
+          <button
+            onClick={() => setShowDateSelectModal(false)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "var(--spacing-xs)",
+              minHeight: "var(--touch-min)",
+              color: "var(--neutral-700)",
+              fontSize: "var(--text-base)",
+              fontWeight: 500,
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              WebkitTapHighlightColor: "transparent",
+            }}
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>戻る</span>
+          </button>
+        </div>
+
+        <div className="px-4 py-6">
+          <div className="max-w-md mx-auto">
+            <h1
+              style={{
+                fontSize: "var(--text-lg)",
+                fontWeight: 500,
+                color: "var(--neutral-800)",
+                marginBottom: "var(--spacing-lg)",
+              }}
+            >
+              他の日程を選択
+            </h1>
+
+            <div
+              className="flex flex-col"
+              style={{
+                gap: "var(--spacing-md)",
+              }}
+            >
+              {/* Current Booking Card */}
+              {savedBooking && (
+                <div
+                  style={{
+                    background: "var(--bg-card)",
+                    border: "1px solid var(--green-100)",
+                    borderRadius: "var(--radius-lg)",
+                    padding: "var(--spacing-lg)",
+                    cursor: "not-allowed",
+                    opacity: 0.7,
+                  }}
+                >
+                  <div style={{ marginBottom: "var(--spacing-xs)" }}>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        padding: "3px 10px",
+                        fontSize: "var(--text-xs)",
+                        fontWeight: 500,
+                        borderRadius: "var(--radius-full)",
+                        background: "var(--green-600)",
+                        color: "#fff",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      予約中
+                    </span>
+                  </div>
+                  <div
+                    className="flex items-center gap-2"
+                    style={{
+                      fontSize: "var(--text-base)",
+                      color: "var(--neutral-500)",
+                      fontWeight: 500,
+                    }}
+                  >
+                    <Calendar className="w-4 h-4" style={{ color: "var(--neutral-500)" }} />
+                    <span>{savedBooking.date || event.fullDateTime}</span>
+                  </div>
+                  <div
+                    className="flex items-center gap-2"
+                    style={{
+                      fontSize: "var(--text-sm)",
+                      color: "var(--neutral-500)",
+                      fontWeight: 500,
+                      marginTop: "4px",
+                    }}
+                  >
+                    <Users className="w-3.5 h-3.5" style={{ color: "var(--neutral-500)" }} />
+                    <span>5人</span>
+                  </div>
+                </div>
+              )}
+
+              {alternativeDates.map((alt) => (
+                <div
+                  key={alt.fullDateTime}
+                  onClick={() => {
+                    setSelectedNewDate(alt.fullDateTime);
+                    setShowConfirmModal(true);
+                  }}
+                  style={{
+                    background: "var(--bg-card)",
+                    border: "1px solid var(--green-100)",
+                    borderRadius: "var(--radius-lg)",
+                    padding: "var(--spacing-lg)",
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                    e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                >
+                  <div style={{ marginBottom: "var(--spacing-xs)" }}>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        padding: "3px 10px",
+                        fontSize: "var(--text-xs)",
+                        fontWeight: 500,
+                        borderRadius: "var(--radius-full)",
+                        background: "var(--green-100)",
+                        color: "var(--green-800)",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      {event.theme}
+                    </span>
+                  </div>
+                  <div
+                    className="flex items-center gap-2"
+                    style={{
+                      fontSize: "var(--text-base)",
+                      color: "var(--neutral-800)",
+                      fontWeight: 500,
+                    }}
+                  >
+                    <Calendar className="w-4 h-4" style={{ color: "var(--green-600)" }} />
+                    <span>{alt.fullDateTime}</span>
+                  </div>
+                  <div
+                    className="flex items-center gap-2"
+                    style={{
+                      fontSize: "var(--text-sm)",
+                      color: "var(--neutral-500)",
+                      fontWeight: 500,
+                      marginTop: "4px",
+                    }}
+                  >
+                    <Users className="w-3.5 h-3.5" />
+                    <span>5人</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Confirm Modal */}
+        {showConfirmModal && selectedNewDate && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: "rgba(19,26,24,0.45)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "var(--spacing-lg)",
+              zIndex: 101,
+            }}
+            onClick={() => setShowConfirmModal(false)}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                background: "var(--bg-card)",
+                borderRadius: "var(--radius-lg)",
+                padding: "var(--spacing-lg)",
+                maxWidth: "400px",
+                width: "100%",
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: "var(--text-md)",
+                  fontWeight: 500,
+                  color: "var(--neutral-800)",
+                  marginBottom: "var(--spacing-md)",
+                }}
+              >
+                日時を変更しますか？
+              </h3>
+              <div
+                style={{
+                  background: "var(--neutral-50)",
+                  border: "1px solid var(--neutral-200)",
+                  borderRadius: "var(--radius-md)",
+                  padding: "var(--spacing-md)",
+                  marginBottom: "var(--spacing-lg)",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "var(--text-sm)",
+                    color: "var(--neutral-500)",
+                    fontWeight: 500,
+                    marginBottom: "4px",
+                  }}
+                >
+                  新しい日時
+                </p>
+                <p
+                  style={{
+                    fontSize: "var(--text-base)",
+                    color: "var(--neutral-800)",
+                    fontWeight: 500,
+                  }}
+                >
+                  {selectedNewDate}
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowConfirmModal(false)}
+                  style={{
+                    flex: 1,
+                    minHeight: "var(--touch-min)",
+                    borderRadius: "var(--radius-full)",
+                    fontSize: "var(--text-base)",
+                    fontWeight: 500,
+                    border: "1.5px solid var(--neutral-300)",
+                    background: "transparent",
+                    color: "var(--neutral-700)",
+                    cursor: "pointer",
+                    WebkitTapHighlightColor: "transparent",
+                  }}
+                >
+                  キャンセル
+                </button>
+                <button
+                  onClick={() => {
+                    if (savedBooking && selectedNewDate) {
+                      const updated = {
+                        ...savedBooking,
+                        date: selectedNewDate,
+                        bookedAt: new Date().toISOString(),
+                      };
+                      localStorage.setItem("sakuraco_current_booking", JSON.stringify(updated));
+                      setShowConfirmModal(false);
+                      setShowDateSelectModal(false);
+                      setSelectedNewDate(null);
+                      window.location.reload();
+                    }
+                  }}
+                  style={{
+                    flex: 1,
+                    minHeight: "var(--touch-min)",
+                    borderRadius: "var(--radius-full)",
+                    fontSize: "var(--text-base)",
+                    fontWeight: 500,
+                    border: "none",
+                    background: "var(--green-600)",
+                    color: "#fff",
+                    cursor: "pointer",
+                    WebkitTapHighlightColor: "transparent",
+                  }}
+                >
+                  変更する
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Booked (before-event) view: when user already booked and event is in the future
+  if (!specialSlot && event && isFutureBooking) {
+    const restaurant = {
+      name: "和食ダイニング 緑々",
+      address: "東京都新宿区新宿3-1-1",
+      mapUrl: "https://maps.google.com",
+    };
+
+    return (
+      <div className="min-h-screen">
+        {/* Header */}
+        <div
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 10,
+            background: "var(--bg-card)",
+            borderBottom: "1px solid var(--green-100)",
+            padding: "var(--spacing-md) var(--spacing-lg)",
+          }}
+        >
+          <button
+            onClick={() => navigate(-1)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "var(--spacing-xs)",
+              minHeight: "var(--touch-min)",
+              color: "var(--neutral-700)",
+              fontSize: "var(--text-base)",
+              fontWeight: 500,
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              WebkitTapHighlightColor: "transparent",
+            }}
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>戻る</span>
+          </button>
+        </div>
+
+        <div className="px-4 py-6">
+          <div className="max-w-md mx-auto">
+            {/* Tag / Title / Date / Participants */}
+            <div style={{ marginBottom: "var(--spacing-lg)" }}>
+              <div className="flex gap-2 flex-wrap" style={{ marginBottom: "var(--spacing-sm)" }}>
+                <span
+                  style={{
+                    padding: "4px 12px",
+                    fontSize: "var(--text-sm)",
+                    fontWeight: 500,
+                    borderRadius: "var(--radius-full)",
+                    background: "var(--green-100)",
+                    color: "var(--green-800)",
+                  }}
+                >
+                  {event.category}
+                </span>
+                <span
+                  style={{
+                    padding: "4px 12px",
+                    fontSize: "var(--text-sm)",
+                    fontWeight: 500,
+                    borderRadius: "var(--radius-full)",
+                    background: "var(--green-600)",
+                    color: "#fff",
+                  }}
+                >
+                  {event.theme}
+                </span>
+              </div>
+
+              <h1
+                style={{
+                  fontSize: "var(--text-xl)",
+                  fontWeight: 500,
+                  color: "var(--neutral-800)",
+                  marginBottom: "var(--spacing-sm)",
+                }}
+              >
+                {event.theme}
+              </h1>
+
+              <div
+                className="flex items-center gap-2"
+                style={{
+                  fontSize: "var(--text-base)",
+                  color: "var(--neutral-700)",
+                  fontWeight: 500,
+                  marginBottom: "var(--spacing-xs)",
+                }}
+              >
+                <Calendar className="w-4 h-4" style={{ color: "var(--green-600)" }} />
+                <span>{event.fullDateTime}</span>
+              </div>
+
+              <div
+                className="flex items-center gap-2"
+                style={{
+                  fontSize: "var(--text-base)",
+                  color: "var(--neutral-700)",
+                  fontWeight: 500,
+                  marginBottom: "var(--spacing-md)",
+                }}
+              >
+                <Users className="w-4 h-4" style={{ color: "var(--green-600)" }} />
+                <span>{event.participantCount}人</span>
+              </div>
+            </div>
+
+            {/* Place & Restaurant Info */}
+            <div
+              style={{
+                background: "var(--bg-card)",
+                border: "1px solid var(--green-100)",
+                borderRadius: "var(--radius-lg)",
+                padding: "var(--spacing-lg)",
+                marginBottom: "var(--spacing-lg)",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "var(--text-base)",
+                  color: "var(--neutral-800)",
+                  fontWeight: 500,
+                  marginBottom: "var(--spacing-md)",
+                }}
+              >
+                会場：{(savedBooking && savedBooking.area) || "未選択"}
+              </p>
+              <p
+                style={{
+                  fontSize: "var(--text-sm)",
+                  color: "var(--neutral-600)",
+                }}
+              >
+                レストラン情報は48時間前までにわかります！
+              </p>
+            </div>
+
+            {/* Actions: Change Date / Cancel */}
+            <div className="flex flex-col" style={{ gap: "var(--spacing-sm)", marginBottom: "var(--spacing-md)" }}>
+              <button
+                onClick={() => { setShowDateSelectModal(true); setSelectedNewDate(null); }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "var(--spacing-xs)",
+                  width: "100%",
+                  minHeight: "var(--touch-comfortable)",
+                  borderRadius: "var(--radius-full)",
+                  fontSize: "var(--text-base)",
+                  fontWeight: 500,
+                  border: "1.5px solid var(--neutral-300)",
+                  background: "transparent",
+                  color: "var(--neutral-700)",
+                  cursor: "pointer",
+                  WebkitTapHighlightColor: "transparent",
+                  transition: "all 0.2s",
+                }}
+              >
+                日時を変更する
+              </button>
+
+              <button
+                onClick={() => { if (confirm("キャンセルしますか？")) { localStorage.removeItem("sakuraco_current_booking"); navigate("/home"); } }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "var(--spacing-xs)",
+                  width: "100%",
+                  minHeight: "var(--touch-comfortable)",
+                  borderRadius: "var(--radius-full)",
+                  fontSize: "var(--text-base)",
+                  fontWeight: 500,
+                  border: "1.5px solid var(--neutral-300)",
+                  background: "transparent",
+                  color: "var(--destructive)",
+                  cursor: "pointer",
+                  WebkitTapHighlightColor: "transparent",
+                  transition: "all 0.2s",
+                }}
+              >
+                キャンセル
+              </button>
+            </div>
+
+            {/* Disabled sections */}
+            <div
+              style={{
+                background: "var(--bg-card)",
+                border: "1px solid var(--green-100)",
+                borderRadius: "var(--radius-lg)",
+                padding: "var(--spacing-lg)",
+                marginBottom: "var(--spacing-lg)",
+                opacity: 0.6,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-sm)", marginBottom: "var(--spacing-sm)" }}>
+                <MessageCircle className="w-5 h-5" style={{ color: "var(--green-600)" }} />
+                <h2 style={{ fontSize: "var(--text-md)", fontWeight: 500, color: "var(--neutral-800)" }}>会話のお題</h2>
+              </div>
+              <p style={{ fontSize: "var(--text-sm)", color: "var(--neutral-600)" }}>お食事開始後にみれます</p>
+            </div>
+
+            <div
+              style={{
+                background: "linear-gradient(135deg, var(--green-50) 0%, var(--bg-card) 100%)",
+                border: "1px solid var(--green-200)",
+                borderRadius: "var(--radius-lg)",
+                padding: "var(--spacing-lg)",
+                marginBottom: "var(--spacing-lg)",
+                opacity: 0.6,
+              }}
+            >
+              <h2 style={{ fontSize: "var(--text-md)", fontWeight: 500, color: "var(--neutral-800)", marginBottom: "var(--spacing-sm)" }}>
+                お食事会終了後のきもち
+              </h2>
+              <p style={{ fontSize: "var(--text-sm)", color: "var(--neutral-600)" }}>
+                終了後に記録できます。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Special Slot View
   if (specialSlot) {
