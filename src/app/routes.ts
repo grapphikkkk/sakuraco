@@ -12,6 +12,7 @@ import { Payment } from "./screens/01_05_Payment";
 import { Reservations } from "./screens/Reservations";
 import { MyPage } from "./screens/MyPage";
 import { SpecialHomeAfterLogin } from "./screens/04_01_Home_afterlogin_01";
+import { SchoolSelection } from "./screens/SchoolSelection";
 import { RootLayout } from "./components/RootLayout";
 import React from "react";
 
@@ -29,6 +30,7 @@ const paymentElement = React.createElement(Payment);
 const reservationsElement = React.createElement(Reservations);
 const myPageElement = React.createElement(MyPage);
 const specialHomeAfterLoginElement = React.createElement(SpecialHomeAfterLogin);
+const schoolSelectionElement = React.createElement(SchoolSelection);
 
 export const router = createBrowserRouter([
   {
@@ -87,6 +89,12 @@ export const router = createBrowserRouter([
         path: "home-special",
         element: specialHomeAfterLoginElement,
       },
+      {
+        path: "school-selection",
+        element: schoolSelectionElement,
+      },
     ],
   },
-]);
+], {
+  basename: "/sakuraco",
+});

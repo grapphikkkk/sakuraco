@@ -55,7 +55,11 @@ export function HomeAfterLogin01() {
 
 
   const handleEventClick = (event: Event) => {
-    navigate(`/event/${event.id}`);
+    if (event.theme === "同じ学校出身") {
+      navigate("/school-selection", { state: { eventId: event.id } });
+    } else {
+      navigate(`/event/${event.id}`);
+    }
   };
 
   const handleSpecialSlotClick = (slot: SpecialSlotEvent) => {
