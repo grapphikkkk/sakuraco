@@ -26,6 +26,32 @@
   --pink-400: #E8507A;
   --pink-500: #C73D63;
 
+  /* ══════ Sunset (used for タメ会) ══════ */
+  --sunset-50: #FFF6F2;
+  --sunset-100: #FFE8D8;
+  --sunset-200: #FFD0B3;
+  --sunset-300: #FFB58A;
+  --sunset-400: #FF9A5F;
+  --sunset-500: #FF7A2A;
+  --sunset-600: #D95A00;
+
+  /* ══════ Indigo (used for 趣味系) ══════ */
+  --indigo-50: #F4F6FF;
+  --indigo-100: #E7EDFF;
+  --indigo-200: #D0DBFF;
+  --indigo-300: #AEB9FF;
+  --indigo-400: #8896FF;
+  --indigo-500: #5D6CFF;
+  --indigo-600: #3E50E6;
+
+  /* ══════ Plum (used for 見た目系) ══════ */
+  --plum-50: #FBF7FD;
+  --plum-100: #F3E9F7;
+  --plum-200: #E9D1EF;
+  --plum-300: #D9B5E0;
+  --plum-400: #C58FD0;
+  --plum-500: #9B5FAF;
+
   /* ══════ Neutral ══════ */
   --neutral-50:  #F7F9F9;
   --neutral-100: #EDF1F0;
