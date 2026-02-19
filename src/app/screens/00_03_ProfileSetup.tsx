@@ -1,0 +1,180 @@
+import { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router";
+
+export function ProfileSetup() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const sns = params.get("sns");
+
+  const [nickname, setNickname] = useState("");
+  const [birthYear, setBirthYear] = useState("");
+  const [birthMonth, setBirthMonth] = useState("");
+  const [birthDay, setBirthDay] = useState("");
+  const [iconFile, setIconFile] = useState<File | null>(null);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    minHeight: "48px",
+    padding: "0 16px",
+    fontFamily: "var(--font-body)",
+    fontSize: "var(--text-base)",
+    border: "1.5px solid var(--neutral-300)",
+    borderRadius: "var(--radius-md)",
+    background: "rgba(255,255,255,0.85)",
+    color: "var(--neutral-800)",
+    outline: "none",
+    WebkitAppearance: "none" as const,
+    transition: "border-color 0.2s, box-shadow 0.2s",
+  };
+
+  const selectStyle: React.CSSProperties = {
+    ...inputStyle,
+    cursor: "pointer",
+  };
+
+  useEffect(() => {
+    if (!params.get("authed")) {
+      // if arrived here without auth, go back
+      // keep it simple: navigate back to account creation
+      navigate(-1);
+    }
+  }, [params, navigate]);
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 100 }, (_, i) => currentYear - 18 - i);
+  const months = Array.from({ length: 12 }, (_, i) => ({ value: String(i + 1), label: String(i + 1).padStart(2, "0") }));
+  const getDaysInMonth = () => {
+    if (!birthMonth) return 31;
+    const month = parseInt(birthMonth);
+    const year = parseInt(birthYear) || currentYear;
+    return new Date(year, month, 0).getDate();
+  };
+  const days = Array.from({ length: getDaysInMonth() }, (_, i) => ({ value: String(i + 1), label: String(i + 1).padStart(2, "0") }));
+
+  const isAgeValid = () => {
+    if (!birthYear || !birthMonth || !birthDay) return false;
+    const birthDate = new Date(parseInt(birthYear), parseInt(birthMonth) - 1, parseInt(birthDay));
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    const d = today.getDate() - birthDate.getDate();
+    if (m < 0 || (m === 0 && d < 0)) age--;
+    if (age > 20) return true;
+    if (age === 20 && m > 0) return true;
+    if (age === 20 && m === 0 && d >= 0) return true;
+    return false;
+  };
+
+  const showAgeError = birthYear && birthMonth && birthDay && !isAgeValid();
+  const canSubmit = nickname.trim() && isAgeValid() && agreedToTerms;
+
+  const handleSubmit = () => {
+    if (!canSubmit) return;
+    localStorage.setItem("sakuraco_registered", "true");
+    if (!localStorage.getItem("sakuraco_onboarding_complete")) {
+      navigate("/onboarding");
+    } else {
+      navigate("/home");
+    }
+  };
+
+  return (
+    <div className="min-h-screen px-4 py-8">
+      <div className="max-w-md mx-auto">
+        <h1 style={{ fontSize: "var(--text-lg)", fontWeight: 500, color: "var(--neutral-800)", marginBottom: "var(--spacing-xl)" }}>
+          アカウント情報の登録
+        </h1>
+
+        <p style={{ color: "var(--neutral-600)", marginBottom: "12px" }}>
+          {sns ? `${sns}で認証されました。` : "SNS認証済み"} 次にアイコンとニックネーム、生年月日を設定してください。
+        </p>
+
+        <div style={{ marginBottom: "var(--spacing-md)" }}>
+          <label style={{ display: "block", marginBottom: "6px", fontWeight: 600 }}>アイコン（任意）</label>
+          <p style={{ fontSize: "var(--text-xs)", color: "var(--neutral-500)", marginBottom: 8 }}>後で変更できます。お食事会参加まで他の人には公開されません。</p>
+          <input type="file" accept="image/*" onChange={(e) => setIconFile(e.target.files ? e.target.files[0] : null)} />
+        </div>
+
+        <div style={{ marginBottom: "var(--spacing-md)" }}>
+          <label style={{ display: "block", marginBottom: "6px", fontWeight: 600 }}>ニックネーム</label>
+          <input value={nickname} onChange={(e) => setNickname(e.target.value)} placeholder="あなたの呼び名を入力（本名不要）" style={inputStyle} onFocus={(e:any)=>{e.target.style.borderColor="var(--green-400)";e.target.style.boxShadow="0 0 0 3px rgba(29,140,126,0.12)"}} onBlur={(e:any)=>{e.target.style.borderColor="var(--neutral-300)";e.target.style.boxShadow="none"}} />
+        </div>
+
+        <div style={{ marginBottom: "var(--spacing-md)" }}>
+          <label style={{ display: "block", marginBottom: "6px", fontWeight: 600 }}>生年月日（20歳以上確認）</label>
+          <div style={{ display: "flex", gap: 8 }}>
+            <select value={birthYear} onChange={(e) => setBirthYear(e.target.value)} style={selectStyle}>
+              <option value="">年</option>
+              {years.map(y => <option key={y} value={String(y)}>{y}</option>)}
+            </select>
+            <select value={birthMonth} onChange={(e) => setBirthMonth(e.target.value)} style={selectStyle}>
+              <option value="">月</option>
+              {months.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
+            </select>
+            <select value={birthDay} onChange={(e) => setBirthDay(e.target.value)} style={selectStyle}>
+              <option value="">日</option>
+              {days.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
+            </select>
+          </div>
+          {showAgeError && (
+            <p style={{ fontSize: "var(--text-xs)", color: "var(--red-500)", fontWeight: 500, marginTop: "4px" }}>
+              20歳以上である必要があります
+            </p>
+          )}
+        </div>
+
+        <div style={{ marginBottom: "var(--spacing-md)" }}>
+          <label className="flex items-start gap-3 cursor-pointer" style={{ minHeight: "var(--touch-min)" }}>
+            <input
+              type="checkbox"
+              checked={agreedToTerms}
+              onChange={(e) => setAgreedToTerms(e.target.checked)}
+              className="mt-1"
+              style={{
+                width: "20px",
+                height: "20px",
+                minWidth: "20px",
+                minHeight: "20px",
+                accentColor: "var(--green-600)",
+              }}
+            />
+            <span style={{ fontSize: "var(--text-sm)", color: "var(--neutral-700)", lineHeight: 1.9 }}>
+              本サービスは男性同士（ゲイ）の交流を目的としています。当事者以外の利用は固くお断りします。
+              <a href="#" style={{ color: "var(--green-600)", textDecoration: "underline", marginLeft: "6px" }}>利用規約</a>・
+              <a href="#" style={{ color: "var(--green-600)", textDecoration: "underline" }}>プライバシーポリシー</a>
+              に同意します。
+            </span>
+          </label>
+        </div>
+
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={() => navigate(-1)} style={{ flex: 1, minHeight: 44, background: "var(--neutral-100)", borderRadius: "var(--radius-md)" }}>戻る</button>
+          <button
+            onClick={handleSubmit}
+            disabled={!canSubmit}
+            className="w-full transition-all"
+            style={{
+              flex: 1,
+              minHeight: "var(--touch-comfortable)",
+              borderRadius: "var(--radius-full)",
+              border: "none",
+              fontWeight: 500,
+              fontSize: "var(--text-sm)",
+              letterSpacing: "0.03em",
+              cursor: canSubmit ? "pointer" : "not-allowed",
+              background: canSubmit ? "var(--green-600)" : "var(--neutral-200)",
+              color: canSubmit ? "#fff" : "var(--neutral-400)",
+              boxShadow: canSubmit ? "0 2px 8px rgba(23,117,104,0.28)" : "none",
+            }}
+          >
+            登録して進む
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ProfileSetup;

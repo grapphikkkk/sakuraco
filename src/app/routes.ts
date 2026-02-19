@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import { HomeBeforeLogin } from "./screens/00_01_HomeBeforeLogin";
 import { AccountCreation } from "./screens/00_02_AccountCreation";
+import { OAuthMock } from "./screens/00_02_OAuthMock";
+import { ProfileSetup } from "./screens/00_03_ProfileSetup";
 import { Onboarding } from "./screens/01_02_Onboarding";
 import { PersonalityQuestions } from "./screens/PersonalityQuestions";
 import { HomeAfterLogin } from "./screens/HomeAfterLogin";
@@ -19,6 +21,8 @@ import React from "react";
 const rootLayoutElement = React.createElement(RootLayout);
 const homeBeforeLoginElement = React.createElement(HomeBeforeLogin);
 const accountCreationElement = React.createElement(AccountCreation);
+const oauthMockElement = React.createElement(OAuthMock);
+const profileSetupElement = React.createElement(ProfileSetup);
 const onboardingElement = React.createElement(Onboarding);
 const personalityQuestionsElement = React.createElement(PersonalityQuestions);
 const homeAfterLoginElement = React.createElement(HomeAfterLogin);
@@ -44,6 +48,14 @@ export const router = createBrowserRouter([
       {
         path: "account-creation",
         element: accountCreationElement,
+      },
+      {
+        path: "auth/mock",
+        element: oauthMockElement,
+      },
+      {
+        path: "profile-setup",
+        element: profileSetupElement,
       },
       {
         path: "onboarding",

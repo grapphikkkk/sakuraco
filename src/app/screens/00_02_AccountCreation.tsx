@@ -8,7 +8,6 @@ export function AccountCreation() {
   const [birthMonth, setBirthMonth] = useState("");
   const [birthDay, setBirthDay] = useState("");
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const [snsProvider, setSnsProvider] = useState<string | null>(null);
   
   const isAgeValid = () => {
     if (!birthYear || !birthMonth || !birthDay) return false;
@@ -28,13 +27,13 @@ export function AccountCreation() {
     return false;
   };
   
-  const canProceed = snsProvider && nickname.trim() && isAgeValid() && agreedToTerms;
+  const canProceed = nickname.trim() && isAgeValid() && agreedToTerms;
   
   const handleSubmit = () => {
     if (canProceed) {
       localStorage.setItem("sakuraco_registered", "true");
       const hasSeenOnboarding = localStorage.getItem("sakuraco_onboarding_complete");
-      
+
       if (!hasSeenOnboarding) {
         navigate("/onboarding");
       } else {
@@ -43,18 +42,7 @@ export function AccountCreation() {
     }
   };
 
-  const snsButtonStyle = (isSelected: boolean): React.CSSProperties => ({
-    width: "100%",
-    minHeight: "var(--touch-comfortable)",
-    borderRadius: "var(--radius-md)",
-    border: isSelected ? "1.5px solid var(--green-600)" : "1.5px solid var(--neutral-300)",
-    background: isSelected ? "var(--green-600)" : "#fff",
-    color: isSelected ? "#fff" : "var(--neutral-800)",
-    fontWeight: 500,
-    fontSize: "var(--text-base)",
-    cursor: "pointer",
-    transition: "all 0.2s ease",
-  });
+  
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
@@ -116,38 +104,7 @@ export function AccountCreation() {
           アカウント作成
         </h1>
         
-        {/* SNS Auth */}
-        <div style={{ marginBottom: "var(--spacing-xl)" }}>
-          <label
-            style={{
-              display: "block",
-              fontSize: "var(--text-sm)",
-              fontWeight: 500,
-              color: "var(--neutral-700)",
-              marginBottom: "var(--spacing-sm)",
-            }}
-          >
-            SNS認証
-          </label>
-          <div className="flex flex-col gap-3">
-            {["google", "line", "facebook"].map((provider) => {
-              const labels: Record<string, string> = {
-                google: "Googleで続ける",
-                line: "LINEで続ける",
-                facebook: "Facebookで続ける",
-              };
-              return (
-                <button
-                  key={provider}
-                  onClick={() => setSnsProvider(provider)}
-                  style={snsButtonStyle(snsProvider === provider)}
-                >
-                  {labels[provider]}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        {/* SNS 認証はトップ画面に移動しました */}
         
         {/* Nickname */}
         <div style={{ marginBottom: "var(--spacing-xl)" }}>

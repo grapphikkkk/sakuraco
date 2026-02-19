@@ -1,9 +1,24 @@
 import { useNavigate } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useState } from "react";
 
 export function HomeBeforeLogin() {
   const navigate = useNavigate();
-  
+  const [snsProvider, setSnsProvider] = useState<string | null>(null);
+
+  const snsButtonStyle = (isSelected: boolean): React.CSSProperties => ({
+    width: "100%",
+    minHeight: "var(--touch-comfortable)",
+    borderRadius: "var(--radius-md)",
+    border: isSelected ? "1.5px solid var(--green-600)" : "1.5px solid var(--neutral-300)",
+    background: isSelected ? "var(--green-600)" : "#fff",
+    color: isSelected ? "#fff" : "var(--neutral-800)",
+    fontWeight: 500,
+    fontSize: "var(--text-base)",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+  });
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
@@ -21,21 +36,21 @@ export function HomeBeforeLogin() {
             SakuraCo
           </h1>
         </div>
-        
+
         {/* Hero Visual */}
-        <div className="w-full max-w-md mb-12">
+        <div className="w-full max-w-md mb-8">
           <ImageWithFallback
             src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80"
             alt="温かい食事の雰囲気"
-            className="w-full h-64 object-cover"
+            className="w-full h-56 object-cover"
             style={{ borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)" }}
           />
         </div>
-        
+
         {/* Concept Copy */}
-        <div className="text-center mb-12 max-w-md">
+        <div className="text-center mb-6 max-w-md">
           <p
-            className="mb-6"
+            className="mb-4"
             style={{
               fontSize: "var(--text-lg)",
               lineHeight: 1.8,
@@ -44,45 +59,39 @@ export function HomeBeforeLogin() {
             }}
           >
             そこにあるのは、思いがけない
-            <br />友情かもしれないし、
-            <br />
-            ときめきかもしれない
-          </p>
-          <p
-            style={{
-              fontSize: "var(--text-base)",
-              color: "var(--neutral-500)",
-              fontWeight: 500,
-            }}
-          >
-            僕と僕らのためのお食事会
+            <br />友情かもしれないし、ときめきかもしれない
           </p>
         </div>
-        
-        {/* CTA Button — Primary (green-600), pill shape, full-width on mobile */}
-        <button
-          onClick={() => navigate("/account-creation")}
-          className="w-full max-w-md transition-all active:opacity-80"
-          style={{
-            height: "48px",
-            minHeight: "var(--touch-comfortable)",
-            background: "var(--green-600)",
-            color: "#fff",
-            borderRadius: "var(--radius-full)",
-            border: "none",
-            fontWeight: 500,
-            fontSize: "var(--text-sm)",
-            letterSpacing: "0.03em",
-            boxShadow: "0 2px 8px rgba(23,117,104,0.28)",
-            cursor: "pointer",
-          }}
-        >
-          はじめる
-        </button>
-        
+
+        {/* SNS Auth Buttons (moved here instead of はじめる) */}
+        <div className="w-full max-w-md mb-6">
+          <div style={{ marginBottom: "var(--spacing-sm)", fontSize: "var(--text-sm)", color: "var(--neutral-700)", fontWeight: 500 }}>SNS認証</div>
+          <div className="flex flex-col gap-3">
+            {["google", "line", "facebook"].map((provider) => {
+              const labels: Record<string, string> = {
+                google: "Googleで続ける",
+                line: "LINEで続ける",
+                facebook: "Facebookで続ける",
+              };
+              return (
+                <button
+                  key={provider}
+                  onClick={() => {
+                    setSnsProvider(provider);
+                    navigate(`/auth/mock?provider=${provider}`);
+                  }}
+                  style={snsButtonStyle(snsProvider === provider)}
+                >
+                  {labels[provider]}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Disclaimer */}
         <p
-          className="mt-8 text-center px-6 max-w-md"
+          className="mt-4 text-center px-6 max-w-md"
           style={{
             fontSize: "var(--text-xs)",
             color: "var(--neutral-500)",
