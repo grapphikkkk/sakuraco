@@ -13,6 +13,8 @@ export function ProfileSetup() {
   const [birthDay, setBirthDay] = useState("");
   const [iconFile, setIconFile] = useState<File | null>(null);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [iconPreview, setIconPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
@@ -53,6 +55,16 @@ export function ProfileSetup() {
   };
   const days = Array.from({ length: getDaysInMonth() }, (_, i) => ({ value: String(i + 1), label: String(i + 1).padStart(2, "0") }));
 
+  useEffect(() => {
+    if (!iconFile) {
+      setIconPreview(null);
+      return;
+    }
+    const url = URL.createObjectURL(iconFile);
+    setIconPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [iconFile]);
+
   const isAgeValid = () => {
     if (!birthYear || !birthMonth || !birthDay) return false;
     const birthDate = new Date(parseInt(birthYear), parseInt(birthMonth) - 1, parseInt(birthDay));
@@ -92,9 +104,39 @@ export function ProfileSetup() {
         </p>
 
         <div style={{ marginBottom: "var(--spacing-md)" }}>
-          <label style={{ display: "block", marginBottom: "6px", fontWeight: 600 }}>アイコン（任意）</label>
-          <p style={{ fontSize: "var(--text-xs)", color: "var(--neutral-500)", marginBottom: 8 }}>後で変更できます。お食事会参加まで他の人には公開されません。</p>
-          <input type="file" accept="image/*" onChange={(e) => setIconFile(e.target.files ? e.target.files[0] : null)} />
+          <div style={{ position: 'relative', background: 'var(--bg-card)', border: '1px solid var(--neutral-200)', borderRadius: 'var(--radius-lg)', padding: 'var(--spacing-md)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--spacing-lg)', width: '100%', position: 'relative' }}>
+              <div style={{ position: 'relative' }}>
+                <div className={`avatar-upload avatar-upload-md`} onClick={() => fileInputRef.current?.click()} role="button" aria-label="プロフィール画像を選択">
+                  <div className={`avatar-upload-circle ${iconPreview ? 'has-image' : ''}`}>
+                    {iconPreview ? (
+                      <img src={iconPreview} alt="avatar preview" />
+                    ) : (
+                      <svg className="avatar-upload-person" width="44" height="44" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                      </svg>
+                    )}
+                  </div>
+                  <div className="avatar-upload-badge" style={{ position: 'absolute' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                  </div>
+                </div>
+
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0] || null;
+                    setIconFile(f);
+                  }}
+                />
+              </div>
+            </div>
+
+            <p style={{ fontSize: "var(--text-xs)", color: "var(--neutral-500)", marginBottom: 8 }}>後で変更できます。お食事会参加まで他の人には公開されません。</p>
+          </div>
         </div>
 
         <div style={{ marginBottom: "var(--spacing-md)" }}>
