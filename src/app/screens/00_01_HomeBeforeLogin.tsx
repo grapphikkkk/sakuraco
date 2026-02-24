@@ -89,6 +89,34 @@ export function HomeBeforeLogin() {
           </div>
         </div>
 
+        {/* Divider */}
+        <div className="w-full max-w-md mb-6 flex items-center gap-4">
+          <div style={{ flex: 1, height: "1px", background: "var(--neutral-300)" }} />
+          <span style={{ fontSize: "var(--text-sm)", color: "var(--neutral-500)", fontWeight: 400 }}>または</span>
+          <div style={{ flex: 1, height: "1px", background: "var(--neutral-300)" }} />
+        </div>
+
+        {/* Email Registration Button */}
+        <div className="w-full max-w-md mb-6">
+          <button
+            onClick={() => navigate("/email-verification")}
+            style={{
+              width: "100%",
+              minHeight: "var(--touch-comfortable)",
+              borderRadius: "var(--radius-md)",
+              border: "1.5px solid var(--green-600)",
+              background: "#fff",
+              color: "var(--green-700)",
+              fontWeight: 500,
+              fontSize: "var(--text-base)",
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+            }}
+          >
+            メールアドレスで登録
+          </button>
+        </div>
+
         {/* Disclaimer */}
         <p
           className="mt-4 text-center px-6 max-w-md"

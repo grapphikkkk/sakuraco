@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { HomeBeforeLogin } from "./screens/00_01_HomeBeforeLogin";
+import { EmailVerification } from "./screens/00_01_EmailVerification";
+import { VerificationCode } from "./screens/00_01_VerificationCode";
 import { AccountCreation } from "./screens/00_02_AccountCreation";
 import { OAuthMock } from "./screens/00_02_OAuthMock";
 import { ProfileSetup } from "./screens/00_03_ProfileSetup";
@@ -19,6 +21,8 @@ import React from "react";
 
 const rootLayoutElement = React.createElement(RootLayout);
 const homeBeforeLoginElement = React.createElement(HomeBeforeLogin);
+const emailVerificationElement = React.createElement(EmailVerification);
+const verificationCodeElement = React.createElement(VerificationCode);
 const accountCreationElement = React.createElement(AccountCreation);
 const oauthMockElement = React.createElement(OAuthMock);
 const profileSetupElement = React.createElement(ProfileSetup);
@@ -42,6 +46,14 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: homeBeforeLoginElement,
+      },
+      {
+        path: "email-verification",
+        element: emailVerificationElement,
+      },
+      {
+        path: "email-verify-code",
+        element: verificationCodeElement,
       },
       {
         path: "account-creation",

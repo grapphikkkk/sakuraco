@@ -1,0 +1,3905 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SakuraCo — Tone & Manner Guide v4 (Mobile First)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   SAKURACO DESIGN TOKENS v3 — Mobile First
+   ═══════════════════════════════════════════════════ */
+:root {
+  /* Primary — Blue Green */
+  --green-50:  #EBF5F4;  --green-100: #C9E8E4;
+  --green-200: #93D1CA;  --green-300: #5BB8AE;
+  --green-400: #34A396;  --green-500: #1D8C7E;
+  --green-600: #177568;  --green-700: #115C52;
+  --green-800: #0B443C;  --green-900: #072E29;
+
+  /* Accent — Pink */
+  --pink-50:  #FFF0F3;  --pink-100: #FFD6E0;
+  --pink-200: #FFB3C6;  --pink-300: #FF8FAB;
+  --pink-400: #E8507A;  --pink-500: #C73D63;
+
+  /* Neutral */
+  --neutral-50:  #F7F9F9;  --neutral-100: #EDF1F0;
+  --neutral-200: #DCE2E0;  --neutral-300: #C1CAC7;
+  --neutral-400: #8A9691;  --neutral-500: #5E6E68;
+  --neutral-600: #455250;  --neutral-700: #333E3C;
+  --neutral-800: #222B29;  --neutral-900: #131A18;
+
+  /* Backgrounds */
+  --bg-main: linear-gradient(168deg, #EBF5F4 0%, #F7F9F9 40%, #EDF1F0 70%, #EBF5F4 100%);
+  --bg-card: rgba(255, 255, 255, 0.78);
+  --bg-glass: rgba(255, 255, 255, 0.52);
+
+  /* Font */
+  --font-display: 'Cormorant Garamond', serif;            /* ブランドロゴ専用 */
+  --font-en: 'Inter', sans-serif;                          /* 英字・数字 */
+  --font-body: 'Inter', 'Noto Sans JP', sans-serif;        /* 本文（英字→Inter、日本語→Noto） */
+  --font-mono: 'JetBrains Mono', monospace;                /* コード・HEX値・技術表記 */
+
+  /* ══════ MOBILE-FIRST SPACING（4px基準） ══════ */
+  --space-xs: 4px;   --space-sm: 8px;   --space-md: 16px;
+  --space-lg: 24px;  --space-xl: 32px;  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* ══════ MOBILE-FIRST TYPOGRAPHY SCALE ══════ */
+  --text-xs:   11px;  /* 最小（バッジ内数字等） */
+  --text-sm:   13px;  /* caption・メタ情報 */
+  --text-base: 15px;  /* 本文 */
+  --text-md:   17px;  /* H2・カード見出し */
+  --text-lg:   20px;  /* H1・画面タイトル */
+  --text-xl:   28px;  /* ヒーロー・特別見出し */
+  --text-brand: 36px; /* ブランドロゴ */
+
+  /* Radius */
+  --radius-sm: 8px;  --radius-md: 12px;
+  --radius-lg: 16px; --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 3px rgba(7,46,41,0.07);
+  --shadow-md: 0 4px 12px rgba(7,46,41,0.09);
+  --shadow-lg: 0 8px 32px rgba(7,46,41,0.11);
+
+  /* ══════ TOUCH TARGET（WCAG 2.5.5 / Apple HIG） ══════ */
+  --touch-min: 44px;   /* 最小タッチ領域 */
+  --touch-comfortable: 48px; /* 推奨タッチ領域 */
+
+  /* ══════ EXTENDED — Warm Sunset（暖色サブカラー） ══════ */
+  --sunset-50:  #FEF3EE;  --sunset-100: #FCE6DC;
+  --sunset-200: #F5C8B0;  --sunset-300: #F19C79;
+  --sunset-400: #E67C50;  --sunset-500: #C0623B;
+  --sunset-600: #964B2D;
+
+  /* ══════ EXTENDED — Deep Plum（深みサブカラー） ══════ */
+  --plum-50:  #F9EFF2;  --plum-100: #EEDAE1;
+  --plum-200: #D9B2BF;  --plum-300: #BD7D93;
+  --plum-400: #A63950;  --plum-500: #81293E;
+  --plum-600: #621E2F;
+
+  /* ══════ EXTENDED — Indigo Blue（落ち着いた青） ══════ */
+  --indigo-50:  #EEF1F8;  --indigo-100: #D5DCEE;
+  --indigo-200: #A8B5D9;  --indigo-300: #7B8EC2;
+  --indigo-400: #5570A8;  --indigo-500: #3D5489;
+  --indigo-600: #2D3E66;
+
+  /* ══════ SEMANTIC — Success（Primary green 派生） ══════ */
+  --success-50:  var(--green-50);   --success-100: var(--green-100);
+  --success-200: var(--green-200);  --success-300: var(--green-300);
+  --success-400: var(--green-500);  --success-500: var(--green-600);
+  --success-600: var(--green-700);
+
+  /* ══════ SEMANTIC — Warning（穏やかなアンバー） ══════ */
+  --warning-50:  #FEF7EC;  --warning-100: #FCEACC;
+  --warning-200: #F8D599;  --warning-300: #F0BC66;
+  --warning-400: #D9A040;  --warning-500: #B5852E;
+  --warning-600: #8C6823;
+
+  /* ══════ SEMANTIC — Error（落ち着いたレッド） ══════ */
+  --error-50:  #FDF2F2;  --error-100: #F9DADA;
+  --error-200: #F0B0B0;  --error-300: #E07C7C;
+  --error-400: #CC5555;
+  --error-500: #A83A3A;  --error-600: #832D2D;
+
+  /* ══════ SEMANTIC — Info（Indigo Blue 派生） ══════ */
+  --info-50:  var(--indigo-50);   --info-100: var(--indigo-100);
+  --info-200: var(--indigo-200);  --info-300: var(--indigo-300);
+  --info-400: var(--indigo-400);  --info-500: var(--indigo-500);
+  --info-600: var(--indigo-600);
+
+  /* ══════ SEMANTIC ALIAS（用途別マッピング） ══════ */
+  --disabled: var(--neutral-200);
+  --disabled-foreground: var(--neutral-400);
+  --focus-ring: rgba(29, 140, 126, 0.18);
+  --overlay: rgba(19, 26, 24, 0.45);
+  --divider: var(--neutral-200);
+  --red-500: var(--error-400);
+
+  /* ══════ SPACING ALIAS（コンポーネント用） ══════ */
+  --spacing-xs: var(--space-xs);   --spacing-sm: var(--space-sm);
+  --spacing-md: var(--space-md);   --spacing-lg: var(--space-lg);
+  --spacing-xl: var(--space-xl);   --spacing-2xl: var(--space-2xl);
+}
+
+/* ══════ Desktop overrides ══════ */
+@media (min-width: 768px) {
+  :root {
+    --text-sm: 13px;   --text-base: 15px;
+    --text-md: 18px;   --text-lg: 24px;
+    --text-xl: 32px;   --text-brand: 48px;
+  }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-main);
+  color: var(--neutral-800);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent; /* iOS */
+  overflow-x: hidden;
+}
+
+/* Grain */
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.012'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999;
+}
+
+.container {
+  max-width: 960px; margin: 0 auto;
+  padding: var(--space-md); /* mobile: 16px */
+}
+@media (min-width: 768px) {
+  .container { padding: var(--space-xl); }
+}
+
+/* ═══════ HERO ═══════ */
+.hero {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-md) var(--space-2xl);
+  position: relative;
+}
+.hero::before {
+  content: ''; position: absolute;
+  top: -60px; right: -80px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(147,209,202,0.18) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-size: var(--text-brand); font-weight: 300;
+  letter-spacing: 0.1em; color: var(--green-700);
+  margin-bottom: var(--space-xs);
+}
+.brand-tagline {
+  font-weight: 300; font-size: var(--text-base);
+  color: var(--neutral-600); letter-spacing: 0.04em;
+}
+.brand-sub {
+  font-size: var(--text-sm); color: var(--neutral-500);
+  font-weight: 500; margin-top: var(--space-xs);
+}
+.doc-label {
+  display: inline-block; margin-top: var(--space-xl);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--bg-glass); backdrop-filter: blur(12px);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs); font-weight: 500;
+  color: var(--green-700); letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ═══════ SECTIONS ═══════ */
+section { margin-bottom: var(--space-3xl); }
+.section-label {
+  font-size: var(--text-xs); font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green-500); margin-bottom: var(--space-xs);
+}
+.section-title {
+  font-size: var(--text-lg); font-weight: 500;
+  color: var(--neutral-800);
+  margin-bottom: var(--space-md); line-height: 1.4;
+}
+.section-desc {
+  font-size: var(--text-base); color: var(--neutral-600);
+  line-height: 1.9; margin-bottom: var(--space-lg);
+}
+
+/* ═══════ DIVIDER ═══════ */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green-200), transparent);
+  margin: var(--space-2xl) 0;
+}
+
+/* ═══════ MOOD KEYWORDS ═══════ */
+.mood-keywords {
+  display: flex; flex-wrap: wrap;
+  gap: var(--space-sm); margin-bottom: var(--space-xl);
+}
+.mood-keyword {
+  padding: 8px 16px; border-radius: var(--radius-full);
+  font-size: var(--text-sm); font-weight: 400;
+  border: 1px solid var(--green-300);
+  color: var(--green-700); background: rgba(255,255,255,0.5);
+}
+.mood-keyword.accent { border-color: var(--pink-200); color: var(--pink-500); }
+
+/* ═══════ PRINCIPLES ═══════ */
+.principles-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* mobile: 1列 */
+  gap: var(--space-md);
+}
+@media (min-width: 768px) {
+  .principles-grid { grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+}
+.principle {
+  padding: var(--space-lg); border-left: 2px solid var(--green-300);
+}
+.principle .num {
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 300;
+  color: var(--green-300); margin-bottom: var(--space-xs);
+}
+.principle h4 {
+  font-weight: 500; font-size: var(--text-base);
+  color: var(--neutral-800); margin-bottom: var(--space-sm);
+}
+.principle p {
+  font-size: var(--text-sm); color: var(--neutral-600); line-height: 1.9;
+}
+
+/* ═══════ COLOR PALETTE ═══════ */
+.palette-group { margin-bottom: var(--space-xl); }
+.palette-group-title {
+  font-weight: 500; font-size: var(--text-sm);
+  color: var(--neutral-700); margin-bottom: var(--space-md);
+  display: flex; align-items: center; gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+.badge {
+  font-size: var(--text-xs); padding: 2px 10px;
+  border-radius: var(--radius-full); font-weight: 500;
+}
+.badge-primary { background: var(--green-100); color: var(--green-800); }
+.badge-accent { background: var(--pink-100); color: var(--pink-500); }
+.badge-neutral { background: var(--neutral-200); color: var(--neutral-700); }
+
+.palette-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* mobile: 5列 */
+  gap: 4px;
+}
+@media (min-width: 768px) {
+  .palette-row { grid-template-columns: repeat(10, 1fr); gap: 6px; }
+}
+.swatch {
+  aspect-ratio: 1; border-radius: var(--radius-sm);
+  display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 4px;
+  border: 1px solid rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+@media (min-width: 768px) {
+  .swatch { padding: var(--space-sm); }
+}
+.swatch-label { font-size: 9px; font-weight: 500; }
+.swatch-hex { font-size: 8px; font-family: var(--font-mono); display: none; }
+@media (min-width: 768px) {
+  .swatch-hex { display: block; }
+}
+.swatch.on-light .swatch-label, .swatch.on-light .swatch-hex { color: var(--neutral-800); }
+.swatch.on-dark .swatch-label, .swatch.on-dark .swatch-hex { color: #fff; }
+
+/* ═══════ ACCESSIBILITY BOX ═══════ */
+.a11y-box {
+  margin-top: var(--space-lg); padding: var(--space-lg);
+  background: #fff; border-radius: var(--radius-md);
+  border: 1px solid var(--green-200);
+}
+.a11y-title {
+  font-size: var(--text-sm); font-weight: 700;
+  color: var(--green-700); margin-bottom: var(--space-md);
+}
+.a11y-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* mobile: 1列 */
+  gap: var(--space-sm);
+}
+@media (min-width: 600px) {
+  .a11y-grid { grid-template-columns: 1fr 1fr; }
+}
+.a11y-item {
+  padding: var(--space-md); border-radius: var(--radius-sm);
+}
+.a11y-item .sample { font-size: var(--text-base); font-weight: 500; margin-bottom: 4px; }
+.a11y-item .detail { font-size: var(--text-xs); font-weight: 500; }
+.a11y-pass { color: var(--green-700); }
+.a11y-fail { color: #C7254E; }
+
+/* Info box */
+.info-box {
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--pink-300);
+  background: var(--pink-50);
+  margin-top: var(--space-lg);
+}
+.info-box .title {
+  font-size: var(--text-sm); font-weight: 700;
+  color: var(--pink-500); margin-bottom: var(--space-xs);
+}
+.info-box p {
+  font-size: var(--text-sm); color: var(--neutral-700); line-height: 1.9;
+}
+
+/* ═══════ TYPOGRAPHY SPECIMENS ═══════ */
+.type-specimen {
+  background: var(--bg-card); backdrop-filter: blur(12px);
+  border: 1px solid var(--green-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg); margin-bottom: var(--space-md);
+}
+.type-meta {
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--neutral-200);
+}
+@media (min-width: 600px) {
+  .type-meta { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+.type-role {
+  font-size: var(--text-xs); font-weight: 500;
+  color: var(--green-600); letter-spacing: 0.08em; text-transform: uppercase;
+}
+.type-family {
+  font-size: var(--text-xs); color: var(--neutral-500);
+  font-weight: 500; font-family: var(--font-mono);
+}
+
+/* Scale table */
+.scale-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: var(--space-md); }
+.scale-table { width: 100%; border-collapse: collapse; min-width: 540px; }
+.scale-table th {
+  font-size: var(--text-xs); font-weight: 500;
+  color: var(--neutral-600); letter-spacing: 0.08em;
+  text-transform: uppercase; text-align: left;
+  padding: var(--space-sm); border-bottom: 1px solid var(--neutral-200);
+  white-space: nowrap;
+}
+.scale-table td {
+  padding: var(--space-sm); font-size: var(--text-sm);
+  color: var(--neutral-700); border-bottom: 1px solid var(--neutral-100);
+  white-space: nowrap;
+}
+
+/* ═══════ COMPONENTS ═══════ */
+.components-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* mobile: 1列 */
+  gap: var(--space-md);
+}
+@media (min-width: 768px) {
+  .components-grid { grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+}
+.component-card {
+  background: var(--bg-card); backdrop-filter: blur(12px);
+  border: 1px solid var(--green-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+.component-label {
+  font-size: var(--text-xs); font-weight: 500;
+  color: var(--neutral-600); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: var(--space-md);
+}
+
+/* ═══ Buttons — 44px min touch target ═══ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-body); font-weight: 500;
+  font-size: var(--text-sm); letter-spacing: 0.03em;
+  border: none; cursor: pointer;
+  transition: all 0.25s ease;
+  border-radius: var(--radius-full);
+  min-height: var(--touch-min); /* 44px */
+  padding: 0 24px; gap: var(--space-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+@media (min-width: 768px) {
+  .btn { font-size: 0.85rem; padding: 0 28px; }
+}
+.btn-primary {
+  background: var(--green-600); color: #fff;
+  box-shadow: 0 2px 8px rgba(23,117,104,0.28);
+}
+.btn-primary:hover { background: var(--green-700); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(23,117,104,0.2); }
+.btn-secondary {
+  background: transparent; color: var(--green-700);
+  border: 1.5px solid var(--green-400);
+}
+.btn-secondary:hover { background: var(--green-50); }
+.btn-ghost { background: transparent; color: var(--neutral-600); padding: 0 16px; }
+.btn-ghost:hover { color: var(--green-700); }
+.btn-accent {
+  background: var(--pink-400); color: #fff;
+  box-shadow: 0 2px 8px rgba(232,80,122,0.22);
+}
+.btn-accent:active { transform: translateY(0); }
+.btn-group { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-md); }
+
+/* Full-width CTA on mobile */
+.btn-block-mobile { width: 100%; }
+@media (min-width: 768px) {
+  .btn-block-mobile { width: auto; }
+}
+
+/* ═══ Inputs — 48px height ═══ */
+.input-field {
+  width: 100%;
+  min-height: var(--touch-comfortable); /* 48px */
+  padding: 0 16px;
+  font-family: var(--font-body); font-size: var(--text-base); /* 15px — 16pxで自動ズーム防止に近い */
+  border: 1.5px solid var(--neutral-300);
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,0.85);
+  color: var(--neutral-800);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  -webkit-appearance: none; /* iOS */
+}
+.input-field:focus {
+  border-color: var(--green-400);
+  box-shadow: 0 0 0 3px rgba(29,140,126,0.12);
+}
+.input-field::placeholder { color: var(--neutral-400); font-weight: 300; }
+.input-label {
+  font-size: var(--text-sm); font-weight: 500;
+  color: var(--neutral-700); margin-bottom: 6px; display: block;
+}
+
+/* ═══ Chips — 36px min height ═══ */
+.chip {
+  display: inline-flex; align-items: center;
+  min-height: 36px; padding: 0 14px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm); font-weight: 400;
+  cursor: pointer; transition: all 0.2s;
+  border: 1.5px solid var(--neutral-300);
+  background: transparent; color: var(--neutral-700);
+  -webkit-tap-highlight-color: transparent;
+}
+.chip:hover { border-color: var(--green-400); color: var(--green-700); }
+.chip.active { background: var(--green-600); border-color: var(--green-600); color: #fff; font-weight: 500; }
+.chip-group { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ═══ Event Card ═══ */
+.event-card {
+  background: var(--bg-card); border: 1px solid var(--green-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg); transition: all 0.25s ease;
+  position: relative; overflow: hidden;
+}
+.event-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--green-400), var(--green-500));
+  opacity: 0; transition: opacity 0.25s;
+}
+.event-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.event-card:hover::before { opacity: 1; }
+.event-card .tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: var(--space-sm); }
+.event-card .tag {
+  padding: 3px 10px; font-size: var(--text-xs); font-weight: 500;
+  border-radius: var(--radius-full);
+  background: var(--green-100); color: var(--green-800);
+}
+.event-card .tag.first-time { background: var(--pink-100); color: var(--pink-500); }
+.event-card h3 {
+  font-weight: 500; font-size: var(--text-md); color: var(--neutral-800);
+  margin-bottom: var(--space-xs);
+}
+.event-card .meta {
+  font-size: var(--text-sm); color: var(--neutral-500);
+  font-weight: 500; margin-bottom: var(--space-md);
+}
+.event-card .bottom { display: flex; justify-content: space-between; align-items: center; }
+.event-card .price { font-weight: 700; color: var(--green-700); font-size: var(--text-base); }
+.event-card .seats { font-size: var(--text-sm); color: var(--neutral-500); font-weight: 500; }
+
+.event-cards-grid {
+  display: grid; grid-template-columns: 1fr; gap: var(--space-md);
+}
+@media (min-width: 600px) {
+  .event-cards-grid { grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+}
+
+/* Badge */
+.notification-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 20px; height: 20px; padding: 0 6px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs); font-weight: 700;
+  color: #fff; background: var(--pink-400);
+}
+
+/* ═══════ GRADIENTS ═══════ */
+.gradient-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* mobile: 2列 */
+  gap: var(--space-sm);
+}
+@media (min-width: 768px) {
+  .gradient-grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+}
+.gradient-swatch {
+  aspect-ratio: 16/10; border-radius: var(--radius-md);
+  display: flex; flex-direction: column;
+  justify-content: flex-end; padding: var(--space-sm);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+.gradient-swatch .name { font-size: var(--text-xs); font-weight: 500; }
+.gradient-swatch .css { font-size: 9px; font-family: var(--font-mono); }
+.gradient-swatch.on-dark .name, .gradient-swatch.on-dark .css { color: rgba(255,255,255,0.9); }
+.gradient-swatch.on-light .name { color: var(--neutral-700); }
+.gradient-swatch.on-light .css { color: var(--neutral-500); }
+
+/* ═══════ DO/DON'T ═══════ */
+.dodont-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* mobile: 1列 */
+  gap: var(--space-md);
+}
+@media (min-width: 768px) {
+  .dodont-grid { grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+}
+.dodont-card { padding: var(--space-lg); border-radius: var(--radius-lg); }
+.dodont-card.do-card { background: rgba(201,232,228,0.3); border: 1px solid var(--green-200); }
+.dodont-card.dont-card { background: rgba(255,214,224,0.18); border: 1px solid rgba(255,179,198,0.35); }
+.dodont-card .label {
+  font-size: var(--text-xs); font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: var(--space-md);
+}
+.do-card .label { color: var(--green-700); }
+.dont-card .label { color: var(--pink-500); }
+.dodont-card ul {
+  list-style: none; font-size: var(--text-sm);
+  color: var(--neutral-700); line-height: 2.1;
+}
+.dodont-card li::before { margin-right: 8px; }
+.do-card li::before { content: '○'; color: var(--green-600); }
+.dont-card li::before { content: '×'; color: var(--pink-400); }
+
+/* ═══════ SPACING DEMO ═══════ */
+.spacing-row { display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-sm); }
+.spacing-bar { height: 8px; border-radius: 4px; background: var(--green-200); }
+.spacing-label { font-size: var(--text-sm); font-family: var(--font-mono); color: var(--neutral-600); min-width: 90px; }
+
+.radius-grid { display: flex; gap: var(--space-md); flex-wrap: wrap; }
+.radius-item {
+  width: 64px; height: 64px;
+  background: var(--green-100); border: 1px solid var(--green-200);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-family: var(--font-mono); color: var(--green-800);
+}
+
+.shadow-grid { display: flex; gap: var(--space-lg); flex-wrap: wrap; margin-top: var(--space-md); }
+.shadow-item {
+  width: 80px; height: 80px; background: #fff;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+}
+.shadow-item .name { font-size: var(--text-xs); color: var(--neutral-600); }
+
+/* ═══════ MOBILE SPECIFIC SECTION ═══════ */
+.mobile-spec {
+  background: var(--bg-card); border: 1px solid var(--green-100);
+  border-radius: var(--radius-lg); padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+.mobile-spec .title {
+  font-size: var(--text-sm); font-weight: 700;
+  color: var(--green-700); margin-bottom: var(--space-sm);
+}
+.mobile-spec .rule {
+  font-size: var(--text-sm); color: var(--neutral-700);
+  line-height: 2; padding-left: 1em;
+  text-indent: -1em;
+}
+.mobile-spec .rule::before { content: '・'; color: var(--green-500); }
+.mobile-spec .note {
+  font-size: var(--text-xs); color: var(--neutral-600);
+  font-weight: 500; margin-top: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--green-50); border-radius: var(--radius-sm);
+}
+
+/* Touch target demo */
+.touch-demo {
+  display: flex; align-items: center; gap: var(--space-md);
+  flex-wrap: wrap; margin-top: var(--space-md);
+}
+.touch-box {
+  display: flex; align-items: center; justify-content: center;
+  border: 2px dashed var(--green-300);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs); color: var(--green-700); font-weight: 500;
+  text-align: center; padding: 4px;
+}
+
+/* Code block */
+.code-block {
+  background: var(--neutral-800); border-radius: var(--radius-lg);
+  padding: var(--space-lg); overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.code-block pre {
+  font-family: var(--font-mono);
+  font-size: 11px; line-height: 1.9;
+  color: #93D1CA; white-space: pre; margin: 0;
+}
+@media (min-width: 768px) {
+  .code-block pre { font-size: 12px; }
+}
+.code-comment { color: #6E7F79; }
+.code-prop { color: #5BB8AE; }
+.code-val { color: #FFB3C6; }
+
+/* ═══════ SAFE AREA INFO ═══════ */
+.safe-area-note {
+  padding: var(--space-lg);
+  background: linear-gradient(135deg, var(--green-50), #fff);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-lg);
+}
+.safe-area-note .title {
+  font-weight: 700; font-size: var(--text-sm);
+  color: var(--neutral-800); margin-bottom: var(--space-sm);
+}
+.safe-area-note code {
+  background: var(--neutral-100); padding: 2px 6px;
+  border-radius: 4px; font-size: var(--text-xs);
+  font-family: var(--font-mono); color: var(--green-700);
+}
+
+/* ═══════ SEMANTIC COLOR BADGES ═══════ */
+.badge-success { background: var(--green-100); color: var(--green-700); }
+.badge-warning { background: var(--warning-100); color: var(--warning-600); }
+.badge-error { background: var(--error-100); color: var(--error-600); }
+.badge-info { background: var(--indigo-100); color: var(--indigo-600); }
+.badge-sunset { background: var(--sunset-100); color: var(--sunset-600); }
+.badge-plum { background: var(--plum-100); color: var(--plum-600); }
+.badge-indigo { background: var(--indigo-100); color: var(--indigo-600); }
+
+/* ═══════ TOAST NOTIFICATION ═══════ */
+.toast {
+  display: flex; align-items: center; gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm); font-weight: 500;
+  box-shadow: var(--shadow-md);
+  max-width: 360px; width: 100%;
+}
+.toast-success { background: var(--green-50);   border: 1px solid var(--green-200);   color: var(--green-700); }
+.toast-warning { background: var(--warning-50); border: 1px solid var(--warning-200); color: var(--warning-600); }
+.toast-error   { background: var(--error-50);   border: 1px solid var(--error-200);   color: var(--error-600); }
+.toast-info    { background: var(--indigo-50);  border: 1px solid var(--indigo-200);  color: var(--indigo-600); }
+.toast-icon { font-size: var(--text-md); flex-shrink: 0; }
+
+/* ═══════ ALERT / BANNER ═══════ */
+.alert {
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm); line-height: 1.8;
+  border-left: 3px solid;
+}
+.alert-success { background: var(--green-50);   border-left-color: var(--green-400);   color: var(--green-700); }
+.alert-warning { background: var(--warning-50); border-left-color: var(--warning-400); color: var(--warning-600); }
+.alert-error   { background: var(--error-50);   border-left-color: var(--error-400);   color: var(--error-600); }
+.alert-info    { background: var(--indigo-50);  border-left-color: var(--indigo-400);  color: var(--indigo-600); }
+.alert .alert-title { font-weight: 700; margin-bottom: 2px; }
+
+/* ═══════ BOTTOM NAVIGATION BAR ═══════ */
+.bottom-nav {
+  display: flex; align-items: center; justify-content: space-around;
+  height: 56px; background: var(--bg-card);
+  border-top: 1px solid var(--green-100);
+  max-width: 414px; width: 100%;
+  padding-bottom: 0; /* safe-area handled inline */
+}
+.bottom-nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  font-size: 10px; font-weight: 500; color: var(--neutral-400);
+  cursor: pointer; min-width: 56px; min-height: 44px;
+  justify-content: center; background: none; border: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s;
+}
+.bottom-nav-item.active { color: var(--green-600); }
+.bottom-nav-item .nav-icon { font-size: 22px; line-height: 1; }
+
+/* ═══════ AVATAR / PARTICIPANT ICON ═══════ */
+.avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; font-weight: 500; color: #fff;
+  flex-shrink: 0;
+}
+.avatar-sm { width: 32px; height: 32px; font-size: var(--text-xs); }
+.avatar-md { width: 40px; height: 40px; font-size: var(--text-sm); }
+.avatar-lg { width: 48px; height: 48px; font-size: var(--text-md); }
+.avatar-xl { width: 64px; height: 64px; font-size: var(--text-lg); }
+
+/* ═══════ PROGRESS INDICATOR ═══════ */
+.progress-bar-track {
+  width: 100%; height: 6px;
+  background: var(--neutral-200); border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; border-radius: var(--radius-full);
+  background: var(--green-500);
+  transition: width 0.4s ease;
+}
+
+/* Step indicator */
+.step-indicator {
+  display: flex; align-items: center; gap: 0; width: 100%;
+}
+.step-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--neutral-300); flex-shrink: 0;
+  transition: all 0.3s;
+}
+.step-dot.active { background: var(--green-600); width: 28px; border-radius: var(--radius-full); }
+.step-dot.completed { background: var(--green-400); }
+.step-line {
+  flex: 1; height: 2px; background: var(--neutral-200);
+  margin: 0 4px;
+}
+.step-line.completed { background: var(--green-400); }
+
+/* ═══════ TOGGLE / SWITCH ═══════ */
+.toggle-track {
+  position: relative; width: 48px; height: 28px;
+  background: var(--neutral-300); border-radius: var(--radius-full);
+  cursor: pointer; transition: background 0.25s;
+  -webkit-tap-highlight-color: transparent;
+  border: none;
+}
+.toggle-track.on { background: var(--green-500); }
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  transition: transform 0.25s;
+}
+.toggle-track.on .toggle-thumb { transform: translateX(20px); }
+
+/* ═══════ CHECKBOX (styled) ═══════ */
+.checkbox-row {
+  display: flex; align-items: start; gap: var(--space-sm);
+  min-height: var(--touch-min); cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.checkbox-box {
+  width: 20px; height: 20px; min-width: 20px;
+  border-radius: 4px; border: 1.5px solid var(--neutral-300);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 2px; transition: all 0.2s;
+  background: #fff;
+}
+.checkbox-box.checked {
+  background: var(--green-600); border-color: var(--green-600);
+  color: #fff; font-size: 12px;
+}
+.checkbox-label { font-size: var(--text-sm); color: var(--neutral-700); line-height: 1.6; }
+
+/* ═══════ RADIO OPTION ═══════ */
+.radio-option {
+  display: flex; align-items: center; gap: var(--space-sm);
+  width: 100%; min-height: var(--touch-min);
+  padding: 0 var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm); font-weight: 400;
+  border: 1.5px solid var(--neutral-300);
+  background: rgba(255,255,255,0.78);
+  color: var(--neutral-700);
+  cursor: pointer; transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.radio-option.selected {
+  border-color: var(--green-600); background: var(--green-600);
+  color: #fff; font-weight: 500;
+}
+.radio-dot {
+  width: 16px; height: 16px; min-width: 16px;
+  border-radius: 50%; border: 2px solid var(--neutral-300);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.radio-option.selected .radio-dot {
+  border-color: #fff;
+}
+.radio-dot-inner {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: transparent; transition: background 0.2s;
+}
+.radio-option.selected .radio-dot-inner { background: #fff; }
+
+/* ═══════ BOTTOM SHEET HANDLE ═══════ */
+.bottom-sheet-handle {
+  width: 36px; height: 4px;
+  background: var(--neutral-300);
+  border-radius: var(--radius-full);
+  margin: var(--space-sm) auto var(--space-md);
+}
+
+/* ═══════ SKELETON LOADING ═══════ */
+.skeleton {
+  background: linear-gradient(90deg, var(--neutral-100) 25%, var(--neutral-200) 50%, var(--neutral-100) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ═══════ EMPTY STATE ═══════ */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+  min-height: 240px;
+}
+.empty-state-icon {
+  width: 64px; height: 64px; margin-bottom: var(--space-md);
+  background: var(--green-50); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--green-400);
+}
+.empty-state-title {
+  font-size: var(--text-base); font-weight: 500;
+  color: var(--neutral-700); margin-bottom: var(--space-xs);
+}
+.empty-state-desc {
+  font-size: var(--text-sm); color: var(--neutral-500);
+  line-height: 1.8;
+}
+
+/* ═══════ DIVIDER WITH LABEL ═══════ */
+.divider-label {
+  display: flex; align-items: center; gap: var(--space-md);
+  margin: var(--space-xl) 0;
+}
+.divider-label::before, .divider-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: var(--neutral-200);
+}
+.divider-label span {
+  font-size: var(--text-xs); font-weight: 500;
+  color: var(--neutral-500); white-space: nowrap;
+}
+
+/* ═══════ RATING BUTTON GROUP ═══════ */
+.rating-group {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+}
+.rating-btn {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 2px; min-height: var(--touch-comfortable);
+  padding: var(--space-xs) var(--space-xs);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs); font-weight: 400;
+  border: 1.5px solid var(--neutral-300);
+  background: rgba(255,255,255,0.78); color: var(--neutral-700);
+  cursor: pointer; transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.rating-btn.selected {
+  border-color: var(--green-600); background: var(--green-600);
+  color: #fff; font-weight: 500;
+}
+.rating-btn .rating-num { font-size: var(--text-md); line-height: 1; }
+
+/* ═══════ MODAL OVERLAY ═══════ */
+.modal-overlay-demo {
+  position: relative;
+  width: 100%; aspect-ratio: 3/2;
+  background: var(--neutral-800); border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.modal-overlay-demo::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--overlay);
+}
+.modal-demo-sheet {
+  position: relative; z-index: 1;
+  width: 90%; background: var(--bg-card);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--space-lg);
+  min-height: 60%;
+}
+
+/* ═══════ SEMANTIC PALETTE DEMO GRID ═══════ */
+.semantic-palette-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+@media (min-width: 600px) {
+  .semantic-palette-grid { grid-template-columns: 1fr 1fr; }
+}
+.semantic-palette-card {
+  border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.semantic-palette-header {
+  padding: var(--space-md) var(--space-lg);
+  color: #fff; font-size: var(--text-sm); font-weight: 500;
+}
+.semantic-palette-swatches {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+}
+.semantic-swatch {
+  aspect-ratio: 1; display: flex;
+  align-items: flex-end; justify-content: flex-start;
+  padding: 3px;
+}
+.semantic-swatch span {
+  font-size: 8px; font-family: var(--font-mono); font-weight: 500;
+}
+
+/* ═══════ NEW COMPONENTS GRID (3 col on desktop) ═══════ */
+.components-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+@media (min-width: 768px) {
+  .components-grid-3 { grid-template-columns: 1fr 1fr 1fr; gap: var(--space-lg); }
+}
+
+/* ═══════ BODY TYPE SELECTOR ═══════ */
+.bodytype-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  max-width: 520px;
+}
+@media (min-width: 540px) {
+  .bodytype-grid { grid-template-columns: repeat(5, 1fr); }
+}
+.bodytype-card {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+  padding: var(--space-sm) 4px var(--space-xs);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--neutral-200);
+  background: #fff;
+  cursor: pointer; transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 140px;
+  justify-content: flex-end;
+}
+.bodytype-card:hover { border-color: var(--green-400); }
+.bodytype-card.selected {
+  border-color: var(--green-600);
+  background: var(--green-600);
+}
+.bodytype-card .bt-icon {
+  width: 80px; height: 110px;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.bodytype-card .bt-icon img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+}
+.bodytype-card.selected .bt-icon img { filter: brightness(0) invert(1); opacity: 0.9; }
+.bodytype-card .bt-label {
+  font-size: var(--text-xs); font-weight: 500;
+  color: var(--neutral-700); transition: color 0.2s;
+  text-align: center; line-height: 1.3;
+}
+.bodytype-card.selected .bt-label { color: #fff; }
+
+/* ═══════ CARD COMPONENT ═══════ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--green-100);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+.card:active {
+  transform: scale(0.98);
+  background: var(--green-50);
+}
+@media (min-width: 768px) {
+  .card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+  .card:hover::after {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--green-400), var(--green-500));
+  }
+}
+/* --- Text-only Card --- */
+.card-text {
+  padding: var(--space-lg);
+}
+.card-text .card-tags {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  margin-bottom: var(--space-sm);
+}
+.card-text .card-title {
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--neutral-800);
+  line-height: 1.4;
+  margin-bottom: var(--space-xs);
+}
+.card-text .card-meta {
+  font-size: var(--text-sm);
+  color: var(--neutral-500);
+  font-weight: 500;
+  margin-bottom: var(--space-md);
+}
+.card-text .card-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.card-text .card-seats {
+  font-size: var(--text-sm);
+  color: var(--neutral-500);
+  font-weight: 500;
+}
+
+/* --- Image Card --- */
+.card-image-area {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--green-50), var(--neutral-100));
+  overflow: hidden;
+  position: relative;
+}
+.card-image-area img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.card-image-body {
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+}
+.card-image-body .card-title {
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--neutral-800);
+  line-height: 1.4;
+  margin-bottom: var(--space-xs);
+}
+.card-image-body .card-desc {
+  font-size: var(--text-sm);
+  color: var(--neutral-500);
+  line-height: 1.7;
+  margin-bottom: var(--space-sm);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-image-body .card-meta {
+  font-size: var(--text-sm);
+  color: var(--neutral-500);
+  font-weight: 500;
+}
+
+/* --- Tag Colors (Design System準拠) --- */
+.tag-random    { background: var(--green-100); color: var(--green-800); }
+.tag-tamekai   { background: var(--sunset-100); color: var(--sunset-600); }
+.tag-hobby     { background: var(--indigo-100); color: var(--indigo-600); }
+.tag-body      { background: var(--plum-100); color: var(--plum-500); }
+.tag-welcome   { background: var(--pink-100); color: var(--pink-500); }
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  border-radius: var(--radius-full);
+}
+
+/* --- Card List (Mobile mockup) --- */
+.card-list-mobile {
+  max-width: 390px;
+  margin: 0 auto;
+  background: var(--bg-main);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--neutral-200);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.card-list-mobile-header {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 var(--space-md);
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--green-100);
+}
+.card-list-mobile-header .title {
+  flex: 1;
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--neutral-800);
+}
+.card-list-mobile-body {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.card-list-mobile-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px var(--space-md) 0;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--neutral-700);
+}
+
+/* ═══════ AVATAR UPLOAD / PROFILE ICON ═══════ */
+.avatar-upload {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.avatar-upload-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--neutral-100);
+  border: 2px solid var(--neutral-200);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.avatar-upload:hover .avatar-upload-circle {
+  border-color: var(--green-300);
+}
+.avatar-upload-circle.has-image {
+  border-color: var(--green-200);
+}
+.avatar-upload-sm .avatar-upload-circle { width: 64px; height: 64px; }
+.avatar-upload-md .avatar-upload-circle { width: 88px; height: 88px; }
+.avatar-upload-lg .avatar-upload-circle { width: 112px; height: 112px; }
+.avatar-upload-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.avatar-upload-person {
+  color: var(--neutral-400);
+}
+.avatar-upload-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--green-600);
+  color: #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background 0.2s;
+}
+.avatar-upload:hover .avatar-upload-badge {
+  background: var(--green-700);
+}
+.avatar-upload-sm .avatar-upload-badge {
+  width: 24px; height: 24px;
+  bottom: 0; right: 0;
+}
+.avatar-upload-md .avatar-upload-badge {
+  width: 28px; height: 28px;
+  bottom: 2px; right: 2px;
+}
+.avatar-upload-lg .avatar-upload-badge {
+  width: 32px; height: 32px;
+  bottom: 4px; right: 4px;
+}
+.avatar-upload-hint {
+  font-size: var(--text-xs);
+  color: var(--neutral-500);
+  text-align: center;
+  margin-top: var(--space-sm);
+}
+
+/* ═══════ ICON LIBRARY ═══════ */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.icon svg {
+  display: block;
+}
+.icon-xs { width: 16px; height: 16px; }
+.icon-sm { width: 20px; height: 20px; }
+.icon-md { width: 24px; height: 24px; }
+.icon-lg { width: 32px; height: 32px; }
+.icon-xl { width: 40px; height: 40px; }
+.icon-primary { color: var(--green-600); }
+.icon-secondary { color: var(--neutral-500); }
+.icon-accent { color: var(--pink-400); }
+.icon-on-surface { color: var(--neutral-800); }
+.icon-disabled { color: var(--neutral-300); }
+
+.icon-showcase {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+@media (min-width: 600px) {
+  .icon-showcase { grid-template-columns: repeat(6, 1fr); }
+}
+@media (min-width: 768px) {
+  .icon-showcase { grid-template-columns: repeat(8, 1fr); }
+}
+.icon-showcase-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-xs);
+  border-radius: var(--radius-md);
+  transition: background 0.2s;
+}
+.icon-showcase-item:hover {
+  background: var(--green-50);
+}
+.icon-showcase-item .icon-name {
+  font-size: 9px;
+  color: var(--neutral-500);
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
+  word-break: break-all;
+}
+
+/* ═══════ LIST ITEM ═══════ */
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  min-height: var(--touch-comfortable);
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--neutral-100);
+  cursor: pointer;
+  transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.list-item:hover {
+  background: var(--green-50);
+}
+.list-item:last-child {
+  border-bottom: none;
+}
+.list-item-content {
+  flex: 1;
+  min-width: 0;
+}
+.list-item-title {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--neutral-800);
+  line-height: 1.4;
+}
+.list-item-desc {
+  font-size: var(--text-sm);
+  color: var(--neutral-500);
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list-item-trailing {
+  flex-shrink: 0;
+  color: var(--neutral-400);
+}
+.list-group {
+  border: 1px solid var(--green-100);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ═══════ FAB (FLOATING ACTION BUTTON) ═══════ */
+.fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+  background: var(--green-600);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(23,117,104,0.3);
+  transition: all 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.fab:hover {
+  background: var(--green-700);
+  box-shadow: 0 6px 24px rgba(23,117,104,0.35);
+  transform: translateY(-2px);
+}
+.fab:active {
+  transform: translateY(0);
+}
+.fab-sm { width: 40px; height: 40px; border-radius: var(--radius-md); }
+.fab-md { width: 56px; height: 56px; }
+.fab-lg { width: 96px; height: 56px; border-radius: var(--radius-xl); gap: var(--space-sm); padding: 0 var(--space-lg); }
+.fab-lg .fab-label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.fab-accent {
+  background: var(--pink-400);
+  box-shadow: 0 4px 16px rgba(232,80,122,0.25);
+}
+.fab-accent:hover {
+  background: var(--pink-500);
+  box-shadow: 0 6px 24px rgba(232,80,122,0.3);
+}
+
+/* ═══════ SNACKBAR ═══════ */
+.snackbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--neutral-800);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  box-shadow: var(--shadow-lg);
+  max-width: 400px;
+  width: 100%;
+}
+.snackbar-text { flex: 1; line-height: 1.5; }
+.snackbar-action {
+  flex-shrink: 0;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--green-200);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.snackbar-action:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* ═══════ DIALOG ═══════ */
+.dialog-demo {
+  background: #fff;
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  max-width: 320px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+}
+.dialog-title {
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--neutral-800);
+  margin-bottom: var(--space-sm);
+}
+.dialog-body {
+  font-size: var(--text-sm);
+  color: var(--neutral-600);
+  line-height: 1.8;
+  margin-bottom: var(--space-xl);
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
+/* ═══════ TOP APP BAR ═══════ */
+.top-app-bar {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 var(--space-xs);
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--green-100);
+  max-width: 414px;
+  width: 100%;
+}
+.top-app-bar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: var(--neutral-700);
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.top-app-bar-icon:hover {
+  background: var(--green-50);
+}
+.top-app-bar-title {
+  flex: 1;
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--neutral-800);
+  padding: 0 var(--space-xs);
+}
+.top-app-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* ═══════ TAB BAR ═══════ */
+.tab-bar {
+  display: flex;
+  border-bottom: 1px solid var(--neutral-200);
+  max-width: 414px;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 80px;
+  min-height: var(--touch-min);
+  padding: 0 var(--space-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--neutral-500);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+.tab-item:hover {
+  color: var(--green-600);
+  background: var(--green-50);
+}
+.tab-item.active {
+  color: var(--green-600);
+  border-bottom-color: var(--green-600);
+}
+
+/* ═══════ SEARCH BAR ═══════ */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: var(--touch-comfortable);
+  padding: 0 var(--space-md);
+  background: var(--neutral-50);
+  border: 1.5px solid var(--neutral-200);
+  border-radius: var(--radius-full);
+  transition: all 0.2s;
+  max-width: 414px;
+  width: 100%;
+}
+.search-bar:focus-within {
+  border-color: var(--green-400);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(29,140,126,0.10);
+}
+.search-bar-icon {
+  flex-shrink: 0;
+  color: var(--neutral-400);
+}
+.search-bar-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--neutral-800);
+  outline: none;
+  min-height: var(--touch-min);
+}
+.search-bar-input::placeholder {
+  color: var(--neutral-400);
+  font-weight: 300;
+}
+
+/* ═══════ DROPDOWN / MENU ═══════ */
+.dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.dropdown-icon-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--neutral-600);
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+.dropdown-icon-trigger:hover {
+  background: var(--neutral-100);
+  color: var(--neutral-800);
+}
+.dropdown-icon-trigger:active {
+  background: var(--green-50);
+}
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 160px;
+  max-width: 280px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--green-100);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 4px;
+  list-style: none;
+  margin: 0;
+  z-index: 200;
+  transform-origin: top left;
+  animation: ddOpen 150ms ease forwards;
+}
+.dropdown-menu.is-open {
+  display: block;
+}
+.dropdown-menu-full {
+  left: 0;
+  right: 0;
+  min-width: unset;
+  max-width: unset;
+  width: 100%;
+}
+@keyframes ddOpen {
+  from { opacity: 0; transform: scaleY(0.92); }
+  to   { opacity: 1; transform: scaleY(1); }
+}
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--touch-min);
+  padding: 10px var(--space-md);
+  border-radius: 8px;
+  font-size: var(--text-sm);
+  color: var(--neutral-700);
+  cursor: pointer;
+  transition: background 100ms ease, color 100ms ease;
+  user-select: none;
+}
+.dropdown-item:hover {
+  background: var(--green-50);
+  color: var(--green-700);
+}
+.dropdown-item:active {
+  background: var(--green-100);
+}
+.dropdown-item-selected {
+  font-weight: 500;
+  color: var(--green-700);
+  background: var(--green-50);
+}
+.dropdown-item-selected::after {
+  content: '✓';
+  margin-left: auto;
+  font-size: var(--text-xs);
+  color: var(--green-600);
+}
+.dropdown-item-danger {
+  color: var(--error-500, #B91C1C);
+}
+.dropdown-item-danger:hover {
+  background: #FEF2F2;
+  color: #991B1B;
+}
+.dropdown-divider {
+  height: 1px;
+  background: var(--neutral-100);
+  margin: 4px 0;
+  list-style: none;
+}
+.dropdown-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 var(--space-md);
+  background: #fff;
+  border: 1.5px solid var(--neutral-200);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--neutral-800);
+  cursor: pointer;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.dropdown-select-trigger:hover {
+  border-color: var(--neutral-400);
+}
+.dropdown-select-trigger[aria-expanded="true"] {
+  border-color: var(--green-400);
+  box-shadow: 0 0 0 3px var(--green-100);
+}
+
+/* ═══════ PAGE NAVIGATION (Right Column) ═══════ */
+.ds-nav {
+  display: none;
+}
+@media (min-width: 1200px) {
+  .ds-nav {
+    display: block;
+    position: fixed;
+    top: 80px;
+    right: max(20px, calc((100vw - 960px) / 2 - 240px));
+    width: 196px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding: var(--space-md);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--green-100);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    z-index: 100;
+    scrollbar-width: thin;
+    scrollbar-color: var(--green-200) transparent;
+  }
+  .ds-nav::-webkit-scrollbar { width: 4px; }
+  .ds-nav::-webkit-scrollbar-track { background: transparent; }
+  .ds-nav::-webkit-scrollbar-thumb { background: var(--green-200); border-radius: 2px; }
+}
+.ds-nav-title {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--green-600);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--green-100);
+}
+.ds-nav-link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: 6px var(--space-sm);
+  margin: 0 calc(-1 * var(--space-sm));
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--neutral-600);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+  line-height: 1.4;
+}
+.ds-nav-link:hover {
+  background: var(--green-50);
+  color: var(--green-700);
+}
+.ds-nav-link.active {
+  background: var(--green-100);
+  color: var(--green-700);
+  font-weight: 500;
+}
+.ds-nav-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--green-400);
+  min-width: 20px;
+  flex-shrink: 0;
+}
+.ds-nav-link.active .ds-nav-num {
+  color: var(--green-600);
+}
+.ds-nav-sub {
+  display: none;
+  flex-direction: column;
+  padding-left: 28px;
+  margin: 2px 0 4px;
+}
+.ds-nav-sub.open {
+  display: flex;
+}
+.ds-nav-sub-link {
+  display: block;
+  padding: 3px var(--space-sm);
+  margin: 0 calc(-1 * var(--space-sm));
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--neutral-500);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+  line-height: 1.4;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+}
+.ds-nav-sub-link:hover {
+  color: var(--green-700);
+  background: var(--green-50);
+}
+.ds-nav-sub-link.active {
+  color: var(--green-600);
+  border-left-color: var(--green-400);
+  font-weight: 500;
+}
+</style>
+</head>
+<body>
+
+<!-- Page Navigation -->
+<nav class="ds-nav" id="ds-nav">
+  <div class="ds-nav-title">Contents</div>
+  <a class="ds-nav-link" href="#sec-01" data-sec="sec-01"><span class="ds-nav-num">01</span>ブランドムード</a>
+  <a class="ds-nav-link" href="#sec-02" data-sec="sec-02"><span class="ds-nav-num">02</span>カラーパレット</a>
+  <a class="ds-nav-link" href="#sec-03" data-sec="sec-03"><span class="ds-nav-num">03</span>グラデーション</a>
+  <a class="ds-nav-link" href="#sec-04" data-sec="sec-04"><span class="ds-nav-num">04</span>タイポグラフィ</a>
+  <a class="ds-nav-link" href="#sec-05" data-sec="sec-05"><span class="ds-nav-num">05</span>モバイル設計ルール</a>
+  <a class="ds-nav-link" href="#sec-06" data-sec="sec-06"><span class="ds-nav-num">06</span>UIコンポーネント</a>
+  <div class="ds-nav-sub" id="nav-sub-06">
+    <a class="ds-nav-sub-link" href="#comp-buttons">Buttons</a>
+    <a class="ds-nav-sub-link" href="#comp-input">Input</a>
+    <a class="ds-nav-sub-link" href="#comp-tags">Tags & Badges</a>
+    <a class="ds-nav-sub-link" href="#comp-eventcard">Event Card</a>
+    <a class="ds-nav-sub-link" href="#comp-toast">Toast / Alert</a>
+    <a class="ds-nav-sub-link" href="#comp-bottomnav">Bottom Nav</a>
+    <a class="ds-nav-sub-link" href="#comp-progress">Progress / Steps</a>
+    <a class="ds-nav-sub-link" href="#comp-toggle">Toggle / Check</a>
+    <a class="ds-nav-sub-link" href="#comp-bodytype">Body Type</a>
+    <a class="ds-nav-sub-link" href="#comp-modal">Modal</a>
+    <a class="ds-nav-sub-link" href="#comp-card">Card</a>
+    <a class="ds-nav-sub-link" href="#comp-avatar">Avatar Upload</a>
+    <a class="ds-nav-sub-link" href="#comp-list">List Item</a>
+    <a class="ds-nav-sub-link" href="#comp-fab">FAB</a>
+    <a class="ds-nav-sub-link" href="#comp-dialog">Dialog</a>
+    <a class="ds-nav-sub-link" href="#comp-topbar">Top App Bar</a>
+    <a class="ds-nav-sub-link" href="#comp-search">Search Bar</a>
+    <a class="ds-nav-sub-link" href="#comp-dropdown">Dropdown</a>
+  </div>
+  <a class="ds-nav-link" href="#sec-07" data-sec="sec-07"><span class="ds-nav-num">07</span>アイコン</a>
+  <a class="ds-nav-link" href="#sec-08" data-sec="sec-08"><span class="ds-nav-num">08</span>スペーシング・角丸</a>
+  <a class="ds-nav-link" href="#sec-09" data-sec="sec-09"><span class="ds-nav-num">09</span>Do / Don't</a>
+  <a class="ds-nav-link" href="#sec-10" data-sec="sec-10"><span class="ds-nav-num">10</span>Voice &amp; Tone</a>
+  <a class="ds-nav-link" href="#sec-11" data-sec="sec-11"><span class="ds-nav-num">11</span>カラーマッピング</a>
+  <a class="ds-nav-link" href="#sec-12" data-sec="sec-12"><span class="ds-nav-num">12</span>CSS変数リファレンス</a>
+</nav>
+
+<div class="container">
+
+  <header class="hero">
+    <div class="brand-name">SakuraCo</div>
+    <p class="brand-tagline">そこにあるのは、思いがけない友情かもしれないし、ときめきかもしれない</p>
+    <p class="brand-sub">僕と僕らのためのお食事会</p>
+    <div class="doc-label">Tone & Manner v4 — Mobile First</div>
+  </header>
+
+  <div class="divider"></div>
+
+  <section id="sec-01">
+    <div class="section-label">01</div>
+    <h2 class="section-title">ブランドムード</h2>
+    <p class="section-desc">
+      「The Boyfriend」のような透明感と爽やかさ。力の抜けた自然体の空気感。「何かいいことが起こるかも」という静かな期待感を、こじゃれたトーンで包む。
+    </p>
+    <div class="mood-keywords">
+      <span class="mood-keyword">透明感</span>
+      <span class="mood-keyword">爽やか</span>
+      <span class="mood-keyword">こじゃれた</span>
+      <span class="mood-keyword">力の抜けた</span>
+      <span class="mood-keyword">自然体</span>
+      <span class="mood-keyword">クリーン</span>
+      <span class="mood-keyword accent">ちょっとした期待感</span>
+      <span class="mood-keyword accent">何かが起こるかも</span>
+    </div>
+    <div class="principles-grid">
+      <div class="principle"><div class="num">01</div><h4>爽やかな青みグリーン</h4><p>ティール寄りのグリーンで清涼感を演出。背景は淡いグラデーション、要素はすりガラスで浮遊感。</p></div>
+      <div class="principle"><div class="num">02</div><h4>力まない</h4><p>フォントウェイトは300〜500。太字は最小限。声を張らない落ち着いたトーン。</p></div>
+      <div class="principle"><div class="num">03</div><h4>導く、でも押さない</h4><p>UIは流れに乗せるが強制しない。アクションは明確だが、選ばないことも許容する設計。</p></div>
+      <div class="principle"><div class="num">04</div><h4>ピンクは"ときめき"の印</h4><p>つながり通知・初回バッジなど「何かが起こる瞬間」にだけ使用。日常画面では抑制。</p></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-02">
+    <div class="section-label">02</div>
+    <h2 class="section-title">カラーパレット</h2>
+    <p class="section-desc">青みグリーン（ティール）基調。ピンクは5%以下。全テキストカラーはWCAG 2.0 AA準拠。</p>
+
+    <div class="palette-group">
+      <div class="palette-group-title">Primary — Blue Green <span class="badge badge-primary">基調色 60%</span></div>
+      <div class="palette-row">
+        <div class="swatch on-light" style="background:#EBF5F4"><span class="swatch-label">50</span><span class="swatch-hex">#EBF5F4</span></div>
+        <div class="swatch on-light" style="background:#C9E8E4"><span class="swatch-label">100</span><span class="swatch-hex">#C9E8E4</span></div>
+        <div class="swatch on-light" style="background:#93D1CA"><span class="swatch-label">200</span><span class="swatch-hex">#93D1CA</span></div>
+        <div class="swatch on-light" style="background:#5BB8AE"><span class="swatch-label">300</span><span class="swatch-hex">#5BB8AE</span></div>
+        <div class="swatch on-dark" style="background:#34A396"><span class="swatch-label">400</span><span class="swatch-hex">#34A396</span></div>
+        <div class="swatch on-dark" style="background:#1D8C7E"><span class="swatch-label">500</span><span class="swatch-hex">#1D8C7E</span></div>
+        <div class="swatch on-dark" style="background:#177568"><span class="swatch-label">600</span><span class="swatch-hex">#177568</span></div>
+        <div class="swatch on-dark" style="background:#115C52"><span class="swatch-label">700</span><span class="swatch-hex">#115C52</span></div>
+        <div class="swatch on-dark" style="background:#0B443C"><span class="swatch-label">800</span><span class="swatch-hex">#0B443C</span></div>
+        <div class="swatch on-dark" style="background:#072E29"><span class="swatch-label">900</span><span class="swatch-hex">#072E29</span></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <div class="palette-group-title">Accent — Pink <span class="badge badge-accent">5%以下</span></div>
+      <div class="palette-row" style="grid-template-columns: repeat(5,1fr);">
+        <div class="swatch on-light" style="background:#FFF0F3"><span class="swatch-label">50</span></div>
+        <div class="swatch on-light" style="background:#FFD6E0"><span class="swatch-label">100</span></div>
+        <div class="swatch on-light" style="background:#FFB3C6"><span class="swatch-label">200</span></div>
+        <div class="swatch on-dark" style="background:#E8507A"><span class="swatch-label">400</span></div>
+        <div class="swatch on-dark" style="background:#C73D63"><span class="swatch-label">500</span></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <div class="palette-group-title">Neutral <span class="badge badge-neutral">テキスト 35%</span></div>
+      <div class="palette-row">
+        <div class="swatch on-light" style="background:#F7F9F9"><span class="swatch-label">50</span></div>
+        <div class="swatch on-light" style="background:#EDF1F0"><span class="swatch-label">100</span></div>
+        <div class="swatch on-light" style="background:#DCE2E0"><span class="swatch-label">200</span></div>
+        <div class="swatch on-light" style="background:#C1CAC7"><span class="swatch-label">300</span></div>
+        <div class="swatch on-light" style="background:#8A9691"><span class="swatch-label">400</span></div>
+        <div class="swatch on-dark" style="background:#5E6E68"><span class="swatch-label">500</span></div>
+        <div class="swatch on-dark" style="background:#455250"><span class="swatch-label">600</span></div>
+        <div class="swatch on-dark" style="background:#333E3C"><span class="swatch-label">700</span></div>
+        <div class="swatch on-dark" style="background:#222B29"><span class="swatch-label">800</span></div>
+        <div class="swatch on-dark" style="background:#131A18"><span class="swatch-label">900</span></div>
+      </div>
+    </div>
+
+    <!-- WCAG -->
+    <div class="a11y-box">
+      <div class="a11y-title">♿ WCAG 2.0 AA コントラスト検証（白背景上）</div>
+      <div class="a11y-grid">
+        <div class="a11y-item" style="background:#fff;"><span class="sample" style="color:#222B29;">本文 — neutral-800</span><span class="detail a11y-pass">✓ 15.4 : 1</span></div>
+        <div class="a11y-item" style="background:#fff;"><span class="sample" style="color:#333E3C;">見出し — neutral-700</span><span class="detail a11y-pass">✓ 10.5 : 1</span></div>
+        <div class="a11y-item" style="background:#fff;"><span class="sample" style="color:#455250;">説明文 — neutral-600</span><span class="detail a11y-pass">✓ 7.97 : 1</span></div>
+        <div class="a11y-item" style="background:#fff;"><span class="sample" style="color:#5E6E68;font-weight:500;">メタ — neutral-500 w500</span><span class="detail a11y-pass">✓ 4.97 : 1（大テキスト・太字AA）</span></div>
+        <div class="a11y-item" style="background:#177568;"><span class="sample" style="color:#fff;">CTA白文字 on green-600</span><span class="detail" style="color:rgba(255,255,255,.85);">✓ 5.65 : 1</span></div>
+        <div class="a11y-item" style="background:#E8507A;"><span class="sample" style="color:#fff;">アクセント on pink-400</span><span class="detail" style="color:rgba(255,255,255,.85);">✓ 4.54 : 1（太字AA）</span></div>
+      </div>
+      <div style="margin-top:var(--space-md);font-size:var(--text-sm);color:var(--neutral-600);line-height:1.9;">
+        <strong style="color:var(--neutral-800);">使い分けルール：</strong><br>
+        本文 → neutral-800（15.4:1）／見出し → neutral-700（10.5:1）<br>
+        説明文 → neutral-600（7.97:1）／メタ → neutral-500 + weight 500（4.97:1）<br>
+        neutral-400以下 → テキスト情報の伝達には使用しない（placeholder・装飾のみ）
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="title">ピンクの使用ルール</div>
+      <p>
+        使用箇所：つながり通知バッジ ／「初めての方歓迎」タグ ／ 振り返り画面「もう一度会いたい」選択後 ／ 特別キャンペーン<br>
+        ※ 日常のナビゲーション・ボタン・テキストには使用しない
+      </p>
+    </div>
+
+    <div class="divider" style="margin:var(--space-2xl) 0;"></div>
+
+    <!-- 拡張カラー ＆ セマンティックカラー -->
+    <h3 class="section-title" style="font-size:var(--text-md);">拡張カラー ＆ セマンティックカラー</h3>
+    <p class="section-desc">Primary（ブルーグリーン）・Accent（ピンク）と相性の良い拡張カラーと、UIステートを伝えるセマンティックカラー。</p>
+    <!-- Extended — Warm Sunset -->
+    <div class="palette-group">
+      <div class="palette-group-title">Extended — Warm Sunset <span class="badge badge-sunset">暖色・コーラル系</span></div>
+      <div class="palette-row" style="grid-template-columns: repeat(7, 1fr);">
+        <div class="swatch on-light" style="background:#FEF3EE"><span class="swatch-label">50</span><span class="swatch-hex">#FEF3EE</span></div>
+        <div class="swatch on-light" style="background:#FCE6DC"><span class="swatch-label">100</span><span class="swatch-hex">#FCE6DC</span></div>
+        <div class="swatch on-light" style="background:#F5C8B0"><span class="swatch-label">200</span><span class="swatch-hex">#F5C8B0</span></div>
+        <div class="swatch on-light" style="background:#F19C79"><span class="swatch-label">300</span><span class="swatch-hex">#F19C79</span></div>
+        <div class="swatch on-dark" style="background:#E67C50"><span class="swatch-label">400</span><span class="swatch-hex">#E67C50</span></div>
+        <div class="swatch on-dark" style="background:#C0623B"><span class="swatch-label">500</span><span class="swatch-hex">#C0623B</span></div>
+        <div class="swatch on-dark" style="background:#964B2D"><span class="swatch-label">600</span><span class="swatch-hex">#964B2D</span></div>
+      </div>
+      <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);line-height:1.9;">
+        用途：イベントカードのカテゴリ識別タグ（例：「趣味」「グルメ」）、温かみを出したいカード背景。<br>
+        ティールの補色域（コーラル〜ピーチ）に位置し、添付画像のCoral・Golden Yellowに近い色相。
+      </div>
+    </div>
+
+    <!-- Extended — Deep Plum -->
+    <div class="palette-group">
+      <div class="palette-group-title">Extended — Deep Plum <span class="badge badge-plum">深み・特別感</span></div>
+      <div class="palette-row" style="grid-template-columns: repeat(7, 1fr);">
+        <div class="swatch on-light" style="background:#F9EFF2"><span class="swatch-label">50</span><span class="swatch-hex">#F9EFF2</span></div>
+        <div class="swatch on-light" style="background:#EEDAE1"><span class="swatch-label">100</span><span class="swatch-hex">#EEDAE1</span></div>
+        <div class="swatch on-light" style="background:#D9B2BF"><span class="swatch-label">200</span><span class="swatch-hex">#D9B2BF</span></div>
+        <div class="swatch on-light" style="background:#BD7D93"><span class="swatch-label">300</span><span class="swatch-hex">#BD7D93</span></div>
+        <div class="swatch on-dark" style="background:#A63950"><span class="swatch-label">400</span><span class="swatch-hex">#A63950</span></div>
+        <div class="swatch on-dark" style="background:#81293E"><span class="swatch-label">500</span><span class="swatch-hex">#81293E</span></div>
+        <div class="swatch on-dark" style="background:#621E2F"><span class="swatch-label">600</span><span class="swatch-hex">#621E2F</span></div>
+      </div>
+      <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);line-height:1.9;">
+        用途：Accent Pinkよりも落ち着いた深みのある表現。特別イベントのタグ、プレミアム感のある要素。<br>
+        添付画像のRaspberry・Burgundyに近い色相。Pinkの延長として、より大人な雰囲気に。
+      </div>
+    </div>
+
+    <!-- Extended — Indigo Blue -->
+    <div class="palette-group">
+      <div class="palette-group-title">Extended — Indigo Blue <span class="badge badge-indigo">落ち着き・信頼</span></div>
+      <div class="palette-row" style="grid-template-columns: repeat(7, 1fr);">
+        <div class="swatch on-light" style="background:#EEF1F8"><span class="swatch-label">50</span><span class="swatch-hex">#EEF1F8</span></div>
+        <div class="swatch on-light" style="background:#D5DCEE"><span class="swatch-label">100</span><span class="swatch-hex">#D5DCEE</span></div>
+        <div class="swatch on-light" style="background:#A8B5D9"><span class="swatch-label">200</span><span class="swatch-hex">#A8B5D9</span></div>
+        <div class="swatch on-light" style="background:#7B8EC2"><span class="swatch-label">300</span><span class="swatch-hex">#7B8EC2</span></div>
+        <div class="swatch on-dark" style="background:#5570A8"><span class="swatch-label">400</span><span class="swatch-hex">#5570A8</span></div>
+        <div class="swatch on-dark" style="background:#3D5489"><span class="swatch-label">500</span><span class="swatch-hex">#3D5489</span></div>
+        <div class="swatch on-dark" style="background:#2D3E66"><span class="swatch-label">600</span><span class="swatch-hex">#2D3E66</span></div>
+      </div>
+      <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);line-height:1.9;">
+        用途：Info通知、お知らせ、信頼感を示す要素。ティールの類似色相（青寄り）でありつつ、十分な差別化。<br>
+        添付画像のPurple寄りの青。Cool Skyより濃く、落ち着いた印象でティールと自然に共存。
+      </div>
+    </div>
+
+    <!-- Semantic Colors -->
+    <div style="margin-top:var(--space-xl);">
+      <div class="component-label" style="margin-bottom:var(--space-md);">セマンティックカラー（UIステート）</div>
+      <div class="semantic-palette-grid">
+        <!-- Success = Primary Green -->
+        <div class="semantic-palette-card">
+          <div class="semantic-palette-header" style="background:var(--green-600);">
+            ✓ Success — Primary Green 派生
+          </div>
+          <div class="semantic-palette-swatches">
+            <div class="semantic-swatch on-light" style="background:var(--green-50)"><span style="color:var(--green-700);">50</span></div>
+            <div class="semantic-swatch on-light" style="background:var(--green-100)"><span style="color:var(--green-700);">100</span></div>
+            <div class="semantic-swatch on-light" style="background:var(--green-200)"><span style="color:var(--green-700);">200</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--green-400)"><span style="color:#fff;">400</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--green-600)"><span style="color:#fff;">600</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--green-700)"><span style="color:#fff;">700</span></div>
+          </div>
+          <div style="padding:var(--space-sm) var(--space-md);font-size:var(--text-xs);color:var(--neutral-600);">Primaryから派生。新規定義不要。予約完了、送信成功</div>
+        </div>
+
+        <!-- Warning -->
+        <div class="semantic-palette-card">
+          <div class="semantic-palette-header" style="background:var(--warning-500);">
+            ⚠ Warning — 穏やかなアンバー
+          </div>
+          <div class="semantic-palette-swatches">
+            <div class="semantic-swatch on-light" style="background:var(--warning-50)"><span style="color:var(--warning-600);">50</span></div>
+            <div class="semantic-swatch on-light" style="background:var(--warning-100)"><span style="color:var(--warning-600);">100</span></div>
+            <div class="semantic-swatch on-light" style="background:var(--warning-200)"><span style="color:var(--warning-600);">200</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--warning-300)"><span style="color:#fff;">300</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--warning-400)"><span style="color:#fff;">400</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--warning-600)"><span style="color:#fff;">600</span></div>
+          </div>
+          <div style="padding:var(--space-sm) var(--space-md);font-size:var(--text-xs);color:var(--neutral-600);">キャンセルポリシー確認、期限切れ間近</div>
+        </div>
+
+        <!-- Error -->
+        <div class="semantic-palette-card">
+          <div class="semantic-palette-header" style="background:var(--error-500);">
+            ✕ Error — 落ち着いたレッド
+          </div>
+          <div class="semantic-palette-swatches">
+            <div class="semantic-swatch on-light" style="background:var(--error-50)"><span style="color:var(--error-600);">50</span></div>
+            <div class="semantic-swatch on-light" style="background:var(--error-100)"><span style="color:var(--error-600);">100</span></div>
+            <div class="semantic-swatch on-light" style="background:var(--error-200)"><span style="color:var(--error-600);">200</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--error-300)"><span style="color:#fff;">300</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--error-400)"><span style="color:#fff;">400</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--error-600)"><span style="color:#fff;">600</span></div>
+          </div>
+          <div style="padding:var(--space-sm) var(--space-md);font-size:var(--text-xs);color:var(--neutral-600);">入力エラー、年齢確認失敗、決済エラー</div>
+        </div>
+
+        <!-- Info = Indigo -->
+        <div class="semantic-palette-card">
+          <div class="semantic-palette-header" style="background:var(--indigo-500);">
+            ℹ Info — Indigo Blue 派生
+          </div>
+          <div class="semantic-palette-swatches">
+            <div class="semantic-swatch on-light" style="background:var(--indigo-50)"><span style="color:var(--indigo-600);">50</span></div>
+            <div class="semantic-swatch on-light" style="background:var(--indigo-100)"><span style="color:var(--indigo-600);">100</span></div>
+            <div class="semantic-swatch on-light" style="background:var(--indigo-200)"><span style="color:var(--indigo-600);">200</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--indigo-300)"><span style="color:#fff;">300</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--indigo-400)"><span style="color:#fff;">400</span></div>
+            <div class="semantic-swatch on-dark" style="background:var(--indigo-600)"><span style="color:#fff;">600</span></div>
+          </div>
+          <div style="padding:var(--space-sm) var(--space-md);font-size:var(--text-xs);color:var(--neutral-600);">Indigoから派生。ヘルプ情報、お知らせ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color Harmony Note -->
+    <div class="info-box" style="margin-top:var(--space-xl);border-left-color:var(--green-300);background:var(--green-50);">
+      <div class="title" style="color:var(--green-700);">カラーハーモニーの設計方針</div>
+      <p>
+        <strong style="color:var(--neutral-800);">Sunset（コーラル）</strong>：ティールの補色域。添付画像のCoral・Golden Yellowに相当。温かみと活気を加える。<br>
+        <strong style="color:var(--neutral-800);">Plum（プラム）</strong>：添付画像のRaspberry・Burgundyに相当。Accent Pinkより深く落ち着いた大人のトーン。<br>
+        <strong style="color:var(--neutral-800);">Indigo（インディゴ）</strong>：添付画像のPurple寄り。Cool Skyより濃く、ティールと同じ寒色系で自然に共存。<br>
+        <strong style="color:var(--neutral-800);">Success</strong>：Primaryの green をそのまま流用し、パレット数を増やさない。<br>
+        <strong style="color:var(--neutral-800);">全体</strong>：彩度を40〜55%に統一し、Primaryのティールと並べても違和感のない落ち着いたトーン。
+      </p>
+    </div>
+
+    <!-- WCAG for semantic -->
+    <div class="a11y-box" style="margin-top:var(--space-lg);">
+      <div class="a11y-title">♿ 拡張カラー コントラスト検証</div>
+      <div class="a11y-grid">
+        <div class="a11y-item" style="background:var(--sunset-50);"><span class="sample" style="color:var(--sunset-600);">Sunset-600 on 50</span><span class="detail a11y-pass">✓ 5.4 : 1</span></div>
+        <div class="a11y-item" style="background:var(--plum-50);"><span class="sample" style="color:var(--plum-600);">Plum-600 on 50</span><span class="detail a11y-pass">✓ 6.8 : 1</span></div>
+        <div class="a11y-item" style="background:var(--indigo-50);"><span class="sample" style="color:var(--indigo-600);">Indigo-600 on 50</span><span class="detail a11y-pass">✓ 7.2 : 1</span></div>
+        <div class="a11y-item" style="background:var(--warning-50);"><span class="sample" style="color:var(--warning-600);">Warning-600 on 50</span><span class="detail a11y-pass">✓ 5.3 : 1</span></div>
+        <div class="a11y-item" style="background:var(--error-400);"><span class="sample" style="color:#fff;">白文字 on Error-400</span><span class="detail" style="color:rgba(255,255,255,.85);">✓ 4.6 : 1</span></div>
+        <div class="a11y-item" style="background:var(--sunset-400);"><span class="sample" style="color:#fff;">白文字 on Sunset-400</span><span class="detail" style="color:rgba(255,255,255,.85);">✓ 3.2 : 1（大テキストAA）</span></div>
+      </div>
+    </div>
+
+
+    <div class="divider" style="margin:var(--space-2xl) 0;"></div>
+
+    <!-- カラー活用例 -->
+    <h3 class="section-title" style="font-size:var(--text-md);">カラー活用例 — お食事会一覧</h3>
+    <p class="section-desc">拡張カラーを使って、カテゴリごとにイベントカードのタグ色を変えることで、一覧画面での視認性と識別性を高めるイメージ例。</p>
+    <div class="event-cards-grid" style="grid-template-columns:1fr;max-width:420px;">
+      <!-- Card 1: ランダム — Primary green -->
+      <div class="event-card">
+        <div class="tags">
+          <span class="tag">ランダム</span>
+          <span class="tag first-time">初めての方歓迎</span>
+        </div>
+        <h3>木曜の夜、5人でごはん</h3>
+        <div class="meta">2月20日（木）19:30〜 ｜ 新宿エリア</div>
+        <div class="bottom"><span class="price">¥1,000</span><span class="seats">残り2席</span></div>
+      </div>
+
+      <!-- Card 2: ランダム — Primary green (same category = same color) -->
+      <div class="event-card">
+        <div class="tags"><span class="tag">ランダム</span></div>
+        <h3>日曜ブランチ、5人で</h3>
+        <div class="meta">2月23日（日）11:30〜 ｜ 中目黒エリア</div>
+        <div class="bottom"><span class="price">¥1,000</span><span class="seats">残り3席</span></div>
+      </div>
+
+      <!-- Card 3: ランダム — Primary green -->
+      <div class="event-card">
+        <div class="tags"><span class="tag">ランダム</span></div>
+        <h3>金曜の夜、5人でごはん</h3>
+        <div class="meta">2月28日（金）19:30〜 ｜ 渋谷エリア</div>
+        <div class="bottom"><span class="price">¥1,000</span><span class="seats">残り4席</span></div>
+      </div>
+
+      <!-- Card 4: タメ会 — Sunset tag -->
+      <div class="event-card">
+        <div class="tags">
+          <span style="padding:3px 10px;font-size:var(--text-xs);font-weight:500;border-radius:var(--radius-full);background:var(--sunset-100);color:var(--sunset-600);">タメ会</span>
+        </div>
+        <h3>30代同世代で土曜ランチ</h3>
+        <div class="meta">3月1日（土）12:00〜 ｜ 渋谷エリア</div>
+        <div class="bottom"><span class="price">¥1,000</span><span class="seats">残り4席</span></div>
+      </div>
+
+      <!-- Card 5: ランダム — Primary green -->
+      <div class="event-card">
+        <div class="tags"><span class="tag">ランダム</span></div>
+        <h3>水曜の夜、5人でごはん</h3>
+        <div class="meta">3月5日（水）19:30〜 ｜ 池袋エリア</div>
+        <div class="bottom"><span class="price">¥1,000</span><span class="seats">残り1席</span></div>
+      </div>
+    </div>
+
+    <!-- Tag Color Legend -->
+    <div style="margin-top:var(--space-lg);padding:var(--space-lg);background:var(--bg-card);border:1px solid var(--green-100);border-radius:var(--radius-lg);">
+      <div class="component-label" style="margin-bottom:var(--space-md);">タグのカラーマッピング例</div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;">
+        <span style="padding:4px 12px;background:var(--green-100);color:var(--green-800);font-size:var(--text-xs);border-radius:var(--radius-full);font-weight:500;">ランダム</span>
+        <span style="font-size:var(--text-xs);color:var(--neutral-500);">Primary green — ベーシック</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin-top:var(--space-xs);">
+        <span style="padding:4px 12px;background:var(--sunset-100);color:var(--sunset-600);font-size:var(--text-xs);border-radius:var(--radius-full);font-weight:500;">タメ会</span>
+        <span style="font-size:var(--text-xs);color:var(--neutral-500);">Sunset — 属性カテゴリ</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin-top:var(--space-xs);">
+        <span style="padding:4px 12px;background:var(--plum-100);color:var(--plum-500);font-size:var(--text-xs);border-radius:var(--radius-full);font-weight:500;">カミングアウト</span>
+        <span style="font-size:var(--text-xs);color:var(--neutral-500);">Plum — ゲイ独自の興味カテゴリ</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin-top:var(--space-xs);">
+        <span style="padding:4px 12px;background:var(--indigo-100);color:var(--indigo-600);font-size:var(--text-xs);border-radius:var(--radius-full);font-weight:500;">映画好き</span>
+        <span style="font-size:var(--text-xs);color:var(--neutral-500);">Indigo — 趣味カテゴリ</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin-top:var(--space-xs);">
+        <span style="padding:4px 12px;background:var(--pink-100);color:var(--pink-500);font-size:var(--text-xs);border-radius:var(--radius-full);font-weight:500;">初めての方歓迎</span>
+        <span style="font-size:var(--text-xs);color:var(--neutral-500);">Pink — 特別な瞬間のみ</span>
+      </div>
+      <div style="margin-top:var(--space-md);font-size:var(--text-xs);color:var(--neutral-600);line-height:1.9;">
+        ※ カテゴリが増えてもタグ色は上記4系統に収まるよう運用する。むやみに色を増やさない。
+      </div>
+    </div>
+
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-03">
+    <div class="section-label">03</div>
+    <h2 class="section-title">グラデーション</h2>
+    <div class="gradient-grid">
+      <div class="gradient-swatch on-light" style="background:linear-gradient(168deg,#EBF5F4,#F7F9F9,#EDF1F0);"><span class="name">Main BG</span><span class="css">green-50 → neutral-50</span></div>
+      <div class="gradient-swatch on-light" style="background:linear-gradient(135deg,#C9E8E4,#EBF5F4);"><span class="name">Card Highlight</span><span class="css">green-100 → 50</span></div>
+      <div class="gradient-swatch on-dark" style="background:linear-gradient(135deg,#177568,#1D8C7E);"><span class="name">CTA Button</span><span class="css">green-600 → 500</span></div>
+      <div class="gradient-swatch on-light" style="background:linear-gradient(135deg,#FFF0F3,#FFD6E0);"><span class="name">Match Moment</span><span class="css">pink-50 → 100</span></div>
+      <div class="gradient-swatch on-dark" style="background:linear-gradient(135deg,#115C52,#177568,#1D8C7E);"><span class="name">Header Dark</span><span class="css">green-700 → 500</span></div>
+      <div class="gradient-swatch on-light" style="background:linear-gradient(180deg,#F7F9F9,#EBF5F4);"><span class="name">Page Fade</span><span class="css">neutral-50 → green-50</span></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-04">
+    <div class="section-label">04</div>
+    <h2 class="section-title">タイポグラフィ</h2>
+    <p class="section-desc">日本語はNoto Sans JP、英字・数字はInter、コード表記はJetBrains Mono。ブランドロゴのみCormorant Garamond。font-family指定で英字→日本語の順にフォールバック。</p>
+
+    <div class="type-specimen">
+      <div class="type-meta"><span class="type-role">Brand Logo のみ</span><span class="type-family">Cormorant Garamond 300</span></div>
+      <div style="font-family:var(--font-display);font-weight:300;font-size:var(--text-brand);color:var(--neutral-800);letter-spacing:.04em;">SakuraCo</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-meta"><span class="type-role">English — 英字・数字</span><span class="type-family">Inter 400 / 500</span></div>
+      <div style="font-family:var(--font-en);font-weight:400;font-size:var(--text-lg);color:var(--neutral-800);letter-spacing:-.01em;line-height:1.5;">The quick brown fox jumps over the lazy dog</div>
+      <div style="font-family:var(--font-en);font-weight:500;font-size:var(--text-base);color:var(--neutral-600);margin-top:8px;">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</div>
+      <div style="font-family:var(--font-en);font-weight:500;font-size:var(--text-base);color:var(--neutral-600);margin-top:4px;">0123456789 ¥1,000 — 19:30〜 — 2/20（Thu）</div>
+      <div style="font-size:var(--text-xs);color:var(--neutral-500);font-weight:500;margin-top:12px;">※ Noto Sans JPの英字より字幅がタイトで、価格・日時・残席数などの表示がすっきりする</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-meta"><span class="type-role">Monospace — コード・HEX値</span><span class="type-family">JetBrains Mono 400</span></div>
+      <div style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--neutral-700);line-height:1.7;">#177568 — rgba(23, 117, 104, 0.28) — env(safe-area-inset-bottom)</div>
+      <div style="font-size:var(--text-xs);color:var(--neutral-500);font-weight:500;margin-top:8px;">※ カラーコード・技術ドキュメント・開発者向け表記に使用</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-meta"><span class="type-role">混植例 — 日英混在テキスト</span><span class="type-family">Inter + Noto Sans JP</span></div>
+      <div style="font-family:var(--font-body);font-size:var(--text-base);color:var(--neutral-700);line-height:1.9;">2月20日（木）19:30 Start — 新宿エリアで4人のごはん会。参加費 ¥1,000（tax included）。残り2席です。</div>
+      <div style="font-size:var(--text-xs);color:var(--neutral-500);font-weight:500;margin-top:8px;">※ font-family: 'Inter', 'Noto Sans JP' の順で指定。英字・数字はInterで描画、日本語はNoto Sans JPにフォールバック</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta"><span class="type-role">H1 — 画面タイトル</span><span class="type-family">Noto Sans JP 500</span></div>
+      <div style="font-size:var(--text-lg);font-weight:500;color:var(--neutral-800);">今週のイベント</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta"><span class="type-role">H2 — セクション見出し</span><span class="type-family">Noto Sans JP 500</span></div>
+      <div style="font-size:var(--text-md);font-weight:500;color:var(--neutral-800);">木曜の夜、4人でごはん</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta"><span class="type-role">Body — 本文</span><span class="type-family">Noto Sans JP 400</span></div>
+      <div style="font-size:var(--text-base);color:var(--neutral-700);line-height:1.9;">緊張しても大丈夫。みんな初めて同士です。頑張らなくても、そこにいるだけで十分。</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta"><span class="type-role">Caption — メタ情報</span><span class="type-family">Noto Sans JP 500</span></div>
+      <div style="font-size:var(--text-sm);color:var(--neutral-500);font-weight:500;">2月15日（土）19:00〜 ｜ 新宿エリア ｜ 残り2席</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-meta"><span class="type-role">Button</span><span class="type-family">Noto Sans JP 500</span></div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+        <button class="btn btn-primary">参加する</button>
+        <button class="btn btn-secondary">詳しく見る</button>
+        <button class="btn btn-ghost">スキップ</button>
+      </div>
+    </div>
+
+    <div class="scale-table-wrap">
+      <table class="scale-table">
+        <thead><tr><th>Role</th><th>Font Stack</th><th>Weight</th><th>Mobile</th><th>Desktop</th><th>Color</th><th>Contrast</th></tr></thead>
+        <tbody>
+          <tr><td>Brand</td><td style="font-family:var(--font-mono);font-size:10px;">Cormorant Garamond</td><td>300</td><td>36px</td><td>48px</td><td style="color:var(--green-700)">green-700</td><td>6.26:1 ✓</td></tr>
+          <tr><td>H1</td><td style="font-family:var(--font-mono);font-size:10px;">Inter → Noto Sans JP</td><td>500</td><td>20px</td><td>24px</td><td style="color:var(--neutral-800)">neutral-800</td><td>15.4:1 ✓</td></tr>
+          <tr><td>H2</td><td style="font-family:var(--font-mono);font-size:10px;">Inter → Noto Sans JP</td><td>500</td><td>17px</td><td>18px</td><td style="color:var(--neutral-800)">neutral-800</td><td>15.4:1 ✓</td></tr>
+          <tr><td>Body</td><td style="font-family:var(--font-mono);font-size:10px;">Inter → Noto Sans JP</td><td>400</td><td>15px</td><td>15px</td><td style="color:var(--neutral-700)">neutral-700</td><td>10.5:1 ✓</td></tr>
+          <tr><td>Caption</td><td style="font-family:var(--font-mono);font-size:10px;">Inter → Noto Sans JP</td><td>500</td><td>13px</td><td>13px</td><td style="color:var(--neutral-500)">neutral-500</td><td>4.97:1 ✓</td></tr>
+          <tr><td>Button</td><td style="font-family:var(--font-mono);font-size:10px;">Inter → Noto Sans JP</td><td>500</td><td>13px</td><td>14px</td><td>on-color</td><td>4.5+:1 ✓</td></tr>
+          <tr><td>Code</td><td style="font-family:var(--font-mono);font-size:10px;">JetBrains Mono</td><td>400</td><td>11px</td><td>12px</td><td style="color:var(--neutral-700)">neutral-700</td><td>10.5:1 ✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-05">
+    <div class="section-label">05</div>
+    <h2 class="section-title">📱 モバイル固有の設計ルール</h2>
+    <p class="section-desc">ユーザーの大半がiPhone / Androidを使用。すべてのUI要素はモバイルファーストで設計する。</p>
+
+    <div class="mobile-spec">
+      <div class="title">タッチターゲット</div>
+      <div class="rule">すべてのインタラクティブ要素は最小 44×44px（Apple HIG / WCAG 2.5.5）</div>
+      <div class="rule">推奨サイズは 48×48px（Material Design 3）</div>
+      <div class="rule">ボタン間のギャップは最低 8px（誤タップ防止）</div>
+      <div class="touch-demo">
+        <div class="touch-box" style="width:44px;height:44px;">44px<br>最小</div>
+        <div class="touch-box" style="width:48px;height:48px;">48px<br>推奨</div>
+        <div class="touch-box" style="width:36px;height:36px;border-color:var(--pink-300);color:var(--pink-500);">36px<br>Chipのみ</div>
+      </div>
+    </div>
+
+    <div class="mobile-spec">
+      <div class="title">入力フォーム（iOS対策）</div>
+      <div class="rule">inputのfont-sizeは最低16px（iOS Safariの自動ズーム防止）</div>
+      <div class="rule">本アプリでは15pxを採用 → <code style="background:var(--neutral-100);padding:2px 6px;border-radius:4px;font-size:11px;">meta viewport</code> の <code style="background:var(--neutral-100);padding:2px 6px;border-radius:4px;font-size:11px;">maximum-scale=1</code> で対応</div>
+      <div class="rule">テキストエリアは十分な高さ（min-height: 48px）を確保</div>
+      <div class="rule">フォーカス時のハイライトは box-shadow で表現（outline不使用）</div>
+      <div class="note">⚠️ iOS: <code>-webkit-appearance: none;</code> でデフォルトスタイルをリセット</div>
+    </div>
+
+    <div class="mobile-spec">
+      <div class="title">レイアウト・余白</div>
+      <div class="rule">画面左右のパディング: 16px（狭い画面でも情報が切れない）</div>
+      <div class="rule">カード間の余白: 12〜16px</div>
+      <div class="rule">ボトムナビゲーションバーの高さ: 56px + safe area</div>
+      <div class="rule">CTAボタンはフッター固定時、safe area下を考慮</div>
+      <div class="rule">スクロール方向は基本垂直のみ。横スクロールはチップ・カルーセルに限定</div>
+    </div>
+
+    <div class="mobile-spec">
+      <div class="title">セーフエリア（ノッチ・Dynamic Island対応）</div>
+      <div class="rule">上部: ステータスバー + ノッチ/Dynamic Island を避ける</div>
+      <div class="rule">下部: ホームインジケーター領域を避ける</div>
+      <div class="rule">固定フッター/CTAには safe area padding を必ず適用</div>
+      <div class="note" style="font-family:var(--font-mono); font-size:11px; line-height:1.7;">
+        padding-bottom: calc(16px + env(safe-area-inset-bottom));<br>
+        padding-top: calc(16px + env(safe-area-inset-top));
+      </div>
+    </div>
+
+    <div class="mobile-spec">
+      <div class="title">パフォーマンス</div>
+      <div class="rule">backdrop-filter: blur() は重い → 使用箇所を限定（ヘッダー・モーダルのみ）</div>
+      <div class="rule">ボタンの :hover は不要 → :active スタイルを重視</div>
+      <div class="rule">画像は WebP + lazy loading を徹底</div>
+      <div class="rule">フォント読み込み: Noto Sans JP (300/400/500/700) + Inter (300/400/500/700) + JetBrains Mono (400/500)</div>
+      <div class="rule">Inter + Noto Sans JPの合計で約400KB。display=swap で FOUT 対応済み</div>
+    </div>
+
+    <div class="mobile-spec">
+      <div class="title">スマートフォン特有のインタラクション</div>
+      <div class="rule">スワイプ: オンボーディング、アイスブレイクのトピックカード切り替え</div>
+      <div class="rule">プルダウン: ホーム画面のイベント一覧リフレッシュ</div>
+      <div class="rule">ハプティクス: つながり成立時に軽い振動（iOS Taptic / Android Vibrate）</div>
+      <div class="rule">ボトムシート: イベント詳細・フィルターはボトムシートで表示</div>
+      <div class="rule">トースト通知: 操作完了メッセージは画面上部にトーストで3秒表示</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-06">
+    <div class="section-label">06</div>
+    <h2 class="section-title">UIコンポーネント</h2>
+
+    <div class="components-grid">
+      <div class="component-card">
+        <div class="component-label" id="comp-buttons">Buttons（min-height: 44px）</div>
+        <div class="btn-group">
+          <button class="btn btn-primary">参加する</button>
+          <button class="btn btn-secondary">詳しく見る</button>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-ghost">スキップ</button>
+          <button class="btn btn-accent">つながり ✦</button>
+        </div>
+        <button class="btn btn-primary btn-block-mobile" style="margin-top:var(--space-sm);">モバイルCTA（フル幅）</button>
+        <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);">※ モバイルの主要CTAは画面幅いっぱいに配置</div>
+      </div>
+
+      <div class="component-card">
+        <div class="component-label" id="comp-input">Input（min-height: 48px）</div>
+        <label class="input-label">ニックネーム</label>
+        <input class="input-field" type="text" placeholder="あなたの呼び名を入力">
+        <div style="height:var(--space-md);"></div>
+        <label class="input-label">ひとこと</label>
+        <input class="input-field" type="text" placeholder="（任意）好きなこと、最近のこと…">
+      </div>
+
+      <div class="component-card">
+        <div class="component-label">Chips（min-height: 36px）・横スクロール可</div>
+        <div class="chip-group" style="overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px;">
+          <span class="chip active" style="flex-shrink:0;">すべて</span>
+          <span class="chip" style="flex-shrink:0;">新宿</span>
+          <span class="chip" style="flex-shrink:0;">渋谷</span>
+          <span class="chip" style="flex-shrink:0;">池袋</span>
+          <span class="chip" style="flex-shrink:0;">中野</span>
+          <span class="chip" style="flex-shrink:0;">高円寺</span>
+          <span class="chip" style="flex-shrink:0;">上野</span>
+        </div>
+        <div style="height:var(--space-lg);"></div>
+        <div class="component-label">Interest（折り返し）</div>
+        <div class="chip-group">
+          <span class="chip active">映画</span><span class="chip active">ワイン</span>
+          <span class="chip">旅行</span><span class="chip">筋トレ</span><span class="chip">K-POP</span>
+        </div>
+      </div>
+
+      <div class="component-card">
+        <div class="component-label" id="comp-tags">Tags & Badges</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--space-md);">
+          <span style="padding:4px 12px;background:var(--green-100);color:var(--green-800);font-size:var(--text-xs);border-radius:var(--radius-full);font-weight:500;">ランダム</span>
+          <span style="padding:4px 12px;background:var(--green-100);color:var(--green-800);font-size:var(--text-xs);border-radius:var(--radius-full);font-weight:500;">タメ会</span>
+          <span style="padding:4px 12px;background:var(--pink-100);color:var(--pink-500);font-size:var(--text-xs);border-radius:var(--radius-full);font-weight:500;">初めての方歓迎</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:var(--text-base);color:var(--neutral-700);">つながり</span>
+          <span class="notification-badge">2</span>
+          <span style="font-size:var(--text-xs);color:var(--neutral-600);">← ピンクバッジ</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:var(--space-xl);">
+      <div class="component-label" id="comp-eventcard" style="margin-bottom:var(--space-md);">Event Card</div>
+      <div class="event-cards-grid">
+        <div class="event-card">
+          <div class="tags"><span class="tag">ランダム</span><span class="tag first-time">初めての方歓迎</span></div>
+          <h3>木曜の夜、4人でごはん</h3>
+          <div class="meta">2月20日（木）19:30〜 ｜ 新宿エリア</div>
+          <div class="bottom"><span class="price">¥1,000</span><span class="seats">残り2席</span></div>
+        </div>
+        <div class="event-card">
+          <div class="tags"><span class="tag">タメ会</span></div>
+          <h3>30代同世代で土曜ランチ</h3>
+          <div class="meta">2月22日（土）12:00〜 ｜ 渋谷エリア</div>
+          <div class="bottom"><span class="price">¥1,000</span><span class="seats">残り4席</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" style="margin:var(--space-2xl) 0;"></div>
+
+    <!-- 追加UIコンポーネント -->
+    <h3 class="section-title" style="font-size:var(--text-md);">追加UIコンポーネント</h3>
+    <p class="section-desc">M3ガイドラインに準拠した追加コンポーネント定義。</p>
+
+    <!-- Toast Notifications -->
+    <div style="margin-bottom:var(--space-2xl);">
+      <div class="component-label" id="comp-toast" style="margin-bottom:var(--space-md);">Toast Notification（トースト通知）</div>
+      <div class="flex flex-col" style="display:flex;flex-direction:column;gap:var(--space-sm);max-width:360px;">
+        <div class="toast toast-success"><span class="toast-icon">✓</span>予約が完了しました</div>
+        <div class="toast toast-warning"><span class="toast-icon">⚠</span>キャンセル期限が近づいています</div>
+        <div class="toast toast-error"><span class="toast-icon">✕</span>決済に失敗しました</div>
+        <div class="toast toast-info"><span class="toast-icon">ℹ</span>新しいお食事会が追加されました</div>
+      </div>
+      <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);">※ 画面上部に3秒間表示 → 自動フェードアウト。タップで即時消去。</div>
+    </div>
+
+    <!-- Alert Banners -->
+    <div style="margin-bottom:var(--space-2xl);">
+      <div class="component-label" style="margin-bottom:var(--space-md);">Alert / Banner（アラート）</div>
+      <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+        <div class="alert alert-success"><span class="alert-title">フィードバックを送信しました</span><br>ご回答ありがとうございます。</div>
+        <div class="alert alert-warning"><span class="alert-title">キャンセル規定のご確認</span><br>3日前以降のキャンセルは返金対象外です。</div>
+        <div class="alert alert-error"><span class="alert-title">年齢確認エラー</span><br>20歳以上である必要があります。</div>
+        <div class="alert alert-info"><span class="alert-title">お知らせ</span><br>2月のお食事会スケジュールが公開されました。</div>
+      </div>
+    </div>
+
+    <div class="components-grid">
+      <!-- Bottom Navigation -->
+      <div class="component-card">
+        <div class="component-label" id="comp-bottomnav">Bottom Navigation（56px + safe area）</div>
+        <div style="display:flex;justify-content:center;">
+          <div class="bottom-nav" style="box-shadow:var(--shadow-sm);">
+            <button class="bottom-nav-item active"><span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>ホーム</button>
+            <button class="bottom-nav-item"><span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>さがす</button>
+            <button class="bottom-nav-item"><span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>予約</button>
+            <button class="bottom-nav-item"><span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>マイページ</button>
+          </div>
+        </div>
+        <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);">
+          アクティブ: green-600 / 非アクティブ: neutral-400<br>
+          高さ: 56px + env(safe-area-inset-bottom)
+        </div>
+      </div>
+
+      <!-- Avatar -->
+      <div class="component-card">
+        <div class="component-label">Avatar / Participant Icon</div>
+        <div style="display:flex;align-items:center;gap:var(--space-md);flex-wrap:wrap;">
+          <div class="avatar avatar-sm" style="background:var(--green-600);">Y</div>
+          <div class="avatar avatar-md" style="background:#3B82F6;">K</div>
+          <div class="avatar avatar-lg" style="background:#A855F7;">T</div>
+          <div class="avatar avatar-xl" style="background:var(--pink-400);">M</div>
+        </div>
+        <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);">
+          sm: 32px / md: 40px / lg: 48px / xl: 64px<br>
+          フィードバック画面の参加者アイコンに使用
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress & Steps -->
+    <div style="margin-top:var(--space-xl);">
+      <div class="components-grid">
+        <div class="component-card">
+          <div class="component-label" id="comp-progress">Progress Bar</div>
+          <div style="margin-bottom:var(--space-md);">
+            <div style="font-size:var(--text-xs);color:var(--neutral-600);margin-bottom:var(--space-xs);">質問 3 / 5</div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="width:60%;"></div></div>
+          </div>
+          <div>
+            <div style="font-size:var(--text-xs);color:var(--neutral-600);margin-bottom:var(--space-xs);">完了</div>
+            <div class="progress-bar-track"><div class="progress-bar-fill" style="width:100%;background:var(--success-400);"></div></div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="component-label">Step Indicator（オンボーディング）</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:var(--space-md);">
+            <div class="step-dot completed"></div>
+            <div class="step-line completed"></div>
+            <div class="step-dot completed"></div>
+            <div class="step-line completed"></div>
+            <div class="step-dot active"></div>
+            <div class="step-line"></div>
+            <div class="step-dot"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="step-dot active"></div>
+            <div class="step-dot"></div>
+            <div class="step-dot"></div>
+            <div class="step-dot"></div>
+          </div>
+          <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);">
+            上: 線でつないだステッパー<br>下: ドットのみ（オンボーディング）
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toggle, Checkbox, Radio -->
+    <div style="margin-top:var(--space-xl);">
+      <div class="components-grid">
+        <div class="component-card">
+          <div class="component-label" id="comp-toggle">Toggle Switch</div>
+          <div style="display:flex;align-items:center;gap:var(--space-lg);margin-bottom:var(--space-md);">
+            <div>
+              <button class="toggle-track on" style="pointer-events:none;"><div class="toggle-thumb"></div></button>
+              <div style="font-size:var(--text-xs);color:var(--neutral-600);margin-top:4px;text-align:center;">ON</div>
+            </div>
+            <div>
+              <button class="toggle-track" style="pointer-events:none;"><div class="toggle-thumb"></div></button>
+              <div style="font-size:var(--text-xs);color:var(--neutral-600);margin-top:4px;text-align:center;">OFF</div>
+            </div>
+          </div>
+          <div style="font-size:var(--text-xs);color:var(--neutral-600);">トラック: 48×28px / サム: 24px<br>通知設定・プライバシー設定</div>
+        </div>
+
+        <div class="component-card">
+          <div class="component-label">Checkbox & Radio</div>
+          <div style="margin-bottom:var(--space-md);">
+            <div class="checkbox-row" style="margin-bottom:var(--space-sm);">
+              <div class="checkbox-box checked">✓</div>
+              <span class="checkbox-label">キャンセル規定に同意します</span>
+            </div>
+            <div class="checkbox-row">
+              <div class="checkbox-box"></div>
+              <span class="checkbox-label">お知らせメールを受け取る</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-xs);">
+            <div class="radio-option selected">
+              <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+              クレジットカード
+            </div>
+            <div class="radio-option">
+              <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+              Apple Pay
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rating, Empty State, Skeleton -->
+    <div style="margin-top:var(--space-xl);">
+      <div class="components-grid">
+        <div class="component-card">
+          <div class="component-label">Rating Group（フィードバック）</div>
+          <div class="rating-group" style="max-width:320px;">
+            <div class="rating-btn"><span class="rating-num">1</span>とても悪い</div>
+            <div class="rating-btn"><span class="rating-num">2</span>悪い</div>
+            <div class="rating-btn selected"><span class="rating-num">3</span>普通</div>
+            <div class="rating-btn"><span class="rating-num">4</span>良い</div>
+            <div class="rating-btn"><span class="rating-num">5</span>とても良い</div>
+          </div>
+          <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);">
+            お食事会の振り返りで使用。選択状態=green-600
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="component-label">Empty State</div>
+          <div class="empty-state">
+            <div class="empty-state-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="empty-state-title">まだ予約がありません</div>
+            <div class="empty-state-desc">お食事会を探して参加してみましょう</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skeleton, Divider Label, Modal -->
+    <div style="margin-top:var(--space-xl);">
+      <div class="components-grid">
+        <div class="component-card">
+          <div class="component-label">Skeleton Loading</div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+            <div style="display:flex;align-items:center;gap:var(--space-sm);">
+              <div class="skeleton" style="width:40px;height:40px;border-radius:50%;"></div>
+              <div style="flex:1;">
+                <div class="skeleton" style="height:14px;width:60%;margin-bottom:6px;"></div>
+                <div class="skeleton" style="height:10px;width:40%;"></div>
+              </div>
+            </div>
+            <div class="skeleton" style="height:100px;width:100%;border-radius:var(--radius-md);"></div>
+            <div class="skeleton" style="height:12px;width:80%;"></div>
+            <div class="skeleton" style="height:12px;width:50%;"></div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="component-label">Divider Label ＆ Bottom Sheet Handle</div>
+          <div style="margin-bottom:var(--space-lg);">
+            <div class="divider-label"><span>または</span></div>
+            <div class="divider-label"><span>SNSでログイン</span></div>
+          </div>
+          <div>
+            <div style="font-size:var(--text-xs);color:var(--neutral-600);margin-bottom:var(--space-sm);">Bottom Sheet Handle</div>
+            <div style="background:var(--bg-card);border:1px solid var(--green-100);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:var(--space-sm) var(--space-lg) var(--space-lg);">
+              <div class="bottom-sheet-handle"></div>
+              <div style="font-size:var(--text-sm);color:var(--neutral-700);font-weight:500;">ボトムシートの内容</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body Type Selector -->
+    <div style="margin-top:var(--space-xl);">
+      <div class="component-label" id="comp-bodytype" style="margin-bottom:var(--space-md);">Body Type Selector（体型選択カード）</div>
+      <p style="font-size:var(--text-sm);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-md);">
+        オンボーディングで自分の体型を選ぶUI。PNGイラスト＋ラベルのカード形式。選択時はgreen-600背景、イラストは白反転。
+      </p>
+      <div class="bodytype-grid">
+
+        <div class="bodytype-card">
+          <div class="bt-icon"><img src="img/bodytype_chubby.png" alt="ぽっちゃり"></div>
+          <span class="bt-label">ぽっちゃり</span>
+        </div>
+
+        <div class="bodytype-card">
+          <div class="bt-icon"><img src="img/bodytype_stocky.png" alt="ガチムチ"></div>
+          <span class="bt-label">ガチムチ</span>
+        </div>
+
+        <div class="bodytype-card">
+          <div class="bt-icon"><img src="img/bodytype_athletic.png" alt="アスリート"></div>
+          <span class="bt-label">アスリート</span>
+        </div>
+
+        <div class="bodytype-card selected">
+          <div class="bt-icon"><img src="img/bodytype_average.png" alt="普通体型"></div>
+          <span class="bt-label">普通体型</span>
+        </div>
+
+        <div class="bodytype-card">
+          <div class="bt-icon"><img src="img/bodytype_slim.png" alt="スリム"></div>
+          <span class="bt-label">スリム</span>
+        </div>
+
+      </div>
+      <div style="margin-top:var(--space-md);font-size:var(--text-xs);color:var(--neutral-600);line-height:1.9;">
+        ※ 選択は1つ。選択中カード: green-600背景＋イラスト白反転（CSS filter: brightness(0) invert(1)）<br>
+        ※ 画像パス: <code style="background:var(--neutral-100);padding:1px 4px;border-radius:3px;font-size:10px;">img/bodytype_[type].png</code><br>
+        ※ 推奨画像サイズ: 幅80px × 高さ110px（@2xの場合 160×220px）、背景透過PNG
+      </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div style="margin-top:var(--space-xl);">
+      <div class="component-label" id="comp-modal" style="margin-bottom:var(--space-md);">Modal / Overlay</div>
+      <div class="modal-overlay-demo">
+        <div style="position:absolute;top:var(--space-md);left:var(--space-md);z-index:1;font-size:var(--text-xs);color:rgba(255,255,255,0.7);">overlay: rgba(19,26,24,0.45)</div>
+        <div class="modal-demo-sheet">
+          <div class="bottom-sheet-handle"></div>
+          <div style="font-size:var(--text-md);font-weight:500;color:var(--neutral-800);margin-bottom:var(--space-sm);">イベント詳細</div>
+          <div style="font-size:var(--text-sm);color:var(--neutral-600);line-height:1.8;">ボトムシートとオーバーレイの組み合わせ。フィルター・詳細表示に使用。</div>
+          <button class="btn btn-primary btn-block-mobile" style="margin-top:var(--space-md);">参加する</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ CARD COMPONENT ═══════ -->
+    <div style="margin-top:var(--space-2xl);">
+      <div class="component-label" id="comp-card" style="margin-bottom:var(--space-md);">Card（カード）</div>
+      <p style="font-size:var(--text-sm);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-lg);">
+        M3 Card に準拠。カード全体がタップ領域（ボタン内包ではなくカード自体がリンク）。<br>
+        タップで詳細画面に遷移する。:active で scale(0.98) + green-50 背景で押下フィードバック。<br>
+        エリア・金額などの詳細情報は詳細画面で表示するため、カードには含めない。
+      </p>
+
+      <!-- Type A: Text-only Card -->
+      <div style="font-size:var(--text-sm);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-sm);">Type A: テキストのみカード</div>
+      <p style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-md);">
+        お食事会一覧のメインカード。タグ＋タイトル＋日時＋残席。カード全体タップで詳細遷移。
+      </p>
+      <div style="max-width:390px;margin-bottom:var(--space-lg);">
+        <div class="card" style="margin-bottom:var(--space-md);">
+          <div class="card-text">
+            <div class="card-tags">
+              <span class="tag tag-random">ランダム</span>
+              <span class="tag tag-welcome">初めての方歓迎</span>
+            </div>
+            <div class="card-title">木曜の夜、5人でごはん</div>
+            <div class="card-meta">2月20日（木）19:30〜</div>
+            <div class="card-footer">
+              <span class="card-seats">残り2席</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type B: Image Card -->
+      <div style="font-size:var(--text-sm);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-sm);">Type B: 画像付きカード</div>
+      <p style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-md);">
+        スペシャルイベント・特集ページで使用。サムネイル画像（16:9）＋テキスト。<br>
+        タグは画像内ではなくテキスト領域のタイトル上に配置。カード全体タップで詳細遷移。
+      </p>
+      <div style="max-width:390px;margin-bottom:var(--space-lg);">
+        <div class="card">
+          <div class="card-image-area">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg, var(--green-100) 0%, var(--sunset-50) 50%, var(--pink-50) 100%);display:flex;align-items:center;justify-content:center;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-300)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            </div>
+          </div>
+          <div class="card-image-body">
+            <div class="card-tags" style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:var(--space-sm);">
+              <span class="tag tag-hobby">ワイン好き</span>
+            </div>
+            <div class="card-title">春のナチュールワイン会</div>
+            <div class="card-desc">ソムリエ厳選のナチュールワインを楽しみながら、初対面でもリラックスできるお食事会です。</div>
+            <div class="card-meta">3月8日（土）18:00〜</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.9;margin-bottom:var(--space-lg);padding:var(--space-md);background:var(--bg-card);border:1px solid var(--green-100);border-radius:var(--radius-md);">
+        <strong style="color:var(--neutral-700);">カード設計のルール</strong><br>
+        ※ カード内にボタンを置かない — カード全体がタップ領域（<code style="background:var(--neutral-100);padding:1px 4px;border-radius:3px;font-size:10px;">cursor: pointer</code>）<br>
+        ※ エリア・金額は詳細画面で確認 — カードには載せない（情報を絞ってタップを促す）<br>
+        ※ モバイル: <code style="background:var(--neutral-100);padding:1px 4px;border-radius:3px;font-size:10px;">:active { scale(0.98) + green-50 }</code> で押下フィードバック<br>
+        ※ デスクトップ: <code style="background:var(--neutral-100);padding:1px 4px;border-radius:3px;font-size:10px;">:hover { translateY(-2px) + shadow-lg + 上部3pxグリーンライン }</code><br>
+        ※ border-radius: var(--radius-lg) = 16px<br>
+        ※ 画像付きカード: タグは画像内ではなくテキスト領域（card-image-body）のタイトル上に配置<br>
+        ※ 画像: aspect-ratio 16:9、WebP + lazy loading 推奨<br>
+        ※ タグ色はDesign Systemのカラーマッピングに準拠（下記参照）
+      </div>
+
+      <!-- ═══════ MOBILE MOCKUP: 5 Cards ═══════ -->
+      <div style="font-size:var(--text-sm);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-sm);">モバイル表示例 — カード5枚縦並び</div>
+      <p style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-md);">
+        実際のiPhone画面（390px幅）での一覧表示イメージ。カード間のギャップは var(--space-md) = 16px。
+      </p>
+
+      <div class="card-list-mobile">
+        <!-- Status bar -->
+        <div class="card-list-mobile-status-bar">
+          <span>9:41</span>
+          <span style="display:flex;gap:4px;align-items:center;">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="var(--neutral-700)"><rect x="0" y="4" width="3" height="8" rx="0.5"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="0.5"/><rect x="9" y="0.5" width="3" height="11.5" rx="0.5"/><rect x="13.5" y="0.5" width="2.5" height="11.5" rx="0.5" fill="var(--neutral-300)"/></svg>
+            <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="2" stroke="var(--neutral-700)" stroke-width="1"/><rect x="22" y="3.5" width="2" height="5" rx="1" fill="var(--neutral-400)"/><rect x="2" y="2" width="14" height="8" rx="1" fill="var(--green-500)"/></svg>
+          </span>
+        </div>
+
+        <!-- Top App Bar -->
+        <div class="card-list-mobile-header">
+          <span class="title">お食事会</span>
+          <span style="display:flex;gap:0;">
+            <span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;color:var(--neutral-600);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
+            <span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;color:var(--neutral-600);position:relative;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+            </span>
+          </span>
+        </div>
+
+        <!-- Card List Body -->
+        <div class="card-list-mobile-body">
+          <!-- Card 1: ランダム -->
+          <div class="card">
+            <div class="card-text">
+              <div class="card-tags">
+                <span class="tag tag-random">ランダム</span>
+                <span class="tag tag-welcome">初めての方歓迎</span>
+              </div>
+              <div class="card-title">木曜の夜、5人でごはん</div>
+              <div class="card-meta">2月20日（木）19:30〜</div>
+              <div class="card-footer">
+                <span class="card-seats">残り2席</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: タメ会 -->
+          <div class="card">
+            <div class="card-text">
+              <div class="card-tags">
+                <span class="tag tag-tamekai">タメ会</span>
+              </div>
+              <div class="card-title">30代同世代で土曜ランチ</div>
+              <div class="card-meta">3月1日（土）12:00〜</div>
+              <div class="card-footer">
+                <span class="card-seats">残り4席</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: 趣味会 -->
+          <div class="card">
+            <div class="card-text">
+              <div class="card-tags">
+                <span class="tag tag-hobby">趣味会</span>
+              </div>
+              <div class="card-title">映画好きで集まる金曜ディナー</div>
+              <div class="card-meta">3月7日（金）19:00〜</div>
+              <div class="card-footer">
+                <span class="card-seats">残り3席</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: 身長-体重100以下 -->
+          <div class="card">
+            <div class="card-text">
+              <div class="card-tags">
+                <span class="tag tag-body">身長-体重100以下</span>
+              </div>
+              <div class="card-title">がっちり体型で日曜ブランチ</div>
+              <div class="card-meta">3月9日（日）11:00〜</div>
+              <div class="card-footer">
+                <span class="card-seats">残り5席</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5: ランダム -->
+          <div class="card">
+            <div class="card-text">
+              <div class="card-tags">
+                <span class="tag tag-random">ランダム</span>
+              </div>
+              <div class="card-title">水曜の夜、5人でごはん</div>
+              <div class="card-meta">3月12日（水）19:30〜</div>
+              <div class="card-footer">
+                <span class="card-seats">残り1席</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div style="display:flex;align-items:center;justify-content:space-around;height:52px;background:var(--bg-card);border-top:1px solid var(--green-100);padding:0 var(--space-sm);">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--green-600);font-size:10px;font-weight:500;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            ホーム
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--neutral-400);font-size:10px;font-weight:500;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            さがす
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--neutral-400);font-size:10px;font-weight:500;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            予約
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--neutral-400);font-size:10px;font-weight:500;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            マイページ
+          </div>
+        </div>
+
+        <!-- Home Indicator -->
+        <div style="display:flex;justify-content:center;padding:8px 0 6px;background:var(--bg-card);">
+          <div style="width:134px;height:5px;background:var(--neutral-800);border-radius:3px;"></div>
+        </div>
+      </div>
+
+      <!-- Tag Color Reference -->
+      <div style="margin-top:var(--space-lg);padding:var(--space-md);background:var(--bg-card);border:1px solid var(--green-100);border-radius:var(--radius-md);">
+        <div style="font-size:var(--text-xs);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-sm);">モックアップ内タグカラー参照</div>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;">
+          <span class="tag tag-random">ランダム</span>
+          <span style="font-size:9px;color:var(--neutral-500);">green-100/800</span>
+          <span style="color:var(--neutral-300);margin:0 4px;">|</span>
+          <span class="tag tag-tamekai">タメ会</span>
+          <span style="font-size:9px;color:var(--neutral-500);">sunset-100/600</span>
+          <span style="color:var(--neutral-300);margin:0 4px;">|</span>
+          <span class="tag tag-hobby">趣味会</span>
+          <span style="font-size:9px;color:var(--neutral-500);">indigo-100/600</span>
+          <span style="color:var(--neutral-300);margin:0 4px;">|</span>
+          <span class="tag tag-body">身長-体重100以下</span>
+          <span style="font-size:9px;color:var(--neutral-500);">plum-100/500</span>
+          <span style="color:var(--neutral-300);margin:0 4px;">|</span>
+          <span class="tag tag-welcome">初めての方歓迎</span>
+          <span style="font-size:9px;color:var(--neutral-500);">pink-100/500</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ AVATAR UPLOAD ═══════ -->
+    <div style="margin-top:var(--space-2xl);">
+      <div class="component-label" id="comp-avatar" style="margin-bottom:var(--space-md);">Avatar Upload（プロフィール画像登録）</div>
+      <p style="font-size:var(--text-sm);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-lg);">
+        プロフィール登録・編集画面で使用するアバターアップロードUI。<br>
+        未登録時は人型アイコン、右下にカメラ/編集バッジを配置。タップでカメラロール/ギャラリーを起動。
+      </p>
+      <div style="display:flex;gap:var(--space-2xl);flex-wrap:wrap;align-items:flex-start;margin-bottom:var(--space-lg);">
+        <!-- Small - 未登録 -->
+        <div style="text-align:center;">
+          <div class="avatar-upload avatar-upload-sm">
+            <div class="avatar-upload-circle">
+              <svg class="avatar-upload-person" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <div class="avatar-upload-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+          </div>
+          <div class="avatar-upload-hint">SM・64px</div>
+        </div>
+
+        <!-- Medium - 未登録 -->
+        <div style="text-align:center;">
+          <div class="avatar-upload avatar-upload-md">
+            <div class="avatar-upload-circle">
+              <svg class="avatar-upload-person" width="44" height="44" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <div class="avatar-upload-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+          </div>
+          <div class="avatar-upload-hint">MD・88px</div>
+        </div>
+
+        <!-- Large - 登録済み -->
+        <div style="text-align:center;">
+          <div class="avatar-upload avatar-upload-lg">
+            <div class="avatar-upload-circle has-image" style="background:linear-gradient(135deg, var(--green-200), var(--pink-200));">
+              <svg width="56" height="56" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <div class="avatar-upload-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+          </div>
+          <div class="avatar-upload-hint">LG・112px<br>（編集アイコン）</div>
+        </div>
+      </div>
+
+      <div style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.9;">
+        ※ サイズ: SM(64px) / MD(88px) / LG(112px) — オンボーディングでは MD推奨、プロフィール編集では LG推奨<br>
+        ※ バッジアイコン: 未登録時=カメラ、登録済み=編集（ペン）<br>
+        ※ バッジ背景: <code style="background:var(--neutral-100);padding:1px 4px;border-radius:3px;font-size:10px;">var(--green-600)</code> + 白ボーダー2px<br>
+        ※ 未登録時: neutral-100 背景 + 人型アイコン（neutral-400）<br>
+        ※ hover: バッジが green-700 に、サークルの border-color が green-300 に変化<br>
+        ※ 実装: <code style="background:var(--neutral-100);padding:1px 4px;border-radius:3px;font-size:10px;">&lt;input type="file" accept="image/*"&gt;</code> を非表示にしてラップ
+      </div>
+
+      <!-- Card Usage Example -->
+      <div style="margin-top:var(--space-xl);">
+        <div style="font-size:var(--text-sm);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-sm);">使用例 — プロフィール登録カード</div>
+        <p style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-md);">
+          オンボーディングやプロフィール編集画面で使用するカード形式のレイアウト例。Avatar Uploadを中央配置し、適度なスペーシングで余白を持たせる。
+        </p>
+        <div style="max-width:390px;">
+          <!-- Card: 未登録状態 -->
+          <div style="background:var(--bg-card);border:1px solid var(--green-100);border-radius:var(--radius-lg);padding:var(--space-2xl) var(--space-lg);text-align:center;margin-bottom:var(--space-md);">
+            <div style="font-size:var(--text-sm);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-xl);">プロフィール写真を設定</div>
+            <div style="display:flex;justify-content:center;margin-bottom:var(--space-lg);">
+              <div class="avatar-upload avatar-upload-lg">
+                <div class="avatar-upload-circle">
+                  <svg class="avatar-upload-person" width="56" height="56" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                <div class="avatar-upload-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                </div>
+              </div>
+            </div>
+            <div style="font-size:var(--text-sm);color:var(--neutral-500);line-height:1.7;">タップして写真を選択</div>
+            <div style="font-size:var(--text-xs);color:var(--neutral-400);margin-top:var(--space-xs);">JPG, PNG｜最大 5MB</div>
+          </div>
+
+          <!-- Card: 登録済み状態 -->
+          <div style="background:var(--bg-card);border:1px solid var(--green-100);border-radius:var(--radius-lg);padding:var(--space-2xl) var(--space-lg);text-align:center;">
+            <div style="font-size:var(--text-sm);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-xl);">プロフィール写真</div>
+            <div style="display:flex;justify-content:center;margin-bottom:var(--space-lg);">
+              <div class="avatar-upload avatar-upload-lg">
+                <div class="avatar-upload-circle has-image" style="background:linear-gradient(135deg, var(--green-200), var(--pink-200));">
+                  <svg width="56" height="56" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                <div class="avatar-upload-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div style="font-size:var(--text-sm);color:var(--green-600);font-weight:500;">写真を変更する</div>
+          </div>
+        </div>
+        <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);line-height:1.9;">
+          ※ カード padding: var(--space-2xl)(48px) 上下 / var(--space-lg)(24px) 左右<br>
+          ※ アバターとタイトル間: var(--space-xl) = 32px<br>
+          ※ アバターとキャプション間: var(--space-lg) = 24px<br>
+          ※ テキストは中央揃え。カード全体がタップ領域。
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ LIST ITEM ═══════ -->
+    <div style="margin-top:var(--space-2xl);">
+      <div class="component-label" id="comp-list" style="margin-bottom:var(--space-md);">List Item（リスト項目）</div>
+      <p style="font-size:var(--text-sm);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-md);">
+        M3 List に準拠。設定画面、メニュー、通知一覧などで使用。Leading（アイコン/アバター）+コンテンツ+Trailing の構成。
+      </p>
+      <div class="list-group" style="max-width:414px;">
+        <div class="list-item">
+          <span class="icon icon-md icon-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+          <div class="list-item-content">
+            <div class="list-item-title">プロフィール編集</div>
+            <div class="list-item-desc">名前・写真・自己紹介を変更</div>
+          </div>
+          <span class="list-item-trailing"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </div>
+        <div class="list-item">
+          <span class="icon icon-md icon-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+          <div class="list-item-content">
+            <div class="list-item-title">通知設定</div>
+            <div class="list-item-desc">プッシュ通知・メール通知の管理</div>
+          </div>
+          <span class="list-item-trailing"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </div>
+        <div class="list-item">
+          <span class="icon icon-md icon-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <div class="list-item-content">
+            <div class="list-item-title">アカウント設定</div>
+            <div class="list-item-desc">メールアドレス・パスワード</div>
+          </div>
+          <span class="list-item-trailing"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+        </div>
+      </div>
+      <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);">最小高さ: 48px / Leading: icon-md(24px) / Trailing: chevron-right(20px)</div>
+    </div>
+
+    <!-- ═══════ FAB ═══════ -->
+    <div style="margin-top:var(--space-2xl);">
+      <div class="components-grid">
+        <div class="component-card">
+          <div class="component-label" id="comp-fab">FAB — Floating Action Button</div>
+          <div style="display:flex;align-items:center;gap:var(--space-lg);flex-wrap:wrap;margin-bottom:var(--space-md);">
+            <button class="fab fab-sm">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <button class="fab fab-md">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <button class="fab fab-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span class="fab-label">新規作成</span>
+            </button>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-lg);margin-bottom:var(--space-md);">
+            <button class="fab fab-md fab-accent">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;">
+            SM: 40px / MD: 56px / Extended: 高さ56px+ラベル<br>
+            Accent バリアント=pink-400。画面右下に固定配置。
+          </div>
+        </div>
+
+        <!-- Snackbar -->
+        <div class="component-card">
+          <div class="component-label">Snackbar</div>
+          <div class="snackbar" style="margin-bottom:var(--space-md);">
+            <span class="snackbar-text">お食事会をブックマークしました</span>
+            <button class="snackbar-action">元に戻す</button>
+          </div>
+          <div class="snackbar">
+            <span class="snackbar-text">プロフィールを更新しました</span>
+            <button class="snackbar-action">閉じる</button>
+          </div>
+          <div style="margin-top:var(--space-md);font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;">
+            neutral-800背景 + 白テキスト。アクション=green-200。<br>
+            画面下部にFABの上に表示。4秒後に自動消去。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ DIALOG & TOP APP BAR ═══════ -->
+    <div style="margin-top:var(--space-xl);">
+      <div class="components-grid">
+        <!-- Dialog -->
+        <div class="component-card">
+          <div class="component-label" id="comp-dialog">Dialog（ダイアログ）</div>
+          <div class="dialog-demo">
+            <div class="dialog-title">参加をキャンセルしますか？</div>
+            <div class="dialog-body">キャンセル後はこのお食事会に再度参加できない場合があります。よろしいですか？</div>
+            <div class="dialog-actions">
+              <button class="btn btn-ghost" style="font-size:var(--text-xs);min-height:36px;">戻る</button>
+              <button class="btn btn-primary" style="font-size:var(--text-xs);min-height:36px;padding:0 16px;background:var(--error-400);box-shadow:none;">キャンセルする</button>
+            </div>
+          </div>
+          <div style="margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--neutral-600);">radius-xl(24px) / 最大幅320px / overlay上に表示</div>
+        </div>
+
+        <!-- Top App Bar -->
+        <div class="component-card">
+          <div class="component-label" id="comp-topbar">Top App Bar</div>
+          <div class="top-app-bar" style="margin-bottom:var(--space-md);">
+            <button class="top-app-bar-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+            <div class="top-app-bar-title">お食事会を探す</div>
+            <div class="top-app-bar-actions">
+              <button class="top-app-bar-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </button>
+              <button class="top-app-bar-icon" style="position:relative;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span class="notification-badge" style="position:absolute;top:6px;right:6px;min-width:16px;height:16px;font-size:9px;padding:0 4px;">3</span>
+              </button>
+            </div>
+          </div>
+          <div style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;">
+            高さ56px / 背景: bg-card / 下線: green-100<br>
+            Leading: 戻る or メニュー / Trailing: アクションアイコン
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ TAB BAR & SEARCH BAR ═══════ -->
+    <div style="margin-top:var(--space-xl);">
+      <div class="components-grid">
+        <div class="component-card">
+          <div class="component-label">Tab Bar（タブバー）</div>
+          <div class="tab-bar" style="margin-bottom:var(--space-md);">
+            <button class="tab-item active">すべて</button>
+            <button class="tab-item">和食</button>
+            <button class="tab-item">イタリアン</button>
+            <button class="tab-item">ワイン</button>
+          </div>
+          <div style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;">
+            アクティブ: green-600 テキスト + green-600 下線(2px)<br>
+            非アクティブ: neutral-500 / hover: green-50 背景<br>
+            最小高さ: 44px / 横スクロール対応
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="component-label" id="comp-search">Search Bar（検索バー）</div>
+          <div class="search-bar" style="margin-bottom:var(--space-md);">
+            <span class="search-bar-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
+            <input class="search-bar-input" type="text" placeholder="エリア・ジャンルで探す">
+          </div>
+          <div style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;">
+            高さ: 48px / neutral-50 背景 / radius-full<br>
+            focus: green-400 ボーダー + 白背景 + focus ring
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ DROPDOWN ═══════ -->
+    <div style="margin-top:var(--space-2xl);">
+      <div class="component-label" id="comp-dropdown" style="margin-bottom:var(--space-md);">Dropdown / Menu（ドロップダウン）</div>
+      <p style="font-size:var(--text-sm);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-lg);">
+        M3 Menus仕様に準拠。一時的なアクション一覧を表示するオーバーレイコンポーネント。<br>
+        Trigger要素（ボタン・アイコンボタン・テキストフィールド）のタップで開き、外側タップ・選択・Escで閉じる。<br>
+        実装: <code style="background:var(--neutral-100);padding:1px 4px;border-radius:3px;font-size:10px;">@radix-ui/react-dropdown-menu</code>（<code style="background:var(--neutral-100);padding:1px 4px;border-radius:3px;font-size:10px;">src/app/components/ui/dropdown-menu.tsx</code>）
+      </p>
+
+      <div class="components-grid">
+
+        <!-- 標準ドロップダウン -->
+        <div class="component-card">
+          <div class="component-label" style="margin-bottom:var(--space-md);">標準メニュー（Standard Menu）</div>
+          <div style="position:relative;display:inline-block;">
+            <button class="btn btn-ghost dropdown-trigger" onclick="toggleDropdown('dd-standard',this)" aria-haspopup="true" aria-expanded="false" aria-controls="dd-standard">
+              ⋮ オプション
+              <svg style="margin-left:4px;flex-shrink:0;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <ul class="dropdown-menu" id="dd-standard" role="menu">
+              <li class="dropdown-item" role="menuitem" onclick="closeAllDropdowns()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                編集する
+              </li>
+              <li class="dropdown-item" role="menuitem" onclick="closeAllDropdowns()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                シェアする
+              </li>
+              <li class="dropdown-divider" role="separator"></li>
+              <li class="dropdown-item dropdown-item-danger" role="menuitem" onclick="closeAllDropdowns()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                削除する
+              </li>
+            </ul>
+          </div>
+          <div style="margin-top:var(--space-lg);font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;">
+            min-width: 160px / 最大高さ: 280px（スクロール対応）<br>
+            背景: white / 影: shadow-lg / radius: radius-md(12px)<br>
+            各アイテム: 44px min-height / hover: green-50 背景<br>
+            破壊的操作はセパレーターで区切り赤色テキスト
+          </div>
+        </div>
+
+        <!-- アイコンボタントリガー -->
+        <div class="component-card">
+          <div class="component-label" style="margin-bottom:var(--space-md);">アイコンボタントリガー（カード内）</div>
+          <div style="background:var(--bg-card);border:1px solid var(--green-100);border-radius:var(--radius-md);padding:var(--space-md);position:relative;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-sm);">
+              <div>
+                <div class="card-tags" style="margin-bottom:var(--space-xs);"><span class="tag tag-random" style="font-size:10px;padding:2px 8px;">ランダム</span></div>
+                <div style="font-size:var(--text-sm);font-weight:500;color:var(--neutral-800);">木曜の夜、5人でごはん</div>
+                <div style="font-size:var(--text-xs);color:var(--neutral-500);margin-top:2px;">2月20日（木）19:30〜</div>
+              </div>
+              <div style="position:relative;flex-shrink:0;">
+                <button class="dropdown-icon-trigger" onclick="toggleDropdown('dd-icon',this)" aria-haspopup="true" aria-expanded="false" aria-controls="dd-icon" aria-label="more options">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <ul class="dropdown-menu" id="dd-icon" style="left:auto;right:0;transform-origin:top right;" role="menu">
+                  <li class="dropdown-item" role="menuitem" onclick="closeAllDropdowns()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    お気に入りに追加
+                  </li>
+                  <li class="dropdown-item" role="menuitem" onclick="closeAllDropdowns()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                    友達に紹介する
+                  </li>
+                  <li class="dropdown-divider" role="separator"></li>
+                  <li class="dropdown-item dropdown-item-danger" role="menuitem" onclick="closeAllDropdowns()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    問題を報告する
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:var(--space-md);font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;">
+            トリガー: 44×44px アイコンボタン（⋮ 縦三点）<br>
+            メニューはカード右端基準で右寄せ表示<br>
+            hover: neutral-100 / active: green-50
+          </div>
+        </div>
+
+      </div><!-- /components-grid -->
+
+      <!-- Select-style Exposed Dropdown -->
+      <div style="margin-top:var(--space-xl);">
+        <div style="font-size:var(--text-sm);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-sm);">Exposed Dropdown（選択フィールド型）</div>
+        <p style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-md);">
+          テキストフィールドがトリガーになるバリアント。エリア・ジャンル・並び替えなどのフィルタ選択に使用。選択中の値をフィールドに表示。
+        </p>
+        <div style="max-width:320px;">
+          <label class="input-label">エリア</label>
+          <div style="position:relative;">
+            <button class="dropdown-select-trigger" onclick="toggleDropdown('dd-select',this)" aria-haspopup="listbox" aria-expanded="false" aria-controls="dd-select">
+              <span id="dd-select-value">新宿エリア</span>
+              <svg style="flex-shrink:0;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-full" id="dd-select" role="listbox" aria-labelledby="dd-select-value">
+              <li class="dropdown-item dropdown-item-selected" role="option" aria-selected="true" onclick="selectOption('dd-select','dd-select-value',this)">新宿エリア</li>
+              <li class="dropdown-item" role="option" aria-selected="false" onclick="selectOption('dd-select','dd-select-value',this)">渋谷エリア</li>
+              <li class="dropdown-item" role="option" aria-selected="false" onclick="selectOption('dd-select','dd-select-value',this)">池袋エリア</li>
+              <li class="dropdown-item" role="option" aria-selected="false" onclick="selectOption('dd-select','dd-select-value',this)">中野エリア</li>
+              <li class="dropdown-item" role="option" aria-selected="false" onclick="selectOption('dd-select','dd-select-value',this)">高円寺エリア</li>
+              <li class="dropdown-item" role="option" aria-selected="false" onclick="selectOption('dd-select','dd-select-value',this)">上野エリア</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spec Rules -->
+      <div style="margin-top:var(--space-xl);padding:var(--space-md);background:var(--bg-card);border:1px solid var(--green-100);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--neutral-600);line-height:2;">
+        <strong style="color:var(--neutral-700);display:block;margin-bottom:var(--space-sm);">Dropdown 設計ルール（M3 Menus準拠）</strong>
+        ※ <strong style="color:var(--neutral-700);">使用条件</strong>: 選択肢が3つ以上（2以下はラジオボタン・Chipを使用）<br>
+        ※ <strong style="color:var(--neutral-700);">配置</strong>: トリガー直下。画面端で反転（上開き / 右寄せ）<br>
+        ※ <strong style="color:var(--neutral-700);">メニュー幅</strong>: min 160px、max 280px。Exposed型はトリガー幅に合わせる<br>
+        ※ <strong style="color:var(--neutral-700);">アイテム高さ</strong>: min-height 44px（WCAG 2.5.5準拠）、padding: 10px 16px<br>
+        ※ <strong style="color:var(--neutral-700);">アイテム数</strong>: 推奨3〜8件。超える場合はmax-height: 280px + overflow-y: auto<br>
+        ※ <strong style="color:var(--neutral-700);">Divider</strong>: 破壊的操作（削除・報告等）はセパレーターで分離する<br>
+        ※ <strong style="color:var(--neutral-700);">アニメーション</strong>: transform-origin をトリガー方向に設定。scaleY 0.92→1 + opacity 0→1（150ms ease）<br>
+        ※ <strong style="color:var(--neutral-700);">z-index</strong>: 200（Toast 300より低く、Modal 500より低い）<br>
+        ※ <strong style="color:var(--neutral-700);">アクセシビリティ</strong>: role="menu" + role="menuitem"（または role="listbox" + role="option"）、aria-haspopup、aria-expanded、キーボード操作（↑↓矢印 / Enter / Esc）対応必須
+      </div>
+
+    </div><!-- /dropdown section -->
+
+    <script>
+      /* Dropdown toggle helper (design system preview only) */
+      function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-menu.is-open').forEach(function(m) {
+          m.classList.remove('is-open');
+          var btn = document.querySelector('[aria-controls="' + m.id + '"]');
+          if (btn) btn.setAttribute('aria-expanded','false');
+        });
+      }
+      function toggleDropdown(id, triggerEl) {
+        var menu = document.getElementById(id);
+        var isOpen = menu.classList.contains('is-open');
+        closeAllDropdowns();
+        if (!isOpen) {
+          menu.classList.add('is-open');
+          if (triggerEl) triggerEl.setAttribute('aria-expanded','true');
+        }
+      }
+      function selectOption(menuId, valueId, optionEl) {
+        var menu = document.getElementById(menuId);
+        menu.querySelectorAll('.dropdown-item').forEach(function(el) {
+          el.classList.remove('dropdown-item-selected');
+          el.setAttribute('aria-selected','false');
+        });
+        optionEl.classList.add('dropdown-item-selected');
+        optionEl.setAttribute('aria-selected','true');
+        document.getElementById(valueId).textContent = optionEl.textContent.trim();
+        closeAllDropdowns();
+      }
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('[aria-haspopup]') && !e.target.closest('.dropdown-menu')) {
+          closeAllDropdowns();
+        }
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeAllDropdowns();
+      });
+    </script>
+
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-07">
+    <div class="section-label">07</div>
+    <h2 class="section-title">アイコン</h2>
+    <p class="section-desc">M3 Material Symbols に準拠したSVGアイコンライブラリ。SakuraCoで使用する主要アイコンを定義。</p>
+
+    <!-- ═══════ ICON LIBRARY ═══════ -->
+    <div style="margin-top:var(--space-2xl);">
+      <div class="component-label" style="margin-bottom:var(--space-md);">Icon Library（アイコン定義）</div>
+      <p style="font-size:var(--text-sm);color:var(--neutral-600);line-height:1.8;margin-bottom:var(--space-md);">
+        M3 Material Symbols（Outlined, weight 300〜400）に準拠したSVGアイコン。<br>
+        SakuraCoで使用する主要アイコンを定義。stroke-width: 1.5〜2、stroke-linecap/linejoin: round。
+      </p>
+
+      <!-- Icon Sizes -->
+      <div style="margin-bottom:var(--space-lg);">
+        <div style="font-size:var(--text-xs);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-sm);">サイズバリアント</div>
+        <div style="display:flex;align-items:center;gap:var(--space-lg);flex-wrap:wrap;">
+          <div style="text-align:center;">
+            <span class="icon icon-xs icon-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <div style="font-size:9px;color:var(--neutral-500);margin-top:4px;">XS・16px</div>
+          </div>
+          <div style="text-align:center;">
+            <span class="icon icon-sm icon-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <div style="font-size:9px;color:var(--neutral-500);margin-top:4px;">SM・20px</div>
+          </div>
+          <div style="text-align:center;">
+            <span class="icon icon-md icon-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <div style="font-size:9px;color:var(--neutral-500);margin-top:4px;">MD・24px</div>
+          </div>
+          <div style="text-align:center;">
+            <span class="icon icon-lg icon-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <div style="font-size:9px;color:var(--neutral-500);margin-top:4px;">LG・32px</div>
+          </div>
+          <div style="text-align:center;">
+            <span class="icon icon-xl icon-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <div style="font-size:9px;color:var(--neutral-500);margin-top:4px;">XL・40px</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Icon Color Variants -->
+      <div style="margin-bottom:var(--space-lg);">
+        <div style="font-size:var(--text-xs);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-sm);">カラーバリアント</div>
+        <div style="display:flex;align-items:center;gap:var(--space-lg);flex-wrap:wrap;">
+          <div style="text-align:center;">
+            <span class="icon icon-md icon-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <div style="font-size:9px;color:var(--neutral-500);margin-top:4px;">Primary</div>
+          </div>
+          <div style="text-align:center;">
+            <span class="icon icon-md icon-secondary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <div style="font-size:9px;color:var(--neutral-500);margin-top:4px;">Secondary</div>
+          </div>
+          <div style="text-align:center;">
+            <span class="icon icon-md icon-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <div style="font-size:9px;color:var(--neutral-500);margin-top:4px;">Accent</div>
+          </div>
+          <div style="text-align:center;">
+            <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <div style="font-size:9px;color:var(--neutral-500);margin-top:4px;">On Surface</div>
+          </div>
+          <div style="text-align:center;">
+            <span class="icon icon-md icon-disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <div style="font-size:9px;color:var(--neutral-500);margin-top:4px;">Disabled</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Icon Showcase -->
+      <div style="font-size:var(--text-xs);font-weight:500;color:var(--neutral-700);margin-bottom:var(--space-sm);">SakuraCo 使用アイコン一覧</div>
+      <div class="icon-showcase" style="margin-bottom:var(--space-lg);">
+        <!-- Navigation -->
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+          <span class="icon-name">home</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+          <span class="icon-name">search</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+          <span class="icon-name">bell</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+          <span class="icon-name">user</span>
+        </div>
+        <!-- Actions -->
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+          <span class="icon-name">heart</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></span>
+          <span class="icon-name">bookmark</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span>
+          <span class="icon-name">share</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          <span class="icon-name">plus</span>
+        </div>
+        <!-- Status & Info -->
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="icon-name">check</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          <span class="icon-name">close</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+          <span class="icon-name">info</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span class="icon-name">warning</span>
+        </div>
+        <!-- Navigation arrows -->
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></span>
+          <span class="icon-name">chevron-left</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+          <span class="icon-name">chevron-right</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+          <span class="icon-name">arrow-left</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <span class="icon-name">settings</span>
+        </div>
+        <!-- SakuraCo specific -->
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
+          <span class="icon-name">camera</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+          <span class="icon-name">edit</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+          <span class="icon-name">calendar</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <span class="icon-name">map-pin</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+          <span class="icon-name">clock</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="icon-name">users</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          <span class="icon-name">message</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          <span class="icon-name">star</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></span>
+          <span class="icon-name">inbox</span>
+        </div>
+        <!-- Food & dining -->
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></span>
+          <span class="icon-name">coffee</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+          <span class="icon-name">yen</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+          <span class="icon-name">delivery</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span>
+          <span class="icon-name">flag</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+          <span class="icon-name">trash</span>
+        </div>
+        <div class="icon-showcase-item">
+          <span class="icon icon-md icon-on-surface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>
+          <span class="icon-name">filter</span>
+        </div>
+      </div>
+
+      <div style="font-size:var(--text-xs);color:var(--neutral-600);line-height:1.9;">
+        ※ SVG属性: <code style="background:var(--neutral-100);padding:1px 4px;border-radius:3px;font-size:10px;">fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"</code><br>
+        ※ アイコンカラーは <code style="background:var(--neutral-100);padding:1px 4px;border-radius:3px;font-size:10px;">color</code> プロパティで制御（currentColor継承）<br>
+        ※ M3推奨: ナビゲーション内アクティブ状態はFilled版も検討（fill="currentColor"を追加）<br>
+        ※ サイズはアイコンの用途に応じて選択: ナビ/ボタン内=MD(24px)、Top App Bar=MD、装飾=LG/XL<br>
+        ※ 参考: <a href="https://m3.material.io/styles/icons/overview" style="color:var(--green-600);">M3 Icons Overview</a>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-08">
+    <div class="section-label">08</div>
+    <h2 class="section-title">スペーシング・角丸・シャドウ</h2>
+    <div style="margin-bottom:var(--space-xl);">
+      <div class="component-label" style="margin-bottom:var(--space-md);">Spacing（4px base grid）</div>
+      <div class="spacing-row"><span class="spacing-label">xs — 4px</span><div class="spacing-bar" style="width:4px;"></div></div>
+      <div class="spacing-row"><span class="spacing-label">sm — 8px</span><div class="spacing-bar" style="width:16px;"></div></div>
+      <div class="spacing-row"><span class="spacing-label">md — 16px</span><div class="spacing-bar" style="width:48px;"></div></div>
+      <div class="spacing-row"><span class="spacing-label">lg — 24px</span><div class="spacing-bar" style="width:80px;"></div></div>
+      <div class="spacing-row"><span class="spacing-label">xl — 32px</span><div class="spacing-bar" style="width:112px;"></div></div>
+      <div class="spacing-row"><span class="spacing-label">2xl — 48px</span><div class="spacing-bar" style="width:160px;"></div></div>
+    </div>
+    <div style="margin-bottom:var(--space-xl);">
+      <div class="component-label" style="margin-bottom:var(--space-md);">Border Radius</div>
+      <div class="radius-grid">
+        <div class="radius-item" style="border-radius:8px;">sm 8</div>
+        <div class="radius-item" style="border-radius:12px;">md 12</div>
+        <div class="radius-item" style="border-radius:16px;">lg 16</div>
+        <div class="radius-item" style="border-radius:24px;">xl 24</div>
+        <div class="radius-item" style="border-radius:9999px;">full</div>
+      </div>
+    </div>
+    <div>
+      <div class="component-label" style="margin-bottom:var(--space-md);">Shadows</div>
+      <div class="shadow-grid">
+        <div class="shadow-item" style="box-shadow:var(--shadow-sm);"><span class="name">sm</span></div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-md);"><span class="name">md</span></div>
+        <div class="shadow-item" style="box-shadow:var(--shadow-lg);"><span class="name">lg</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-09">
+    <div class="section-label">09</div>
+    <h2 class="section-title">デザイン Do / Don't</h2>
+    <div class="dodont-grid">
+      <div class="dodont-card do-card">
+        <div class="label">Do</div>
+        <ul>
+          <li>モバイルファーストで設計する</li>
+          <li>タッチターゲットは44px以上を厳守</li>
+          <li>余白を多めに取り呼吸感を出す</li>
+          <li>フォントウェイトは300〜500で統一</li>
+          <li>CTAは画面下部に固定（親指ゾーン）</li>
+          <li>ピンクは「特別な瞬間」にだけ点灯</li>
+          <li>テキストのコントラスト比 WCAG AA以上</li>
+          <li>セーフエリアを常に考慮する</li>
+        </ul>
+      </div>
+      <div class="dodont-card dont-card">
+        <div class="label">Don't</div>
+        <ul>
+          <li>デスクトップ前提でデザインしない</li>
+          <li>小さすぎるタップ領域を作らない</li>
+          <li>neutral-400以下をテキスト情報に使わない</li>
+          <li>太字（700+）を多用しない</li>
+          <li>レインボーカラーを使わない</li>
+          <li>ピンクを日常的に使わない</li>
+          <li>backdrop-filterを多用しない（性能）</li>
+          <li>hoverだけに頼ったインタラクション</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-10">
+    <div class="section-label">10</div>
+    <h2 class="section-title">Voice & Tone</h2>
+    <p class="section-desc">語りかけるように。友人が隣で静かに話しかけてくるような距離感。</p>
+    <div class="dodont-grid">
+      <div class="dodont-card do-card">
+        <div class="label">こう言う</div>
+        <ul>
+          <li>「緊張しても大丈夫。」</li>
+          <li>「まだ決めなくていいよ。」</li>
+          <li>「今日はどんな夜でしたか？」</li>
+          <li>「素敵な夜でしたね。」</li>
+          <li>「あなたのペースで。」</li>
+        </ul>
+      </div>
+      <div class="dodont-card dont-card">
+        <div class="label">こう言わない</div>
+        <ul>
+          <li>「マッチング成立！」（→「つながり」を使う）</li>
+          <li>「あなたに興味がある人が○人！」</li>
+          <li>「急いで！残りわずか！」</li>
+          <li>「出会いのチャンスを逃すな」</li>
+          <li>「プロフィールを充実させよう」</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-11">
+    <div class="section-label">11</div>
+    <h2 class="section-title">カラー × コンポーネント マッピング</h2>
+    <p class="section-desc">各コンポーネントでどのカラーをどの役割に使うかのクイックリファレンス。</p>
+
+    <div class="scale-table-wrap">
+      <table class="scale-table">
+        <thead>
+          <tr><th>コンポーネント</th><th>デフォルト</th><th>Success</th><th>Warning</th><th>Error</th><th>Info</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Button (Primary)</td>
+            <td style="color:var(--green-600);">green-600</td>
+            <td style="color:var(--success-500);">success-500</td>
+            <td>—</td>
+            <td style="color:var(--error-400);">error-400</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Toast / Alert BG</td>
+            <td>—</td>
+            <td style="color:var(--success-500);">success-50</td>
+            <td style="color:var(--warning-500);">warning-50</td>
+            <td style="color:var(--error-500);">error-50</td>
+            <td style="color:var(--info-500);">info-50</td>
+          </tr>
+          <tr>
+            <td>Toast / Alert Border</td>
+            <td>—</td>
+            <td style="color:var(--success-400);">success-200</td>
+            <td style="color:var(--warning-400);">warning-200</td>
+            <td style="color:var(--error-400);">error-200</td>
+            <td style="color:var(--info-400);">info-200</td>
+          </tr>
+          <tr>
+            <td>Toast / Alert Text</td>
+            <td>—</td>
+            <td style="color:var(--success-600);">success-600</td>
+            <td style="color:var(--warning-600);">warning-600</td>
+            <td style="color:var(--error-600);">error-600</td>
+            <td style="color:var(--info-600);">info-600</td>
+          </tr>
+          <tr>
+            <td>Badge BG</td>
+            <td style="color:var(--green-600);">green-100</td>
+            <td style="color:var(--success-500);">success-100</td>
+            <td style="color:var(--warning-500);">warning-100</td>
+            <td style="color:var(--error-500);">error-100</td>
+            <td style="color:var(--info-500);">info-100</td>
+          </tr>
+          <tr>
+            <td>Input Error</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td style="color:var(--error-400);">error-400 border, error-50 bg</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Disabled</td>
+            <td colspan="5" style="color:var(--neutral-400);">bg: neutral-200 / fg: neutral-400</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Semantic Alias Reference -->
+    <div style="margin-top:var(--space-xl);">
+      <div class="component-label" style="margin-bottom:var(--space-md);">Semantic Alias 変数リファレンス</div>
+      <div class="code-block">
+        <pre><span class="code-comment">/* SakuraCo v4 — Semantic & Tertiary Tokens */</span>
+
+<span class="code-comment">/* Tertiary — Warm Sand */</span>
+<span class="code-prop">--sand-50</span>:  <span class="code-val">#FAF7F2</span>;  <span class="code-prop">--sand-100</span>: <span class="code-val">#F0EBE0</span>;
+<span class="code-prop">--sand-200</span>: <span class="code-val">#E2D9C8</span>;  <span class="code-prop">--sand-300</span>: <span class="code-val">#CCBFA8</span>;
+<span class="code-prop">--sand-400</span>: <span class="code-val">#B0A48A</span>;  <span class="code-prop">--sand-500</span>: <span class="code-val">#938A72</span>;
+<span class="code-prop">--sand-600</span>: <span class="code-val">#75705E</span>;
+
+<span class="code-comment">/* Success — 落ち着いたグリーン（HSL 135° / S 38%） */</span>
+<span class="code-prop">--success-50</span>:  <span class="code-val">#EFF6F0</span>;  <span class="code-prop">--success-100</span>: <span class="code-val">#D0E8D3</span>;
+<span class="code-prop">--success-400</span>: <span class="code-val">#4A9955</span>;  <span class="code-prop">--success-600</span>: <span class="code-val">#2A5E33</span>;
+
+<span class="code-comment">/* Warning — 穏やかなアンバー（HSL 38° / S 52%） */</span>
+<span class="code-prop">--warning-50</span>:  <span class="code-val">#FEF7EC</span>;  <span class="code-prop">--warning-100</span>: <span class="code-val">#FCEACC</span>;
+<span class="code-prop">--warning-400</span>: <span class="code-val">#D9A040</span>;  <span class="code-prop">--warning-600</span>: <span class="code-val">#8C6823</span>;
+
+<span class="code-comment">/* Error — 落ち着いたレッド（HSL 0° / S 45%） */</span>
+<span class="code-prop">--error-50</span>:  <span class="code-val">#FDF2F2</span>;   <span class="code-prop">--error-100</span>: <span class="code-val">#F9DADA</span>;
+<span class="code-prop">--error-400</span>: <span class="code-val">#CC5555</span>;   <span class="code-prop">--error-600</span>: <span class="code-val">#832D2D</span>;
+
+<span class="code-comment">/* Info — 静かなブルー（HSL 208° / S 42%） */</span>
+<span class="code-prop">--info-50</span>:  <span class="code-val">#EFF5FA</span>;    <span class="code-prop">--info-100</span>: <span class="code-val">#D4E5F2</span>;
+<span class="code-prop">--info-400</span>: <span class="code-val">#5592BB</span>;    <span class="code-prop">--info-600</span>: <span class="code-val">#2D5977</span>;
+
+<span class="code-comment">/* Semantic Aliases */</span>
+<span class="code-prop">--disabled</span>: <span class="code-val">var(--neutral-200)</span>;
+<span class="code-prop">--disabled-foreground</span>: <span class="code-val">var(--neutral-400)</span>;
+<span class="code-prop">--focus-ring</span>: <span class="code-val">rgba(29, 140, 126, 0.18)</span>;
+<span class="code-prop">--overlay</span>: <span class="code-val">rgba(19, 26, 24, 0.45)</span>;
+<span class="code-prop">--divider</span>: <span class="code-val">var(--neutral-200)</span>;
+
+<span class="code-comment">/* Spacing Aliases（コンポーネント互換） */</span>
+<span class="code-prop">--spacing-xs</span>: <span class="code-val">var(--space-xs)</span>;
+<span class="code-prop">--spacing-md</span>: <span class="code-val">var(--space-md)</span>;
+<span class="code-prop">--spacing-lg</span>: <span class="code-val">var(--space-lg)</span>;
+<span class="code-prop">--spacing-xl</span>: <span class="code-val">var(--space-xl)</span>;
+<span class="code-prop">--spacing-2xl</span>: <span class="code-val">var(--space-2xl)</span>;</pre>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="sec-12">
+    <div class="section-label">12</div>
+    <h2 class="section-title">CSS変数リファレンス</h2>
+    <div class="code-block">
+      <pre><span class="code-comment">/* SakuraCo v3 — Mobile First Design Tokens */</span>
+:root {
+  <span class="code-comment">/* Colors */</span>
+  <span class="code-prop">--green-50</span>: <span class="code-val">#EBF5F4</span>;  <span class="code-prop">--green-100</span>: <span class="code-val">#C9E8E4</span>;
+  <span class="code-prop">--green-200</span>: <span class="code-val">#93D1CA</span>;  <span class="code-prop">--green-300</span>: <span class="code-val">#5BB8AE</span>;
+  <span class="code-prop">--green-400</span>: <span class="code-val">#34A396</span>;  <span class="code-prop">--green-500</span>: <span class="code-val">#1D8C7E</span>;
+  <span class="code-prop">--green-600</span>: <span class="code-val">#177568</span>;  <span class="code-comment">/* CTA bg — 白文字 5.65:1 */</span>
+  <span class="code-prop">--green-700</span>: <span class="code-val">#115C52</span>;  <span class="code-comment">/* Brand — 白bg 6.26:1 */</span>
+
+  <span class="code-prop">--pink-400</span>: <span class="code-val">#E8507A</span>;  <span class="code-comment">/* Accent — 白文字 4.54:1 */</span>
+  <span class="code-prop">--pink-500</span>: <span class="code-val">#C73D63</span>;  <span class="code-comment">/* Text pink — 白bg 5.85:1 */</span>
+
+  <span class="code-prop">--neutral-500</span>: <span class="code-val">#5E6E68</span>; <span class="code-comment">/* caption 4.97:1 (w500) */</span>
+  <span class="code-prop">--neutral-600</span>: <span class="code-val">#455250</span>; <span class="code-comment">/* sub text 7.97:1 */</span>
+  <span class="code-prop">--neutral-700</span>: <span class="code-val">#333E3C</span>; <span class="code-comment">/* body 10.5:1 */</span>
+  <span class="code-prop">--neutral-800</span>: <span class="code-val">#222B29</span>; <span class="code-comment">/* heading 15.4:1 */</span>
+
+  <span class="code-comment">/* Font */</span>
+  <span class="code-prop">--font-display</span>: <span class="code-val">'Cormorant Garamond', serif</span>;            <span class="code-comment">/* ロゴのみ */</span>
+  <span class="code-prop">--font-en</span>:      <span class="code-val">'Inter', sans-serif</span>;                     <span class="code-comment">/* 英字・数字 */</span>
+  <span class="code-prop">--font-body</span>:    <span class="code-val">'Inter', 'Noto Sans JP', sans-serif</span>;     <span class="code-comment">/* 本文（英→日fallback） */</span>
+  <span class="code-prop">--font-mono</span>:    <span class="code-val">'JetBrains Mono', monospace</span>;             <span class="code-comment">/* コード・HEX */</span>
+
+  <span class="code-comment">/* Mobile-first type scale */</span>
+  <span class="code-prop">--text-xs</span>: <span class="code-val">11px</span>;  <span class="code-prop">--text-sm</span>: <span class="code-val">13px</span>;
+  <span class="code-prop">--text-base</span>: <span class="code-val">15px</span>;  <span class="code-prop">--text-md</span>: <span class="code-val">17px</span>;
+  <span class="code-prop">--text-lg</span>: <span class="code-val">20px</span>;  <span class="code-prop">--text-xl</span>: <span class="code-val">28px</span>;
+
+  <span class="code-comment">/* Touch targets */</span>
+  <span class="code-prop">--touch-min</span>: <span class="code-val">44px</span>;
+  <span class="code-prop">--touch-comfortable</span>: <span class="code-val">48px</span>;
+
+  <span class="code-comment">/* Safe area */</span>
+  <span class="code-prop">--safe-bottom</span>: <span class="code-val">env(safe-area-inset-bottom)</span>;
+  <span class="code-prop">--safe-top</span>: <span class="code-val">env(safe-area-inset-top)</span>;
+
+  <span class="code-comment">/* BG */</span>
+  <span class="code-prop">--bg-main</span>: <span class="code-val">linear-gradient(168deg, #EBF5F4, #F7F9F9, #EBF5F4)</span>;
+  <span class="code-prop">--bg-card</span>: <span class="code-val">rgba(255, 255, 255, 0.78)</span>;
+}
+
+<span class="code-comment">/* Desktop overrides */</span>
+@media (min-width: 768px) {
+  :root {
+    <span class="code-prop">--text-md</span>: <span class="code-val">18px</span>;  <span class="code-prop">--text-lg</span>: <span class="code-val">24px</span>;
+    <span class="code-prop">--text-xl</span>: <span class="code-val">32px</span>;  <span class="code-prop">--text-brand</span>: <span class="code-val">48px</span>;
+  }
+}</pre>
+    </div>
+  </section>
+
+
+</div>
+
+<script>
+(function() {
+  const nav = document.getElementById('ds-nav');
+  if (!nav) return;
+
+  const links = nav.querySelectorAll('.ds-nav-link');
+  const subLinks = nav.querySelectorAll('.ds-nav-sub-link');
+  const sub06 = document.getElementById('nav-sub-06');
+  const sections = [];
+  const compAnchors = [];
+
+  links.forEach(link => {
+    const id = link.getAttribute('data-sec');
+    const el = document.getElementById(id);
+    if (el) sections.push({ el, link, id });
+  });
+
+  subLinks.forEach(link => {
+    const id = link.getAttribute('href').replace('#', '');
+    const el = document.getElementById(id);
+    if (el) compAnchors.push({ el, link, id });
+  });
+
+  function update() {
+    const scrollY = window.scrollY + 140;
+
+    // Main section tracking
+    let current = sections[0];
+    for (const s of sections) {
+      if (s.el.offsetTop <= scrollY) current = s;
+    }
+    links.forEach(l => l.classList.remove('active'));
+    if (current) current.link.classList.add('active');
+
+    // Toggle sub-nav open when sec-06 is active
+    const is06 = current && current.id === 'sec-06';
+    if (sub06) {
+      if (is06) {
+        sub06.classList.add('open');
+      } else {
+        sub06.classList.remove('open');
+      }
+    }
+
+    // Sub-link active tracking
+    if (is06 && compAnchors.length) {
+      let currentComp = compAnchors[0];
+      for (const c of compAnchors) {
+        if (c.el.offsetTop <= scrollY) currentComp = c;
+      }
+      subLinks.forEach(l => l.classList.remove('active'));
+      if (currentComp) currentComp.link.classList.add('active');
+    } else {
+      subLinks.forEach(l => l.classList.remove('active'));
+    }
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+
+  // Smooth scroll for main links
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const id = link.getAttribute('data-sec');
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', '#' + id);
+      }
+    });
+  });
+
+  // Smooth scroll for sub-links
+  subLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        history.replaceState(null, '', '#' + id);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
