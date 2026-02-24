@@ -26,7 +26,7 @@ export function QuestionLayout({
   const progressPercent = totalSteps > 0 ? (currentStep / totalSteps) * 100 : 0;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col h-screen">
       {/* Header */}
       <div
         className="sticky top-0 z-10 px-4 pt-4 pb-2"
@@ -93,18 +93,19 @@ export function QuestionLayout({
         )}
       </div>
 
-      {/* Content */}
+      {/* Content - Scrollable Area */}
       <div className="flex-1 px-4 py-6 overflow-y-auto">
         {children}
       </div>
 
-      {/* Fixed Bottom CTA */}
+      {/* Fixed Bottom Button - Always Visible */}
       <div
-        className="sticky bottom-0 px-4 py-4"
         style={{
+          padding: "16px",
+          paddingBottom: "calc(16px + env(safe-area-inset-bottom))",
           background: "var(--bg-main)",
           borderTop: "1px solid var(--green-100)",
-          paddingBottom: "calc(16px + env(safe-area-inset-bottom))",
+          flexShrink: 0,
         }}
       >
         <button

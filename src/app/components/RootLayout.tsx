@@ -1,8 +1,17 @@
 import { Outlet, useLocation } from "react-router";
+import { useEffect } from "react";
 import { BottomNavigation } from "./BottomNavigation";
 
 export function RootLayout() {
   const location = useLocation();
+  
+  // Scroll to top and reset zoom on every route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    
+    // Reset zoom level on mobile (iOS Safari)
+    document.documentElement.style.zoom = '1';
+  }, [location.pathname]);
   
   // Show bottom navigation only for logged-in screens
   // Include event detail and payment in the logged-in area
