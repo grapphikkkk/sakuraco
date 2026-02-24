@@ -26,11 +26,11 @@ export function QuestionLayout({
   const progressPercent = totalSteps > 0 ? (currentStep / totalSteps) * 100 : 0;
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
       <div
-        className="sticky top-0 z-10 px-4 pt-4 pb-2"
-        style={{ background: "var(--bg-main)" }}
+        className="z-10 px-4 pt-4 pb-2"
+        style={{ background: "var(--bg-main)", flexShrink: 0 }}
       >
         <div className="flex items-center mb-2" style={{ height: "44px" }}>
           {showBack && onBack ? (

@@ -23,7 +23,7 @@ export function RootLayout() {
   location.pathname.startsWith("/event/");
   
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col h-screen overflow-hidden">
       <main className={`flex-1 overflow-y-auto ${showBottomNav ? "pb-[calc(56px+env(safe-area-inset-bottom))]" : ""}`}>
         <Outlet />
       </main>
