@@ -16,6 +16,8 @@ import { Payment } from "./screens/01_05_Payment";
 import { Reservations } from "./screens/Reservations";
 import { MyPage } from "./screens/MyPage";
 import { SchoolSelection } from "./screens/SchoolSelection";
+import { Topick } from "./screens/Topick";
+import { TopickDetail } from "./screens/TopickDetail";
 import { RootLayout } from "./components/RootLayout";
 import React from "react";
 
@@ -37,6 +39,8 @@ const paymentElement = React.createElement(Payment);
 const reservationsElement = React.createElement(Reservations);
 const myPageElement = React.createElement(MyPage);
 const schoolSelectionElement = React.createElement(SchoolSelection);
+const topickElement = React.createElement(Topick);
+const topickDetailElement = React.createElement(TopickDetail);
 
 export const router = createBrowserRouter([
   {
@@ -86,6 +90,14 @@ export const router = createBrowserRouter([
       {
         path: "event-day/:eventId",
         element: eventDetailDayElement,
+      },
+      {
+        path: "topick",
+        element: topickElement,
+      },
+      {
+        path: "topick/:topicId",
+        element: topickDetailElement,
       },
       {
         path: "feedback/:eventId",

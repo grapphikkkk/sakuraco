@@ -4,21 +4,14 @@ import { Calendar, Users, MapPin, Clock, MessageCircle, ArrowLeft, AlertCircle, 
 import { getEventById } from "../data/events";
 import { getMockParticipants, getParticipantHints } from "../data/participants";
 
-const CONVERSATION_TOPICS = [
-  "最近ハマっていることは？",
-  "休日の過ごし方は？",
-  "好きな食べ物は？",
-  "最近観た映画やドラマは？",
-  "行ってみたい場所は？",
-];
-
 export function EventDetailDay() {
   const { eventId } = useParams<{ eventId: string }>();
   const navigate = useNavigate();
   const event = eventId ? getEventById(eventId) : undefined;
 
-  const [showTopics, setShowTopics] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  const [showRunningLateModal, setShowRunningLateModal] = useState(false);
+  const [selectedDelay, setSelectedDelay] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,6 +27,7 @@ export function EventDetailDay() {
 
   const participants = getMockParticipants(event.id);
   const participantHints = getParticipantHints(participants);
+  const lateParticipantName = participants[0]?.nickname ?? "○○";
 
   // Mock restaurant data
   const restaurant = {
@@ -43,7 +37,14 @@ export function EventDetailDay() {
   };
 
   const handleRunningLate = () => {
-    alert("遅刻の連絡を送信しました（本番では参加者に通知されます）");
+    setSelectedDelay(null);
+    setShowRunningLateModal(true);
+  };
+
+  const handleSubmitLate = () => {
+    setShowRunningLateModal(false);
+    setSelectedDelay(null);
+    // TODO: 実装時に通知APIを呼び出す
   };
 
   const handleCancel = () => {
@@ -168,7 +169,7 @@ export function EventDetailDay() {
                 marginBottom: "var(--spacing-sm)",
               }}
             >
-              参加メンバーのヒント
+              参加者
             </h2>
             <p
               style={{
@@ -180,19 +181,19 @@ export function EventDetailDay() {
             >
               {participantHints}
             </p>
+            <p
+              style={{
+                fontSize: "var(--text-sm)",
+                color: "var(--neutral-600)",
+                lineHeight: 1.7,
+                marginBottom: "var(--spacing-md)",
+              }}
+            >
+              {lateParticipantName}さんは30分遅刻しそうです。
+            </p>
 
             {/* Participant Icons */}
             <div>
-              <p
-                style={{
-                  fontSize: "var(--text-sm)",
-                  color: "var(--neutral-600)",
-                  fontWeight: 500,
-                  marginBottom: "var(--spacing-sm)",
-                }}
-              >
-                参加者
-              </p>
               <div className="flex gap-2">
                 {participants.map((participant) => (
                   <div
@@ -348,7 +349,10 @@ export function EventDetailDay() {
             }}
           >
             <button
-              onClick={() => setShowTopics(!showTopics)}
+              onClick={() => {
+                sessionStorage.setItem("topick-return", `/event-day/${event.id}`);
+                navigate("/topick");
+              }}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -373,30 +377,8 @@ export function EventDetailDay() {
               >
                 会話のお題
               </span>
-              <span style={{ color: "var(--neutral-400)" }}>{showTopics ? "▲" : "▼"}</span>
+              <span style={{ color: "var(--neutral-400)" }}>›</span>
             </button>
-
-            {showTopics && (
-              <div
-                className="flex flex-col"
-                style={{ gap: "var(--spacing-xs)", marginTop: "var(--spacing-md)" }}
-              >
-                {CONVERSATION_TOPICS.map((topic, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      padding: "var(--spacing-sm) var(--spacing-md)",
-                      borderRadius: "var(--radius-md)",
-                      background: "var(--green-50)",
-                      fontSize: "var(--text-sm)",
-                      color: "var(--neutral-700)",
-                    }}
-                  >
-                    {topic}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Feedback CTA */}
@@ -451,6 +433,135 @@ export function EventDetailDay() {
         </div>
       </div>
 
+      {/* Running Late Modal */}
+      {showRunningLateModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "var(--overlay)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "var(--spacing-lg)",
+            zIndex: 100,
+          }}
+          onClick={() => setShowRunningLateModal(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "#FFFFFF",
+              borderRadius: "var(--radius-xl)",
+              padding: "var(--spacing-xl)",
+              maxWidth: "320px",
+              width: "100%",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "var(--text-md)",
+                fontWeight: 500,
+                color: "var(--neutral-800)",
+                marginBottom: "var(--spacing-sm)",
+                textAlign: "center",
+              }}
+            >
+              どのくらい遅れそうですか？
+            </h3>
+            <p
+              style={{
+                fontSize: "var(--text-sm)",
+                color: "var(--neutral-600)",
+                textAlign: "center",
+                marginBottom: "var(--spacing-lg)",
+                lineHeight: 1.6,
+              }}
+            >
+              参加者のみなさんに事前にお知らせされます。
+            </p>
+
+            {/* Delay Options */}
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "var(--spacing-sm)",
+                justifyContent: "center",
+                marginBottom: "var(--spacing-xl)",
+              }}
+            >
+              {["10分", "20分", "30分", "40分", "50分以上"].map((delay) => (
+                <button
+                  key={delay}
+                  onClick={() => setSelectedDelay(delay)}
+                  style={{
+                    minHeight: "var(--touch-min)",
+                    padding: "0 var(--spacing-md)",
+                    borderRadius: "var(--radius-full)",
+                    fontSize: "var(--text-sm)",
+                    fontWeight: 500,
+                    border: `1.5px solid ${
+                      selectedDelay === delay ? "var(--green-600)" : "var(--neutral-400)"
+                    }`,
+                    background: selectedDelay === delay ? "var(--green-600)" : "transparent",
+                    color: selectedDelay === delay ? "#fff" : "var(--neutral-700)",
+                    cursor: "pointer",
+                    WebkitTapHighlightColor: "transparent",
+                    transition: "all 0.15s ease",
+                  }}
+                >
+                  {delay}
+                </button>
+              ))}
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowRunningLateModal(false)}
+                style={{
+                  flex: 1,
+                  minHeight: "var(--touch-min)",
+                  borderRadius: "var(--radius-full)",
+                  fontSize: "var(--text-base)",
+                  fontWeight: 500,
+                  border: "1.5px solid var(--neutral-400)",
+                  background: "transparent",
+                  color: "var(--neutral-700)",
+                  cursor: "pointer",
+                  WebkitTapHighlightColor: "transparent",
+                }}
+              >
+                戻る
+              </button>
+              <button
+                onClick={handleSubmitLate}
+                disabled={!selectedDelay}
+                style={{
+                  flex: 1,
+                  minHeight: "var(--touch-min)",
+                  borderRadius: "var(--radius-full)",
+                  fontSize: "var(--text-base)",
+                  fontWeight: 500,
+                  border: "none",
+                  background: selectedDelay ? "var(--green-600)" : "var(--neutral-200)",
+                  color: selectedDelay ? "#fff" : "var(--neutral-400)",
+                  cursor: selectedDelay ? "pointer" : "not-allowed",
+                  WebkitTapHighlightColor: "transparent",
+                  transition: "all 0.15s ease",
+                }}
+              >
+                送信する
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Cancel Confirmation Modal */}
       {showCancelConfirm && (
         <div
@@ -460,7 +571,7 @@ export function EventDetailDay() {
             left: 0,
             right: 0,
             bottom: 0,
-            background: "rgba(0,0,0,0.5)",
+            background: "var(--overlay)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -472,7 +583,7 @@ export function EventDetailDay() {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: "var(--bg-card)",
+              background: "#FFFFFF",
               borderRadius: "var(--radius-lg)",
               padding: "var(--spacing-lg)",
               maxWidth: "400px",
@@ -508,7 +619,7 @@ export function EventDetailDay() {
                   borderRadius: "var(--radius-full)",
                   fontSize: "var(--text-base)",
                   fontWeight: 500,
-                  border: "1.5px solid var(--neutral-300)",
+                  border: "1.5px solid var(--neutral-400)",
                   background: "transparent",
                   color: "var(--neutral-700)",
                   cursor: "pointer",

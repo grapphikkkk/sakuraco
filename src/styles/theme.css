@@ -122,6 +122,9 @@
   --disabled: #DCE2E0;
   --disabled-foreground: #8A9691;
 
+  /* Modal / Dialog Overlay */
+  --overlay: rgba(0, 0, 0, 0.5);
+
   /* ══════ Font Stacks ══════ */
   --font-display: 'Cormorant Garamond', serif;
   --font-en: 'Inter', sans-serif;

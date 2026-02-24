@@ -15,6 +15,14 @@ export function ProfileSetup() {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [iconPreview, setIconPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  
+  // Dropdown open states
+  const [isYearOpen, setIsYearOpen] = useState(false);
+  const [isMonthOpen, setIsMonthOpen] = useState(false);
+  const [isDayOpen, setIsDayOpen] = useState(false);
+  const yearRef = useRef<HTMLDivElement>(null);
+  const monthRef = useRef<HTMLDivElement>(null);
+  const dayRef = useRef<HTMLDivElement>(null);
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
@@ -30,11 +38,53 @@ export function ProfileSetup() {
     WebkitAppearance: "none" as const,
     transition: "border-color 0.2s, box-shadow 0.2s",
   };
-
-  const selectStyle: React.CSSProperties = {
-    ...inputStyle,
+  
+  const dropdownTriggerStyle = (isOpen: boolean, hasValue: boolean): React.CSSProperties => ({
+    width: "100%",
+    minHeight: "48px",
+    padding: "0 40px 0 16px",
+    fontFamily: "var(--font-body)",
+    fontSize: "var(--text-base)",
+    border: isOpen ? "1.5px solid var(--green-600)" : "1.5px solid var(--neutral-300)",
+    borderRadius: "var(--radius-md)",
+    background: "rgba(255,255,255,0.85)",
+    color: hasValue ? "var(--neutral-800)" : "var(--neutral-500)",
+    outline: "none",
     cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "relative",
+    textAlign: "left",
+    transition: "border-color 0.2s, box-shadow 0.2s",
+    boxShadow: isOpen ? "0 0 0 3px rgba(29,140,126,0.12)" : "none",
+  });
+  
+  const dropdownMenuStyle: React.CSSProperties = {
+    position: "absolute",
+    top: "calc(100% + 4px)",
+    left: 0,
+    right: 0,
+    maxHeight: "280px",
+    overflowY: "auto",
+    background: "#fff",
+    border: "1px solid var(--neutral-200)",
+    borderRadius: "var(--radius-md)",
+    boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+    zIndex: 50,
   };
+  
+  const dropdownItemStyle = (isSelected: boolean): React.CSSProperties => ({
+    padding: "12px 16px",
+    fontSize: "var(--text-base)",
+    color: "var(--neutral-800)",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    background: isSelected ? "var(--green-50)" : "transparent",
+    transition: "background 0.15s",
+  });
 
   useEffect(() => {
     if (!params.get("authed")) {
@@ -43,6 +93,24 @@ export function ProfileSetup() {
       navigate(-1);
     }
   }, [params, navigate]);
+  
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (yearRef.current && !yearRef.current.contains(event.target as Node)) {
+        setIsYearOpen(false);
+      }
+      if (monthRef.current && !monthRef.current.contains(event.target as Node)) {
+        setIsMonthOpen(false);
+      }
+      if (dayRef.current && !dayRef.current.contains(event.target as Node)) {
+        setIsDayOpen(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 100 }, (_, i) => currentYear - 18 - i);
@@ -147,18 +215,149 @@ export function ProfileSetup() {
         <div style={{ marginBottom: "var(--spacing-md)" }}>
           <label style={{ display: "block", marginBottom: "6px", fontWeight: 600 }}>生年月日（20歳以上確認）</label>
           <div style={{ display: "flex", gap: 8 }}>
-            <select value={birthYear} onChange={(e) => setBirthYear(e.target.value)} style={selectStyle}>
-              <option value="">年</option>
-              {years.map(y => <option key={y} value={String(y)}>{y}</option>)}
-            </select>
-            <select value={birthMonth} onChange={(e) => setBirthMonth(e.target.value)} style={selectStyle}>
-              <option value="">月</option>
-              {months.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
-            </select>
-            <select value={birthDay} onChange={(e) => setBirthDay(e.target.value)} style={selectStyle}>
-              <option value="">日</option>
-              {days.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
-            </select>
+            {/* Year Dropdown */}
+            <div ref={yearRef} style={{ flex: 1, position: "relative" }}>
+              <div
+                onClick={() => {
+                  setIsYearOpen(!isYearOpen);
+                  setIsMonthOpen(false);
+                  setIsDayOpen(false);
+                }}
+                style={dropdownTriggerStyle(isYearOpen, !!birthYear)}
+              >
+                <span>{birthYear || "年"}</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ position: "absolute", right: "12px", transition: "transform 0.2s", transform: isYearOpen ? "rotate(180deg)" : "rotate(0deg)" }}>
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              {isYearOpen && (
+                <div style={dropdownMenuStyle}>
+                  {years.map((year) => (
+                    <div
+                      key={year}
+                      onClick={() => {
+                        setBirthYear(String(year));
+                        setIsYearOpen(false);
+                      }}
+                      style={dropdownItemStyle(birthYear === String(year))}
+                      onMouseEnter={(e) => {
+                        if (birthYear !== String(year)) {
+                          e.currentTarget.style.background = "var(--neutral-50)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (birthYear !== String(year)) {
+                          e.currentTarget.style.background = "transparent";
+                        }
+                      }}
+                    >
+                      <span>{year}</span>
+                      {birthYear === String(year) && (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Month Dropdown */}
+            <div ref={monthRef} style={{ flex: 1, position: "relative" }}>
+              <div
+                onClick={() => {
+                  setIsMonthOpen(!isMonthOpen);
+                  setIsYearOpen(false);
+                  setIsDayOpen(false);
+                }}
+                style={dropdownTriggerStyle(isMonthOpen, !!birthMonth)}
+              >
+                <span>{birthMonth ? String(birthMonth).padStart(2, '0') : "月"}</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ position: "absolute", right: "12px", transition: "transform 0.2s", transform: isMonthOpen ? "rotate(180deg)" : "rotate(0deg)" }}>
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              {isMonthOpen && (
+                <div style={dropdownMenuStyle}>
+                  {months.map((month) => (
+                    <div
+                      key={month.value}
+                      onClick={() => {
+                        setBirthMonth(month.value);
+                        setIsMonthOpen(false);
+                      }}
+                      style={dropdownItemStyle(birthMonth === month.value)}
+                      onMouseEnter={(e) => {
+                        if (birthMonth !== month.value) {
+                          e.currentTarget.style.background = "var(--neutral-50)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (birthMonth !== month.value) {
+                          e.currentTarget.style.background = "transparent";
+                        }
+                      }}
+                    >
+                      <span>{month.label}</span>
+                      {birthMonth === month.value && (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Day Dropdown */}
+            <div ref={dayRef} style={{ flex: 1, position: "relative" }}>
+              <div
+                onClick={() => {
+                  setIsDayOpen(!isDayOpen);
+                  setIsYearOpen(false);
+                  setIsMonthOpen(false);
+                }}
+                style={dropdownTriggerStyle(isDayOpen, !!birthDay)}
+              >
+                <span>{birthDay ? String(birthDay).padStart(2, '0') : "日"}</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ position: "absolute", right: "12px", transition: "transform 0.2s", transform: isDayOpen ? "rotate(180deg)" : "rotate(0deg)" }}>
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              {isDayOpen && (
+                <div style={dropdownMenuStyle}>
+                  {days.map((day) => (
+                    <div
+                      key={day.value}
+                      onClick={() => {
+                        setBirthDay(day.value);
+                        setIsDayOpen(false);
+                      }}
+                      style={dropdownItemStyle(birthDay === day.value)}
+                      onMouseEnter={(e) => {
+                        if (birthDay !== day.value) {
+                          e.currentTarget.style.background = "var(--neutral-50)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (birthDay !== day.value) {
+                          e.currentTarget.style.background = "transparent";
+                        }
+                      }}
+                    >
+                      <span>{day.label}</span>
+                      {birthDay === day.value && (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           {showAgeError && (
             <p style={{ fontSize: "var(--text-xs)", color: "var(--red-500)", fontWeight: 500, marginTop: "4px" }}>
