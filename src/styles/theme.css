@@ -368,3 +368,174 @@
     line-height: 1.5;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   BUTTON COMPONENT VARIANTS
+   ═══════════════════════════════════════════════════ */
+
+@layer components {
+  /* Base button styles */
+  .button,
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    border-radius: var(--radius-full);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.2s ease;
+    border: none;
+    text-decoration: none;
+  }
+
+  /* ─── PRIMARY: Green solid (CTAs) ─── */
+  .button-primary {
+    background: var(--green-600);
+    color: #FFFFFF;
+    min-height: var(--touch-comfortable);
+    padding: 0 var(--spacing-lg);
+  }
+
+  .button-primary:hover {
+    background: var(--green-700);
+  }
+
+  .button-primary:active {
+    background: var(--green-800);
+  }
+
+  .button-primary:disabled {
+    background: var(--disabled);
+    color: var(--disabled-foreground);
+    cursor: not-allowed;
+  }
+
+  /* ─── SECONDARY: White/Outline (secondary actions) ─── */
+  .button-secondary {
+    background: #FFFFFF;
+    color: var(--neutral-700);
+    border: 1.5px solid var(--neutral-300);
+    min-height: var(--touch-comfortable);
+    padding: 0 var(--spacing-lg);
+  }
+
+  .button-secondary:hover {
+    background: var(--neutral-50);
+    border-color: var(--neutral-400);
+  }
+
+  .button-secondary:active {
+    background: var(--neutral-100);
+    border-color: var(--neutral-500);
+  }
+
+  .button-secondary:disabled {
+    background: var(--disabled);
+    color: var(--disabled-foreground);
+    border-color: var(--disabled);
+    cursor: not-allowed;
+  }
+
+  /* ─── DANGER: Red for destructive actions ─── */
+  .button-danger {
+    background: #FFFFFF;
+    color: var(--destructive);
+    border: 1.5px solid var(--neutral-300);
+    min-height: var(--touch-comfortable);
+    padding: 0 var(--spacing-lg);
+  }
+
+  .button-danger:hover {
+    background: rgba(220, 38, 38, 0.05);
+    border-color: var(--destructive);
+  }
+
+  .button-danger:active {
+    background: rgba(220, 38, 38, 0.1);
+    border-color: var(--destructive);
+  }
+
+  .button-danger:disabled {
+    background: var(--disabled);
+    color: var(--disabled-foreground);
+    border-color: var(--disabled);
+    cursor: not-allowed;
+  }
+
+  /* ─── DANGER FILLED: Solid red ─── */
+  .button-danger-filled {
+    background: var(--destructive);
+    color: #FFFFFF;
+    min-height: var(--touch-comfortable);
+    padding: 0 var(--spacing-lg);
+  }
+
+  .button-danger-filled:hover {
+    background: #b91c1c;
+  }
+
+  .button-danger-filled:active {
+    background: #991b1b;
+  }
+
+  .button-danger-filled:disabled {
+    background: var(--disabled);
+    color: var(--disabled-foreground);
+    cursor: not-allowed;
+  }
+
+  /* ─── GHOST: Transparent (minimal) ─── */
+  .button-ghost {
+    background: transparent;
+    color: var(--neutral-700);
+    min-height: var(--touch-min);
+  }
+
+  .button-ghost:hover {
+    background: var(--neutral-50);
+  }
+
+  .button-ghost:active {
+    background: var(--neutral-100);
+  }
+
+  .button-ghost:disabled {
+    color: var(--disabled-foreground);
+    cursor: not-allowed;
+  }
+
+  /* ─── SMALL: Compact variant ─── */
+  .button-sm {
+    min-height: var(--touch-min);
+    padding: 0 var(--spacing-md);
+    font-size: var(--text-sm);
+  }
+
+  /* ─── LARGE: Extra spacious ─── */
+  .button-lg {
+    min-height: var(--touch-comfortable);
+    padding: 0 var(--spacing-xl);
+    font-size: var(--text-lg);
+  }
+
+  /* ─── FULL WIDTH ─── */
+  .button-full {
+    width: 100%;
+  }
+
+  /* ─── ICON ONLY ─── */
+  .button-icon {
+    width: var(--touch-min);
+    height: var(--touch-min);
+    padding: 0;
+  }
+
+  .button-icon.lg {
+    width: var(--touch-comfortable);
+    height: var(--touch-comfortable);
+  }
+}
+

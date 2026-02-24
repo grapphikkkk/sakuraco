@@ -1,200 +1,178 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { ArrowLeft } from "lucide-react";
+import { TOPICK_THEME_INFO, type TopicCard, type TopicData } from "../constants/topickThemes";
 
-type TopicCard = {
-  question: string;
-  hint: string;
+const TOPICK_CARDS: Record<string, TopicCard[]> = {
+  start: [
+    {
+      question: "まずは自己紹介（30秒）",
+      hint: "ニックネーム／今日の気分／最近よかったこと",
+    },
+    {
+      question: "乾杯のひとこと",
+      hint: "気軽な一言でOK",
+    },
+    {
+      question: "最近ハマっているもの",
+      hint: "ジャンルはなんでもOK",
+    },
+    {
+      question: "最近行ってよかった場所",
+      hint: "思い出話を一つだけ",
+    },
+    {
+      question: "今の気分を色で言うと？",
+      hint: "理由も一言添えると楽しい",
+    },
+    {
+      question: "今週のちょっとよかったこと",
+      hint: "小さなことでOK",
+    },
+  ],
+  warm: [
+    {
+      question: "休日の理想の過ごし方は？",
+      hint: "インドアでもOK",
+    },
+    {
+      question: "最近ちょっと笑ったこと",
+      hint: "軽いエピソードでOK",
+    },
+    {
+      question: "最近\"買ってよかったもの\"",
+      hint: "身近なものでもOK",
+    },
+    {
+      question: "子どもの頃好きだったもの",
+      hint: "思い出と一緒に",
+    },
+    {
+      question: "もし1日だけ自由なら何する？",
+      hint: "理想でも現実でもOK",
+    },
+    {
+      question: "最近ちょっと挑戦したこと",
+      hint: "小さな挑戦でもOK",
+    },
+    {
+      question: "ぶっちゃけ今日はどんな気持ちで来た？",
+      hint: "場を楽しみたい／友達できたら嬉しい／ときめき期待／まだわからない",
+    },
+  ],
+  romance: [
+    {
+      question: "好きなタイプは？",
+      hint: "性格・雰囲気どちらでも",
+    },
+    {
+      question: "見た目と性格、どっち重視？",
+      hint: "今の気分でOK",
+    },
+    {
+      question: "惹かれるポイントを1つ",
+      hint: "小さなことでもOK",
+    },
+    {
+      question: "理想の初回デートは？",
+      hint: "気軽な内容でOK",
+    },
+    {
+      question: "ときめく瞬間ってどんな時？",
+      hint: "日常の中からでもOK",
+    },
+    {
+      question: "逆にこれはちょっと苦手…をやわらかく",
+      hint: "やわらかい言い方でOK",
+    },
+  ],
+  wild: [
+    {
+      question: "こんな\"ありえない人\"に出会ったことある？",
+      hint: "笑える範囲でOK",
+    },
+    {
+      question: "ありえない彼氏エピソード（明るく話せる範囲で）",
+      hint: "無理のない範囲でOK",
+    },
+    {
+      question: "今思うと不思議だった出会い",
+      hint: "短くてもOK",
+    },
+    {
+      question: "言われてびっくりした一言",
+      hint: "笑える内容でOK",
+    },
+    {
+      question: "人生で一番\"なんで？\"と思った出来事",
+      hint: "軽めの話でOK",
+    },
+    {
+      question: "こんなデートは二度とない、と思った話",
+      hint: "楽しい話でOK",
+    },
+  ],
+  secret: [
+    {
+      question: "密かな推し",
+      hint: "軽めの推しトークでOK",
+    },
+    {
+      question: "実はちょっと憧れていること（軽め）",
+      hint: "気軽に話せる内容でOK",
+    },
+    {
+      question: "人には言わない自分ルール",
+      hint: "軽いマイルールでOK",
+    },
+    {
+      question: "最近こっそり始めたこと",
+      hint: "小さなことでもOK",
+    },
+    {
+      question: "実はこう見えて○○",
+      hint: "驚きポイントがあればOK",
+    },
+    {
+      question: "ここだけの小さな野望（重くないもの）",
+      hint: "ライトな目標でOK",
+    },
+  ],
+  close: [
+    {
+      question: "今日いちばん印象に残った話題",
+      hint: "一言だけでもOK",
+    },
+    {
+      question: "今日の会を一言で",
+      hint: "短くてもOK",
+    },
+    {
+      question: "次に行くならどんな会？",
+      hint: "妄想でもOK",
+    },
+    {
+      question: "今日の\"よかった\"を1つ持ち帰ると？",
+      hint: "小さなことでOK",
+    },
+    {
+      question: "最後に、みんなへ一言",
+      hint: "感謝や一言でOK",
+    },
+  ],
 };
 
-type TopicData = {
-  title: string;
-  description: string;
-  cards: TopicCard[];
-};
-
-const TOPICK_DATA: Record<string, TopicData> = {
-  start: {
-    title: "会のはじめのお題",
-    description: "まずは安心して一言",
-    cards: [
-      {
-        question: "まずは自己紹介（30秒）",
-        hint: "ニックネーム／今日の気分／最近よかったこと",
-      },
-      {
-        question: "乾杯のひとこと",
-        hint: "気軽な一言でOK",
-      },
-      {
-        question: "最近ハマっているもの",
-        hint: "ジャンルはなんでもOK",
-      },
-      {
-        question: "最近行ってよかった場所",
-        hint: "思い出話を一つだけ",
-      },
-      {
-        question: "今の気分を色で言うと？",
-        hint: "理由も一言添えると楽しい",
-      },
-      {
-        question: "今週のちょっとよかったこと",
-        hint: "小さなことでOK",
-      },
-    ],
-  },
-  warm: {
-    title: "会をあたためるお題",
-    description: "少しずつ場を広げる",
-    cards: [
-      {
-        question: "休日の理想の過ごし方は？",
-        hint: "インドアでもOK",
-      },
-      {
-        question: "最近ちょっと笑ったこと",
-        hint: "軽いエピソードでOK",
-      },
-      {
-        question: "最近“買ってよかったもの”",
-        hint: "身近なものでもOK",
-      },
-      {
-        question: "子どもの頃好きだったもの",
-        hint: "思い出と一緒に",
-      },
-      {
-        question: "もし1日だけ自由なら何する？",
-        hint: "理想でも現実でもOK",
-      },
-      {
-        question: "最近ちょっと挑戦したこと",
-        hint: "小さな挑戦でもOK",
-      },
-      {
-        question: "ぶっちゃけ今日はどんな気持ちで来た？",
-        hint: "場を楽しみたい／友達できたら嬉しい／ときめき期待／まだわからない",
-      },
-    ],
-  },
-  romance: {
-    title: "好きなタイプ・恋バナ",
-    description: "軽くときめきに触れる",
-    cards: [
-      {
-        question: "好きなタイプは？",
-        hint: "性格・雰囲気どちらでも",
-      },
-      {
-        question: "見た目と性格、どっち重視？",
-        hint: "今の気分でOK",
-      },
-      {
-        question: "惹かれるポイントを1つ",
-        hint: "小さなことでもOK",
-      },
-      {
-        question: "理想の初回デートは？",
-        hint: "気軽な内容でOK",
-      },
-      {
-        question: "ときめく瞬間ってどんな時？",
-        hint: "日常の中からでもOK",
-      },
-      {
-        question: "逆にこれはちょっと苦手…をやわらかく",
-        hint: "やわらかい言い方でOK",
-      },
-    ],
-  },
-  wild: {
-    title: "ありえないエピソード",
-    description: "笑える体験で盛り上がる",
-    cards: [
-      {
-        question: "こんな“ありえない人”に出会ったことある？",
-        hint: "笑える範囲でOK",
-      },
-      {
-        question: "ありえない彼氏エピソード（明るく話せる範囲で）",
-        hint: "無理のない範囲でOK",
-      },
-      {
-        question: "今思うと不思議だった出会い",
-        hint: "短くてもOK",
-      },
-      {
-        question: "言われてびっくりした一言",
-        hint: "笑える内容でOK",
-      },
-      {
-        question: "人生で一番“なんで？”と思った出来事",
-        hint: "軽めの話でOK",
-      },
-      {
-        question: "こんなデートは二度とない、と思った話",
-        hint: "楽しい話でOK",
-      },
-    ],
-  },
-  secret: {
-    title: "ちょいシークレット",
-    description: "軽い秘密で距離を縮める",
-    cards: [
-      {
-        question: "密かな推し",
-        hint: "軽めの推しトークでOK",
-      },
-      {
-        question: "実はちょっと憧れていること（軽め）",
-        hint: "気軽に話せる内容でOK",
-      },
-      {
-        question: "人には言わない自分ルール",
-        hint: "軽いマイルールでOK",
-      },
-      {
-        question: "最近こっそり始めたこと",
-        hint: "小さなことでもOK",
-      },
-      {
-        question: "実はこう見えて○○",
-        hint: "驚きポイントがあればOK",
-      },
-      {
-        question: "ここだけの小さな野望（重くないもの）",
-        hint: "ライトな目標でOK",
-      },
-    ],
-  },
-  close: {
-    title: "会をしめるお題",
-    description: "余韻をつくる",
-    cards: [
-      {
-        question: "今日いちばん印象に残った話題",
-        hint: "一言だけでもOK",
-      },
-      {
-        question: "今日の会を一言で",
-        hint: "短くてもOK",
-      },
-      {
-        question: "次に行くならどんな会？",
-        hint: "妄想でもOK",
-      },
-      {
-        question: "今日の“よかった”を1つ持ち帰ると？",
-        hint: "小さなことでOK",
-      },
-      {
-        question: "最後に、みんなへ一言",
-        hint: "感謝や一言でOK",
-      },
-    ],
-  },
-};
+// Build TOPICK_DATA from TOPICK_THEME_INFO and TOPICK_CARDS
+const TOPICK_DATA: Record<string, TopicData> = Object.fromEntries(
+  TOPICK_THEME_INFO.map((theme) => [
+    theme.id,
+    {
+      title: theme.title,
+      description: theme.description,
+      cards: TOPICK_CARDS[theme.id] || [],
+    },
+  ])
+);
 
 export function TopickDetail() {
   const { topicId } = useParams<{ topicId: string }>();
